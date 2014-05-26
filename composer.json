@@ -1,0 +1,42 @@
+{
+    "name": "shuwee-project/admin-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony ShuweeAdminBundle",
+    "keywords": ["Administration", "admin", "backend", "shuwee"],
+    "homepage": "https://github.com/wanjee/ShuweeAdminBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sébastien Piraux",
+            "email": "wanjee.be@gmail.com",
+            "homepage": "http://www.wanjee.be"
+        },
+        {
+            "name": "Shuwee's tribe",
+            "homepage": "https://github.com/wanjee/ShuweeAdminBundle/graphs/contributors"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "~2.3",
+        "symfony/form": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/security-bundle": "~2.3",
+        "symfony/routing": "~2.3",
+        "symfony/config": "~2.3",
+        "symfony/console": "~2.3",
+        "symfony/twig-bridge": "~2.3",
+        "symfony/class-loader":"~2.3",
+        "sensio/generator-bundle": "~2.3",
+        "twig/twig": "~1.12",
+        "twig/extensions": "~1.0",
+        "doctrine/common": "~2.2",
+    },
+    "autoload": {
+        "psr-4": { "Shuwee\\AdminBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
