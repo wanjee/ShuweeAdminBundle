@@ -10,5 +10,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShuweeAdminBundle extends Bundle
 {
-
 }
