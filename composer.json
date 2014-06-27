@@ -22,7 +22,7 @@
         "twig/twig": "~1.5"
     },
     "autoload": {
-        "psr-4": { "Shuwee\\AdminBundle\\": "" }
+        "psr-4": { "Shuwee\\Bundle\\AdminBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
