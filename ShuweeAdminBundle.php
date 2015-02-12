@@ -4,7 +4,7 @@
  * @author Wanjee <wanjee.be@gmail.com>
  */
 
-namespace Shuwee\Bundle\AdminBundle;
+namespace Shuwee\AdminBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

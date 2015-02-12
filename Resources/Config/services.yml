@@ -1,0 +1,3 @@
+services:
+    shuwee_admin:
+        class: Shuwee\AdminBundle\Service\AdminManager
