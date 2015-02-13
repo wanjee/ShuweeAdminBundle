@@ -35,12 +35,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Shuwee\\Bundle\\AdminBundle\\": "src"
+      "Wanjee\\Shuwee\\AdminBundle\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Shuwee\\Bundle\\AdminBundle\\": "tests"
+      "Wanjee\\Shuwee\\AdminBundle\\": "tests"
     }
   },
   "extra": {
