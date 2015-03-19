@@ -11,11 +11,11 @@
  *
  */
 
-namespace Shuwee\AdminBundle\Controller;
+namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Shuwee\AdminBundle\Admin;
+use Wanjee\Shuwee\AdminBundle\Admin;
 
 /**
  * Class CRUDController
@@ -29,7 +29,8 @@ class CRUDController extends Controller
     protected $admin;
 
     /**
-     *
+     * @Route("/")
+     * @Template()
      */
     public function createAction()
     {

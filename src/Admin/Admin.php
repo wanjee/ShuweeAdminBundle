@@ -1,98 +1,57 @@
 <?php
 
-namespace Shuwee\AdminBundle\Admin;
+/**
+ *
+ */
 
-class Admin implements AdminInterface
+namespace Wanjee\Shuwee\AdminBundle\Admin;
+
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouteCollection;
+
+abstract class Admin implements AdminInterface
 {
     /**
-     * @var Model
+     * @var \Symfony\Component\OptionsResolver\OptionsResolver
      */
-    protected $entity;
+    private $resolver;
 
     /**
-     * @var array
+     * @param array $options
      */
-    protected $listMapping;
-
-    /**
-     * @var boolean
-     */
-    protected $creatable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $editable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $deletable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $previewable = false;
-
-    /**
-     * @var integer
-     */
-    protected $perPage = 25;
-
-    /**
-     *
-     */
-    public function setEntity()
+    public function __construct(array $options = array())
     {
+        $this->resolver = new OptionsResolver();
+        $this->defaultOptions();
 
-
+        $this->options = $this->resolver->resolve($options);
     }
 
     /**
      *
      */
-    public function setListMapping()
+    protected function defaultOptions()
     {
-
+        $this->resolver->setDefaults(array(
+          'creatable' => false,
+          'editable' => false,
+          'deletable' => false,
+          'itemsPerPage' => 25,
+        ));
     }
 
     /**
-     * @return boolean
+     * @param array $options
      */
-    public function isCreatable()
+    public function configure(array $options = array())
     {
-        return $this->creatable;
+        $this->options = $this->resolver->resolve($options);
     }
 
     /**
-     * @return boolean
+     *
      */
-    public function isEditable()
-    {
-        return $this->editable;
-    }
+    public function configureRoutes(RouteCollection $routeCollection) {
 
-    /**
-     * @return boolean
-     */
-    public function isDeletable()
-    {
-        return $this->deletable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isPreviewable()
-    {
-        return $this->previewable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getPerPage()
-    {
-        return $this->perPage();
     }
 }

@@ -1,3 +1,9 @@
 services:
     shuwee_admin:
-        class: Shuwee\AdminBundle\Service\AdminManager
+        class: Wanjee\Shuwee\AdminBundle\Service\AdminManager
+
+    shuwee_admin.routing_loader:
+        class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
+        arguments: [@shuwee_admin]
+        tags:
+        - { name: routing.loader }

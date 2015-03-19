@@ -1,6 +1,6 @@
 <?php
 
-namespace Shuwee\AdminBundle\Show;
+namespace Wanjee\Shuwee\AdminBundle\Show;
 
 /**
  * Manage a list of items
