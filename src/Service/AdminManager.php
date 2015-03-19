@@ -2,10 +2,12 @@
 
 namespace Shuwee\AdminBundle\Service;
 
+use Shuwee\AdminBundle\Admin;
+
 class AdminManager
 {
     /**
-     * @var array list of available payment methods
+     * @var array list of admin services
      */
     private $admins = array();
 
@@ -25,7 +27,7 @@ class AdminManager
     public function getAdmin($alias)
     {
         if (!array_key_exists($alias, $this->admins)) {
-            throw new \InvalidArgumentException(sprintf('The admin %s has not been registered with the Shuwee admin bundle', $alias));
+            throw new \InvalidArgumentException(sprintf('The admin %s has not been registered with the Shuwee Admin bundle', $alias));
         }
         return $this->admins[$alias];
     }
