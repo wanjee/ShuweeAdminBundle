@@ -6,52 +6,57 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
 
-abstract class Admin implements AdminInterface
+abstract class Admin implements AdminInterface, ContainerAwareInterface
 {
     /**
-     * @var \Symfony\Component\OptionsResolver\OptionsResolver
+     * @var ContainerInterface
      */
-    private $resolver;
+    protected $container;
 
     /**
-     * @param array $options
+     * Sets the Container.
+     *
+     * @param ContainerInterface $container A ContainerInterface instance
+     *
+     * @api
      */
-    public function __construct(array $options = array())
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->resolver = new OptionsResolver();
-        $this->defaultOptions();
-
-        $this->options = $this->resolver->resolve($options);
+        $this->container = $container;
     }
 
     /**
      *
      */
-    protected function defaultOptions()
+    public function configureRoutes(RouteCollection $routeCollection)
     {
-        $this->resolver->setDefaults(array(
-          'creatable' => false,
-          'editable' => false,
-          'deletable' => false,
-          'itemsPerPage' => 25,
-        ));
+        $routingHelper = $this->getRoutingHelper();
+
+        // List
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'index'),
+          $routingHelper->getRoute($this, 'index', array(), true)
+        );
+
+        // View
+
+        // Create
+
+        // Update
+
+        // Delete
+
     }
 
     /**
-     * @param array $options
+     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
      */
-    public function configure(array $options = array())
+    public function getRoutingHelper()
     {
-        $this->options = $this->resolver->resolve($options);
-    }
-
-    /**
-     *
-     */
-    public function configureRoutes(RouteCollection $routeCollection) {
-
+        return $this->container->get('shuwee_admin.routing_helper');
     }
 }

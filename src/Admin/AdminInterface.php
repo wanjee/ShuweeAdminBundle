@@ -4,8 +4,6 @@ namespace Wanjee\Shuwee\AdminBundle\Admin;
 
 interface AdminInterface
 {
-    public function configure();
-
     // Get Create/Edit form (form class or \Symfony\Component\Form\Form)
     public function getForm();
 

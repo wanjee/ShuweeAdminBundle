@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Routing\Loader;
 
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Wanjee\Shuwee\AdminBundle\Service\AdminManager;
@@ -43,7 +44,7 @@ class AdminLoader extends Loader
 
         $routes = new RouteCollection();
         foreach ($this->adminManager->getAdmins() as $alias => $admin) {
-            //$admin->addRoutes($routes);
+            $admin->configureRoutes($routes);
         }
 
         $this->loaded = true;
