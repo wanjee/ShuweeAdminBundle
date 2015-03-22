@@ -21,7 +21,7 @@ use Wanjee\Shuwee\AdminBundle\Admin;
  * Class CrudController
  * @package Shuwee\AdminBundle\Controller
  */
-class CrudController extends Controller
+class ContentController extends Controller
 {
     /**
      * @var AdminInterface

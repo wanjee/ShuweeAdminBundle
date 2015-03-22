@@ -52,7 +52,7 @@ class RoutingHelper
             $path .= '/{' . $paramName . '}';
         }
 
-        $controller = 'ShuweeAdminBundle:Crud:' . $action;
+        $controller = 'ShuweeAdminBundle:Content:' . $action;
 
         $defaults = array_merge(
           array(
