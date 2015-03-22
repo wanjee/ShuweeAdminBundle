@@ -29,7 +29,8 @@ class CrudController extends Controller
     protected $admin;
 
     /**
-     *
+     * @Route("/")
+     * @Template()
      */
     public function indexAction()
     {

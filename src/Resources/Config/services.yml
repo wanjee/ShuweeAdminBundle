@@ -17,7 +17,7 @@ services:
         arguments: [@shuwee_admin.admin_manager]
         tags:
             - { name: routing.loader }
-
+            
     shuwee_admin.admin_param_converter:
         class: Wanjee\Shuwee\AdminBundle\Request\ParamConverter\AdminParamConverter
         arguments: [@shuwee_admin.admin_manager]
