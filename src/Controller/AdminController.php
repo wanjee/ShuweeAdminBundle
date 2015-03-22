@@ -17,7 +17,6 @@ class AdminController extends Controller
      * Admin dashboard.
      *
      * @Route("/", name="admin_dashboard")
-     * @Template("ShuweeAdminBundle:Admin:dashboard.html.twig")
      */
     function dashboardAction() {
 
@@ -30,6 +29,6 @@ class AdminController extends Controller
 
         }
 
-        return array();
+        return $this->render('ShuweeAdminBundle:Admin:dashboard.html.twig');
     }
 }

@@ -29,42 +29,32 @@ class ContentController extends Controller
     protected $admin;
 
     /**
-     * @Route("/")
-     * @Template()
      */
     public function indexAction()
     {
-
+        return $this->render('ShuweeAdminBundle:Content:index.html.twig');
     }
 
     /**
-     * @Template()
      */
     public function viewAction()
     {
-        if (false === $this->admin->isCreatable()) {
-            throw new AccessDeniedException();
-        }
+        return $this->render('ShuweeAdminBundle:Content:view.html.twig');
     }
 
     /**
-     * @Template()
      */
     public function createAction()
     {
-        if (false === $this->admin->isCreatable()) {
-            throw new AccessDeniedException();
-        }
+        return $this->render('ShuweeAdminBundle:Content:create.html.twig');
     }
 
     /**
      *
      */
-    public function editAction()
+    public function updateAction()
     {
-        if (false === $this->admin->isEditable()) {
-            throw new AccessDeniedException();
-        }
+        return $this->render('ShuweeAdminBundle:Content:update.html.twig');
     }
 
     /**
@@ -72,9 +62,7 @@ class ContentController extends Controller
      */
     public function deleteAction()
     {
-        if (false === $this->admin->isDeleteable()) {
-            throw new AccessDeniedException();
-        }
+        return $this->render('ShuweeAdminBundle:Content:delete.html.twig');
     }
 
 }
