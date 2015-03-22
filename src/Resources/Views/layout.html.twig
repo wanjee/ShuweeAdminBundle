@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Shuwee - Admin{% endblock %}</title>
+
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite' output='css/ema_admin.css'
+        'bundles/emafileupload/js/select/bootstrap-select.min.css'
+        'bundles/emaadmin/css/bootstrap.min.css'
+        'bundles/emaadmin/css/main.css'
+        %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div id="wrapper">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('admin_dashboard') }}">{% block brand %}Emakina - admin{% endblock %}</a>
+        </div>
+        <div class="navbar-collapse navbar-ex1-collapse collapse">
+            {% block main_menu %}
+            {% endblock %}
+            {% block user_menu %}
+            {% endblock %}
+        </div><!--/.nav-collapse -->
+    </div>
+
+
+
+    <div id="page-wrapper">
+        {% set has_header_title = block('header_title') %}
+        {% if has_header_title is not empty %}
+            <h1>{% block header_title -%}{% endblock %}</h1>
+        {% endif %}
+
+        {% include "ShuweeAdminBundle:Partial:flash.html.twig" %}
+
+        {% set has_action_links = block('action_links') %}
+        {% if has_action_links is not empty %}
+            <div class="inner-navigation">
+                <div class="btn-group">
+                    {% block action_links -%}{% endblock %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% block body -%}
+        {% endblock %}
+
+        {% block footer -%}
+            <footer>
+                {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
+            </footer>
+        {% endblock %}
+    </div>
+
+    {% javascripts output='js/admin_late.js'
+    'bundles/emaadmin/js/jquery-1.11.0.min.js'
+    'bundles/emaadmin/js/bootstrap.min.js'
+    'bundles/emafileupload/js/select/bootstrap-select.min.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+</div><!--/#wrapper -->
+</body>
+</html>

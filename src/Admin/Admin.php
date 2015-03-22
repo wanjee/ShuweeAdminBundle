@@ -1,98 +1,99 @@
 <?php
 
-namespace Shuwee\AdminBundle\Admin;
+/**
+ *
+ */
 
-class Admin implements AdminInterface
+namespace Wanjee\Shuwee\AdminBundle\Admin;
+
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouteCollection;
+
+abstract class Admin implements AdminInterface, ContainerAwareInterface
 {
     /**
-     * @var Model
+     * @var ContainerInterface
      */
-    protected $entity;
+    protected $container;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $listMapping;
+    protected $alias;
 
     /**
-     * @var boolean
-     */
-    protected $creatable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $editable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $deletable = false;
-
-    /**
-     * @var boolean
-     */
-    protected $previewable = false;
-
-    /**
-     * @var integer
-     */
-    protected $perPage = 25;
-
-    /**
+     * Sets the Container.
      *
+     * @param ContainerInterface $container A ContainerInterface instance
+     *
+     * @api
      */
-    public function setEntity()
+    public function setContainer(ContainerInterface $container = null)
     {
+        $this->container = $container;
+    }
 
+    /**
+     * @param string $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
 
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 
     /**
      *
      */
-    public function setListMapping()
+    public function configureRoutes(RouteCollection $routeCollection)
     {
+        $routingHelper = $this->getRoutingHelper();
+
+        // List
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'index'),
+          $routingHelper->getRoute($this, 'index', array(), true)
+        );
+
+        // View
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'view'),
+          $routingHelper->getRoute($this, 'view', array('id'))
+        );
+
+        // Create
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'create'),
+          $routingHelper->getRoute($this, 'create')
+        );
+
+        // Update
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'update'),
+          $routingHelper->getRoute($this, 'update', array('id'))
+        );
+
+        // Delete
+        $routeCollection->add(
+          $routingHelper->getRouteName($this, 'delete'),
+          $routingHelper->getRoute($this, 'delete', array('id'))
+        );
 
     }
 
     /**
-     * @return boolean
+     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
      */
-    public function isCreatable()
+    public function getRoutingHelper()
     {
-        return $this->creatable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isEditable()
-    {
-        return $this->editable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isDeletable()
-    {
-        return $this->deletable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isPreviewable()
-    {
-        return $this->previewable;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getPerPage()
-    {
-        return $this->perPage();
+        return $this->container->get('shuwee_admin.routing_helper');
     }
 }

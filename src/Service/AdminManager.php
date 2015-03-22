@@ -1,8 +1,8 @@
 <?php
 
-namespace Shuwee\AdminBundle\Service;
+namespace Wanjee\Shuwee\AdminBundle\Service;
 
-use Shuwee\AdminBundle\Admin;
+use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 
 class AdminManager
 {
@@ -16,12 +16,14 @@ class AdminManager
      */
     public function registerAdmin($alias, AdminInterface $admin)
     {
+        $admin->setAlias($alias);
+
         $this->admins[$alias] = $admin;
     }
 
     /**
      * @param $alias
-     * @return \Shuwee\AdminBundle\Service\AdminInterface
+     * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
      * @throws \InvalidArgumentException
      */
     public function getAdmin($alias)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shuwee\AdminBundle\DependencyInjection\Compiler;
+namespace Wanjee\Shuwee\AdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,11 +13,11 @@ class AdminCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('shuwee_admin')) {
+        if (false === $container->hasDefinition('shuwee_admin.admin_manager')) {
             return;
         }
 
-        $definition = $container->getDefinition('shuwee_admin');
+        $definition = $container->getDefinition('shuwee_admin.admin_manager');
 
         $taggedServices = $container->findTaggedServiceIds('shuwee.admin');
 

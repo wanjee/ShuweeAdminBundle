@@ -11,17 +11,17 @@
  *
  */
 
-namespace Shuwee\AdminBundle\Controller;
+namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Shuwee\AdminBundle\Admin;
+use Wanjee\Shuwee\AdminBundle\Admin;
 
 /**
- * Class CRUDController
+ * Class CrudController
  * @package Shuwee\AdminBundle\Controller
  */
-class CRUDController extends Controller
+class CrudController extends Controller
 {
     /**
      * @var AdminInterface
@@ -31,7 +31,15 @@ class CRUDController extends Controller
     /**
      *
      */
-    public function createAction()
+    public function indexAction()
+    {
+
+    }
+
+    /**
+     * @Template()
+     */
+    public function viewAction()
     {
         if (false === $this->admin->isCreatable()) {
             throw new AccessDeniedException();
@@ -39,11 +47,13 @@ class CRUDController extends Controller
     }
 
     /**
-     *
+     * @Template()
      */
-    public function listAction()
+    public function createAction()
     {
-
+        if (false === $this->admin->isCreatable()) {
+            throw new AccessDeniedException();
+        }
     }
 
     /**
