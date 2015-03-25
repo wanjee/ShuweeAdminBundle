@@ -22,7 +22,14 @@ interface AdminInterface
      *
      * @return string
      */
-    public function getEntityNamePlural();
+    public function getLabel();
+
+    /**
+     * Get name of the entity (plural form)
+     *
+     * @return string
+     */
+    public function getLabelPlural();
 
     /**
      * Get entity class
