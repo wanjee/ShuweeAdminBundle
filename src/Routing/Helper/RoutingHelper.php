@@ -3,28 +3,43 @@
 namespace Wanjee\Shuwee\AdminBundle\Routing\Helper;
 
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Route;
 
 class RoutingHelper
 {
+    /**
+     * @var \Symfony\Component\Routing\RouterInterface
+     */
+    private $router;
+
+    /**
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser $parser
+     * @param string $routePrefix
+     * @param string $routeNamePrefix
+     */
+    public function __construct(RouterInterface $router) {
+        $this->router = $router;
+    }
 
     /**
      * Get the name of the route related to given $admin and $action.
      *
-     * @param AdminInterface $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      * @param $action
      *
      * @return string Name of the route
      */
     public function getRouteName(AdminInterface $admin, $action)
     {
-        return 'shuwee_admin_' . $admin->getEntityName() . '_' . $action;
+        return 'shuwee_admin_' . $admin->getAlias() . '_' . $action;
     }
 
     /**
      * Build a route for a given admin and action.
      *
-     * @param \Wanjee\Shuwee\AdminBundle\AdminInterface $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      * @param string $action
      * @param array $params
      * @param bool $defaultRoute
@@ -67,7 +82,7 @@ class RoutingHelper
     }
 
     /**
-     * @param \Wanjee\Shuwee\AdminBundle\AdminInterface $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      * @param string $action
      * @param array $params
      *

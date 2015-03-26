@@ -40,7 +40,6 @@ class AdminParamConverter implements ParamConverterInterface {
         try {
             $admin = $this->adminManager->getAdmin($alias);
             $request->attributes->set($param, $admin);
-            $this->registry->addActivePath($admin->getDefaultPath());
         }
         catch(\InvalidArgumentException $e)
         {

@@ -1,6 +1,14 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
 
-{% block title %}ShuweeAdminBundle::create{% endblock %}
+{% block page_title %}ShuweeAdminBundle::create{% endblock %}
+
+{% block action_links %}
+    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
+{%  endblock %}
+
+{% block header_title %}
+    {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(admin) }}</small>
+{% endblock %}
 
 {% block body %}
     <h1>Welcome to the create page</h1>

@@ -1,7 +1,15 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
 
-{% block title %}ShuweeAdminBundle:index{% endblock %}
+{% block page_title %}ShuweeAdminBundle:index{% endblock %}
+
+{% block action_links %}
+    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-primary" type="button"><i class="glyphicon glyphicon-add"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
+{%  endblock %}
+
+{% block header_title %}
+    {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(admin, true) }}</small>
+{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the index page</h1>
+    Here should come the list !
 {% endblock %}

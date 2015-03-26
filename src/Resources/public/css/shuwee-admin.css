@@ -1,3 +1,16 @@
 body {
-    padding-top: 50px;
+    padding-top: 51px;
+    background-color: #eee;
+}
+footer {
+    border-top: 1px solid #e7e7e7;
+    margin-top: 25px;
+    overflow: hidden;
+    padding: 5px;
+    color: #b2b2b4;
+    font-size: 13px;
+}
+footer a {
+    float: right;
+    color: #b2b2b4;
 }

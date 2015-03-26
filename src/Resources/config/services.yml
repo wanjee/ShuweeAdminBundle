@@ -11,6 +11,7 @@ services:
 
     shuwee_admin.routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
+        arguments: [@router]
 
     shuwee_admin.routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
@@ -23,3 +24,10 @@ services:
         arguments: [@shuwee_admin.admin_manager]
         tags:
             - { name: request.param_converter }
+
+    shuwee_admin.admin_twig_extension:
+        class: Wanjee\Shuwee\AdminBundle\Twig\AdminExtension
+        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.routing_helper, @translator]
+        public: false
+        tags:
+            - { name: twig.extension }

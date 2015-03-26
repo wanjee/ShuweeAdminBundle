@@ -48,6 +48,8 @@ class Builder extends ContainerAware
      */
     public function sideMenu(FactoryInterface $factory, array $options)
     {
+        $translator = $this->getTranslator();
+
         $menu = $factory->createItem('root');
 
         $menu->addChild('Dashboard', array('route' => 'admin_dashboard'));
@@ -61,12 +63,23 @@ class Builder extends ContainerAware
 
         /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
-            $contentTypeMenuItem = $contentMenuItem->addChild($admin->getLabel());
+            $singularLabel = $translator->transchoice($admin->getLabel(), 1);
+            $pluralLabel = $translator->transchoice($admin->getLabel(), 10);
+
+            $contentTypeMenuItem = $contentMenuItem->addChild($pluralLabel);
 
             $contentTypeMenuItem->addChild('List', array('route' => $routingHelper->getRouteName($admin, 'index')));
-            $contentTypeMenuItem->addChild('Create', array('route' => $routingHelper->getRouteName($admin, 'create')));
+            $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $routingHelper->getRouteName($admin, 'create')));
         }
 
         return $menu;
+    }
+
+    /**
+     * Get translator helper
+     */
+    public function getTranslator()
+    {
+        return $this->container->get('translator');
     }
 }

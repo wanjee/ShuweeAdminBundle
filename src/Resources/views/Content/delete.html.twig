@@ -1,6 +1,15 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
 
-{% block title %}ShuweeAdminBundle:delete{% endblock %}
+{% block page_title %}ShuweeAdminBundle:delete{% endblock %}
+
+{% block action_links %}
+    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
+    <a href="{{ admin_get_path(admin, 'update', {'id': entity.id}) }}" class="btn btn-sm btn-primary" type="button"><i class="glyphicon glyphicon-edit"></i> {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
+{%  endblock %}
+
+{% block header_title %}
+    {{ 'crud.delete' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(admin) }}</small>
+{% endblock %}
 
 {% block body %}
     <h1>Welcome to the delete page</h1>

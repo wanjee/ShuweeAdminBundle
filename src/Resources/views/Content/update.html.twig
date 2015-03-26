@@ -1,6 +1,15 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
 
-{% block title %}ShuweeAdminBundle:update{% endblock %}
+{% block page_title %}ShuweeAdminBundle:update{% endblock %}
+
+{% block action_links %}
+    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
+    <a href="{{ admin_get_path(admin, 'delete', {'id': entity.id}) }}" class="btn btn-sm btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
+{%  endblock %}
+
+{% block header_title %}
+    {{ 'crud.update' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(admin) }}</small>
+{% endblock %}
 
 {% block body %}
     <h1>Welcome to the update page</h1>

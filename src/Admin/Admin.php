@@ -90,6 +90,33 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * Load a single entity by its id
+     *
+     * @param int $id
+     */
+    public function loadEntity($id)
+    {
+        return $this->getEntityManager()->getRepository($this->getEntityClass())->find($id);
+    }
+
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->getDoctrine()->getManager();
+    }
+
+    /**
+     * @return \Doctrine\Bundle\DoctrineBundle\Registry
+     */
+    public function getDoctrine()
+    {
+        return $this->container->get('doctrine');
+    }
+
+    /**
      * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
      */
     public function getRoutingHelper()
