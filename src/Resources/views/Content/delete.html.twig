@@ -1,4 +1,5 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block page_title %}ShuweeAdminBundle:delete{% endblock %}
 
@@ -12,5 +13,6 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Welcome to the delete page</h1>
+    {{ 'crud.delete.confirm' | trans({'%entity_id%' : entity.id}, 'ShuweeAdminBundle') }}
+    {{ form(form) }}
 {% endblock %}
