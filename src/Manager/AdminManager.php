@@ -1,6 +1,6 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Service;
+namespace Wanjee\Shuwee\AdminBundle\Manager;
 
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 

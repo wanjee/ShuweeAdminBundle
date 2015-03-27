@@ -8,11 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use Wanjee\Shuwee\AdminBundle\Service\AdminManager;
+use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 
 class AdminParamConverter implements ParamConverterInterface {
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Service\AdminManager
+     * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
      */
     private $adminManager;
 

@@ -21,7 +21,7 @@ class AdminController extends Controller
     function dashboardAction() {
 
         /**
-         * @var \Wanjee\Shuwee\AdminBundle\Service\AdminManager
+         * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
          */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 

@@ -5,7 +5,7 @@ namespace Wanjee\Shuwee\AdminBundle\Routing\Loader;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
-use Wanjee\Shuwee\AdminBundle\Service\AdminManager;
+use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 
 /**
  * Class AdminLoader
@@ -14,14 +14,14 @@ use Wanjee\Shuwee\AdminBundle\Service\AdminManager;
 class AdminLoader extends Loader
 {
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Service\AdminManager
+     * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
      */
     private $adminManager;
 
     private $loaded = false;
 
     /**
-     * @param \Wanjee\Shuwee\AdminBundle\Service\AdminManager $adminManager
+     * @param \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager
      */
     public function __construct(AdminManager $adminManager)
     {

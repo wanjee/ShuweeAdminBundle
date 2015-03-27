@@ -56,7 +56,7 @@ class Builder extends ContainerAware
 
         $contentMenuItem = $menu->addChild('Content');
 
-        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Service\AdminManager */
+        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
         $adminManager = $this->container->get('shuwee_admin.admin_manager');
         /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper */
         $routingHelper = $this->container->get('shuwee_admin.routing_helper');

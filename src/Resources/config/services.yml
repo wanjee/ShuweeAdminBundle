@@ -1,7 +1,7 @@
 services:
     #
     shuwee_admin.admin_manager:
-        class: Wanjee\Shuwee\AdminBundle\Service\AdminManager
+        class: Wanjee\Shuwee\AdminBundle\Manager\AdminManager
 
     shuwee_admin.admin_abstract:
         class: Wanjee\Shuwee\AdminBundle\Admin\Admin
