@@ -1,6 +1,6 @@
 {% extends "ShuweeAdminBundle::layout.html.twig" %}
 
-{% block page_title %}ShuweeAdminBundle:view{% endblock %}
+{% block page_title %}{{ 'crud.view' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
 
 {% block action_links %}
     <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
