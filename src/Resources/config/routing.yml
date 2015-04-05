@@ -5,3 +5,7 @@ shuwee_admin_default:
 shuwee_admin_crud:
     resource: .
     type: shuwee_admin_extra
+
+shuwee_admin_section:
+    resource: .
+    type: shuwee_section_extra
