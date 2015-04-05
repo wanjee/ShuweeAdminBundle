@@ -81,7 +81,7 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'created');
-            return $this->redirect($this->getRoutingHelper()->generateUrl($admin, 'index'));
+            return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render('ShuweeAdminBundle:Content:create.html.twig', array(
@@ -114,7 +114,7 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'updated');
-            return $this->redirect($this->getRoutingHelper()->generateUrl($admin, 'index'));
+            return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render('ShuweeAdminBundle:Content:update.html.twig', array(
@@ -148,7 +148,7 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'deleted');
-            return $this->redirect($this->getRoutingHelper()->generateUrl($admin, 'index'));
+            return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render('ShuweeAdminBundle:Content:delete.html.twig', array(
@@ -170,7 +170,7 @@ class ContentController extends Controller
         $formType = new $formClass();
 
         $form = $this->createForm($formType, $entity, array(
-          'action' => $this->getRoutingHelper()->generateUrl($admin, 'create'),
+          'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'create'),
           'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Create'));
@@ -189,7 +189,7 @@ class ContentController extends Controller
         $formType = new $formClass();
 
         $form = $this->createForm($formType, $entity, array(
-          'action' => $this->getRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
+          'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
           'method' => 'PUT',
         ));
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -205,7 +205,7 @@ class ContentController extends Controller
     private function getDeleteForm(Admin $admin, $entity)
     {
         return $this->createFormBuilder()
-          ->setAction($this->getRoutingHelper()->generateUrl($admin, 'delete', array('id' => $entity->getId())))
+          ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', array('id' => $entity->getId())))
           ->setMethod('DELETE')
           ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn-danger')))
           ->getForm();
@@ -214,8 +214,8 @@ class ContentController extends Controller
     /**
      * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
      */
-    public function getRoutingHelper()
+    public function getAdminRoutingHelper()
     {
-        return $this->container->get('shuwee_admin.routing_helper');
+        return $this->container->get('shuwee_admin.admin_routing_helper');
     }
 }

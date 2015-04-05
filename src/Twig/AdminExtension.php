@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
-use Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper;
+use Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper;
 
 
 class AdminExtension extends \Twig_Extension
@@ -29,10 +29,10 @@ class AdminExtension extends \Twig_Extension
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager
-     * @param \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper $routingHelper
+     * @param \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper $routingHelper
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
-    public function __construct(AdminManager $adminManager, RoutingHelper $routingHelper, TranslatorInterface $translator = null)
+    public function __construct(AdminManager $adminManager, AdminRoutingHelper $routingHelper, TranslatorInterface $translator = null)
     {
         $this->adminManager = $adminManager;
         $this->routingHelper = $routingHelper;

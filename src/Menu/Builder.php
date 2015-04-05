@@ -54,12 +54,13 @@ class Builder extends ContainerAware
 
         $menu->addChild('Dashboard', array('route' => 'admin_dashboard'));
 
+        // Content
         $contentMenuItem = $menu->addChild('Content');
 
-        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
+        /** @var $adminRoutingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
         $adminManager = $this->container->get('shuwee_admin.admin_manager');
-        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper */
-        $routingHelper = $this->container->get('shuwee_admin.routing_helper');
+        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper */
+        $adminRoutingHelper = $this->container->get('shuwee_admin.admin_routing_helper');
 
         /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
@@ -68,8 +69,22 @@ class Builder extends ContainerAware
 
             $contentTypeMenuItem = $contentMenuItem->addChild($pluralLabel);
 
-            $contentTypeMenuItem->addChild('List', array('route' => $routingHelper->getRouteName($admin, 'index')));
-            $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $routingHelper->getRouteName($admin, 'create')));
+            $contentTypeMenuItem->addChild('List', array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
+            $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'create')));
+        }
+
+        // Sections
+        $sectionManager = $this->container->get('shuwee_admin.section_manager');
+        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper */
+        $sectionRoutingHelper = $this->container->get('shuwee_admin.section_routing_helper');
+
+        /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
+        foreach ($sectionManager->getSections() as $alias => $section) {
+            $sectionItems = $section->getSectionItems();
+            /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
+            foreach ($sectionItems as $sectionItem) {
+                $menu->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
+            }
         }
 
         return $menu;

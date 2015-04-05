@@ -9,13 +9,32 @@ services:
         calls:
             - [ setContainer, [@service_container]]
 
-    shuwee_admin.routing_helper:
-        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
+    shuwee_admin.section_manager:
+        class: Wanjee\Shuwee\AdminBundle\Manager\SectionManager
+
+    shuwee_admin.section_abstract:
+        class: Wanjee\Shuwee\AdminBundle\Section\Section
+        abstract: true
+        calls:
+            - [ setContainer, [@service_container]]
+
+    shuwee_admin.admin_routing_helper:
+        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
         arguments: [@router]
 
-    shuwee_admin.routing_loader:
+    shuwee_admin.section_routing_helper:
+        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper
+        arguments: [@router]
+
+    shuwee_admin.admin_routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
         arguments: [@shuwee_admin.admin_manager]
+        tags:
+            - { name: routing.loader }
+
+    shuwee_admin.section_routing_loader:
+        class: Wanjee\Shuwee\AdminBundle\Routing\Loader\SectionLoader
+        arguments: [@shuwee_admin.section_manager]
         tags:
             - { name: routing.loader }
             
@@ -27,7 +46,7 @@ services:
 
     shuwee_admin.admin_twig_extension:
         class: Wanjee\Shuwee\AdminBundle\Twig\AdminExtension
-        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.routing_helper, @translator]
+        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator]
         public: false
         tags:
             - { name: twig.extension }

@@ -55,7 +55,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
      */
     public function configureRoutes(RouteCollection $routeCollection)
     {
-        $routingHelper = $this->getRoutingHelper();
+        $routingHelper = $this->getAdminRoutingHelper();
 
         // List
         $routeCollection->add(
@@ -117,10 +117,10 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
+     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
      */
-    public function getRoutingHelper()
+    public function getAdminRoutingHelper()
     {
-        return $this->container->get('shuwee_admin.routing_helper');
+        return $this->container->get('shuwee_admin.admin_routing_helper');
     }
 }
