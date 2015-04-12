@@ -30,9 +30,20 @@ class ContentController extends Controller
     public function indexAction(Request $request, Admin $admin)
     {
         // FIXME : Secure access
+        $entities = $admin->loadEntities();
+
+        if (!$entities) {
+            $entities = array();
+        }
+
+        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $dataGrid */
+        $dataGrid = $admin->getDatagrid();
+        // FIXME datagrid should be responsible for the entities retrieval as he will be for paging, sortering, filtering
+        $dataGrid->setEntities($entities);
 
         return $this->render('ShuweeAdminBundle:Content:index.html.twig', array(
             'admin' => $admin,
+            'datagrid' => $dataGrid,
           )
         );
     }

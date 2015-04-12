@@ -90,6 +90,16 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * Load multiple entities
+     *
+     * @param int $id
+     */
+    public function loadEntities()
+    {
+        return $this->getEntityManager()->getRepository($this->getEntityClass())->findAll();
+    }
+
+    /**
      * Load a single entity by its id
      *
      * @param int $id
@@ -98,7 +108,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     {
         return $this->getEntityManager()->getRepository($this->getEntityClass())->find($id);
     }
-
 
     /**
      * @return \Doctrine\ORM\EntityManager

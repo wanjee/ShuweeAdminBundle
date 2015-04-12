@@ -50,3 +50,10 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    shuwee_admin.datagrid_twig_extension:
+        class: Wanjee\Shuwee\AdminBundle\Twig\DatagridExtension
+        arguments: [@translator]
+        public: false
+        tags:
+            - { name: twig.extension }

@@ -10,9 +10,9 @@ interface AdminInterface
     public function getForm();
 
     /**
-     * Get list configuration
+     * Get datagrid configuration
      */
-    public function getList();
+    public function getDatagrid();
 
     /**
      * Get entity shortcut name (ie.:  AcmeBlogBundle:Post)
