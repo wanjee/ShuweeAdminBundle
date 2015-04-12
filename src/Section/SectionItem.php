@@ -28,7 +28,13 @@ class SectionItem
      * @param $label
      * @param $controller
      */
-    public function __construct($id, $label, $controller) {
+    public function __construct($id, $label, $controller)
+    {
+        // validate id (can contain only letters and numbers)
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $id)) {
+            throw new Exception('SectionItem ID is not a valid ID.  A valid id starts with a letter or underscore, followed by any number of letters, numbers, or underscores.');
+        }
+
         $this->id = $id;
         $this->label = $label;
         $this->controller = $controller;
