@@ -32,7 +32,7 @@ class SectionItem
     {
         // validate id (can contain only letters and numbers)
         if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $id)) {
-            throw new Exception('SectionItem ID is not a valid ID.  A valid id starts with a letter or underscore, followed by any number of letters, numbers, or underscores.');
+            throw new \Exception('SectionItem ID is not a valid ID.  A valid id starts with a letter or underscore, followed by any number of letters, numbers, or underscores.');
         }
 
         $this->id = $id;
