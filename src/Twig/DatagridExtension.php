@@ -4,6 +4,7 @@ namespace Wanjee\Shuwee\AdminBundle\Twig;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface;
 
 /**
  * Class AdminExtension
@@ -44,17 +45,29 @@ class DatagridExtension extends \Twig_Extension
     {
         return array(
           'datagrid' => new \Twig_Function_Method($this, 'renderDatagrid', array('is_safe' => array('html'))),
+          'datagrid_field' => new \Twig_Function_Method($this, 'renderDatagridField', array('is_safe' => array('html'))),
         );
     }
 
     /**
-     *
+     * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
      */
     public function renderDatagrid(DatagridInterface $datagrid)
     {
         return $this->render('datagrid', array(
-            'datagrid' => $datagrid,
+          'datagrid' => $datagrid,
         ));
+    }
+
+    /**
+     * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface
+     */
+    public function renderDatagridField(DatagridFieldInterface $field, $entity)
+    {
+        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface */
+        $type = $field->getType();
+
+        return $this->render($type->getBlockName(), $type->getBlockVariables($field, $entity));
     }
 
     /**

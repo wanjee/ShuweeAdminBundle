@@ -11,7 +11,7 @@
                     {{ field.options['label'] | trans({}, 'ShuweeAdminBundle') }}
                 </th>
             {% endfor %}
-            <th class="actions">{{ "crud.grid.actions" | trans({}, 'ShuweeAdminBundle') }}</th>
+            <th class="actions">{{ "datagrid.actions" | trans({}, 'ShuweeAdminBundle') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -19,15 +19,17 @@
             <tr>
                 {% for field in datagrid.fields %}
                     <td>
-                        {# {{ datagrid_field(field, entity) }} #}
+                        {{ datagrid_field(field, entity) }}
                     </td>
                 {% endfor %}
                 <td class="actions">
                     <div class="btn-toolbar">
                         <div class="btn-group btn-group-xs">
-                            <!--<a class="btn btn-default" role="button" href="{{ admin_get_path(datagrid.admin, 'view', {'id': entity.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>-->
+                            <a class="btn btn-default" role="button" href="{{ admin_get_path(datagrid.admin, 'view', {'id': entity.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
+                        </div>
+                        <div class="btn-group btn-group-xs">
                             <a class="btn btn-primary" role="button" href="{{ admin_get_path(datagrid.admin, 'update', {'id': entity.id}) }}"><i class="glyphicon glyphicon-edit"></i>  {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
-                            <a class="btn btn-danger" role="button" href="{{ admin_get_path(datagrid.admin, 'delete', {'id': entity.id}) }}"><i class="glyphicon glyphicon-remove"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
+                            <a class="btn btn-danger" role="button" href="{{ admin_get_path(datagrid.admin, 'delete', {'id': entity.id}) }}"><i class="glyphicon glyphicon-trash"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
                         </div>
                     </div>
                 </td>
@@ -36,11 +38,19 @@
             {% set size = datagrid.fields | length %}
             <tr>
                 <td colspan="{{ size+1 }}">
-                    {{ 'crud.grid.empty' | trans }}
+                    {{ 'datagrid.empty_grid' | trans }}
                     <a href="{{ admin_get_path(datagrid.admin, 'create') }}"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block datagrid_text %}
+    {% if value is not null %}
+        {{ value | raw }}
+    {% else %}
+        <span class="empty-value">{{ 'datagrid.empty_value' | trans({}, 'ShuweeAdminBundle') }}</span>
+    {% endif %}
 {% endblock %}

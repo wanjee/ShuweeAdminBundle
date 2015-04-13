@@ -10,6 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * Class Admin
+ * @package Wanjee\Shuwee\AdminBundle\Admin
+ */
 abstract class Admin implements AdminInterface, ContainerAwareInterface
 {
     /**
@@ -123,6 +127,14 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     public function getDoctrine()
     {
         return $this->container->get('doctrine');
+    }
+
+    /**
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
+     */
+    public function getDatagridManager()
+    {
+        return $this->container->get('shuwee_admin.datagrid_manager');
     }
 
     /**

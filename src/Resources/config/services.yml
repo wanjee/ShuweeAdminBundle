@@ -1,5 +1,5 @@
 services:
-    #
+    # Admin manager
     shuwee_admin.admin_manager:
         class: Wanjee\Shuwee\AdminBundle\Manager\AdminManager
 
@@ -9,6 +9,7 @@ services:
         calls:
             - [ setContainer, [@service_container]]
 
+    # Section manager
     shuwee_admin.section_manager:
         class: Wanjee\Shuwee\AdminBundle\Manager\SectionManager
 
@@ -18,12 +19,9 @@ services:
         calls:
             - [ setContainer, [@service_container]]
 
+    # Routing
     shuwee_admin.admin_routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
-        arguments: [@router]
-
-    shuwee_admin.section_routing_helper:
-        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper
         arguments: [@router]
 
     shuwee_admin.admin_routing_loader:
@@ -32,18 +30,24 @@ services:
         tags:
             - { name: routing.loader }
 
+    shuwee_admin.section_routing_helper:
+        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper
+        arguments: [@router]
+
     shuwee_admin.section_routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\SectionLoader
         arguments: [@shuwee_admin.section_manager]
         tags:
             - { name: routing.loader }
-            
+
+    # ParamConverter
     shuwee_admin.admin_param_converter:
         class: Wanjee\Shuwee\AdminBundle\Request\ParamConverter\AdminParamConverter
         arguments: [@shuwee_admin.admin_manager]
         tags:
             - { name: request.param_converter }
 
+    # Twig
     shuwee_admin.admin_twig_extension:
         class: Wanjee\Shuwee\AdminBundle\Twig\AdminExtension
         arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator]
@@ -57,3 +61,13 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    # Datagrid
+    shuwee_admin.datagrid_manager:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
+
+    # Datagrid types
+    shuwee_admin.datagrid_type_text:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeText
+        tags:
+            - { name: shuwee.datagrid_type , alias: text}

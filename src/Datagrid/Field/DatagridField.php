@@ -2,6 +2,8 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field;
 
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 /**
  * Class DatagridField
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field
@@ -14,9 +16,14 @@ class DatagridField implements DatagridFieldInterface
     protected $name;
 
     /**
-     * @var Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
+     * @var \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
      */
     protected $type;
+
+    /**
+     * @var string Entity class (ie.: Acme\BlogBundle\Entity\Post)
+     */
+    protected $entityClass;
 
     /**
      * @var array
@@ -26,7 +33,7 @@ class DatagridField implements DatagridFieldInterface
 
     /**
      * @param string $name
-     * @param Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface $type
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface $type
      * @param array $options
      */
     function __construct($name, $type, $options = array())
@@ -35,6 +42,8 @@ class DatagridField implements DatagridFieldInterface
         $this->type = $type;
         $this->options = $options;
 
+        // add mandatory label option if missing
+        // TODO use optionResolver instead
         if (!$this->hasOption('label')) {
             $this->setOption('label', $name);
         }
@@ -49,7 +58,7 @@ class DatagridField implements DatagridFieldInterface
     }
 
     /**
-     * @return Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
      */
     public function getType()
     {
@@ -99,9 +108,13 @@ class DatagridField implements DatagridFieldInterface
      * @param mixed $row
      * @return mixed
      */
-    public function getData($row)
+    public function getData($entity)
     {
+        $accessor = PropertyAccess::createPropertyAccessor();
 
+        // TODO Add failure management
+        $value = $accessor->getValue($entity, $this->name);
+        return $value;
     }
 
 }

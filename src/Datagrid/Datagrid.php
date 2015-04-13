@@ -33,6 +33,8 @@ class Datagrid implements DatagridInterface
     function __construct(AdminInterface $admin)
     {
         $this->admin = $admin;
+
+        return $this;
     }
 
     /**
@@ -59,11 +61,13 @@ class Datagrid implements DatagridInterface
     public function addField($name, $type, $options = array())
     {
         // instanciate new field object of given type
-        // todo pass options to type
-        $type = $type;
+        $type = $this->getDatagridManager()->getType($type);
+
         $field = new DatagridField($name, $type, $options);
 
         $this->fields[] = $field;
+
+        return $this;
     }
 
     /**
@@ -76,7 +80,7 @@ class Datagrid implements DatagridInterface
 
     /**
      * Set all entities
-     * FIXME datagrid should be responsible for the entities retrieval as he will be for paging, sortering, filtering
+     * FIXME datagrid should be responsible for the entities retrieval as it will be for paging, sortering, filtering
      */
     public function setEntities($entities = array())
     {
@@ -99,5 +103,19 @@ class Datagrid implements DatagridInterface
     public function setRequest(Request $request)
     {
 
+    }
+
+    /**
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
+     */
+    public function getDatagridManager() {
+        return $this->admin->getDatagridManager();
+    }
+
+    /**
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
+     */
+    public function getEntityClass() {
+        return $this->admin->getEntityClass();
     }
 }
