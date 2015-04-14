@@ -20,11 +20,10 @@ class AdminController extends Controller
      */
     function dashboardAction() {
 
-        /**
-         * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
-         */
+        /** @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 
+        /** @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
 
         }
