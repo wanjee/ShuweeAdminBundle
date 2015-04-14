@@ -78,6 +78,13 @@ Add ShuweeAdminBundle routing in app/config/routing.yml
         resource: "@ShuweeAdminBundle/Resources/config/routing.yml"
         prefix: /admin
 
+Define or generate form type for your entity.
+
+.. code-block:: bash
+
+    bin/console generate:doctrine:form AcmeDemoBundle:Post
+
+
 Define admin services in your bundle.  
 
 .. code-block:: php
@@ -142,3 +149,13 @@ Define admin services in your bundle.
             return '{0} Posts|{1} Post|]1,Inf] Posts';
         }
     }
+
+Register your admin class as a tagged service
+
+.. code-block:: yaml
+
+    acmedemo.post_admin:
+        class: Acme\Bundle\DemoBundle\Admin\PostAdmin
+        parent: shuwee_admin.admin_abstract
+        tags:
+          -  { name: shuwee.admin, alias: post }
