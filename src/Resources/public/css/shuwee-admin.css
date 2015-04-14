@@ -2,6 +2,43 @@ body {
     padding-top: 51px;
     background-color: #eee;
 }
+
+/* Menu */
+#layer-sidebar ul,
+#layer-sidebar li,
+#layer-sidebar a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    font-weight: normal;
+    text-decoration: none;
+    line-height: 1;
+    position: relative;
+}
+
+#layer-sidebar a {
+    line-height: 1.3;
+    padding: 5px 10px;
+    display: block;
+}
+
+#layer-sidebar li > span {
+    line-height: 1.3;
+    padding: 5px 10px;
+    display: block;
+    font-weight: bold;
+}
+
+#layer-sidebar li.active a {
+    font-weight: bold;
+}
+
+#layer-sidebar li > ul > li {
+    padding-left: 25px;
+}
+
+
 footer {
     border-top: 1px solid #e7e7e7;
     margin-top: 25px;
