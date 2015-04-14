@@ -22,6 +22,4 @@ abstract class DatagridType implements DatagridTypeInterface
             'value' => $field->getData($entity),
         );
     }
-
-
 }
