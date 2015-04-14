@@ -54,3 +54,10 @@
         <span class="empty-value">{{ 'datagrid.empty_value' | trans({}, 'ShuweeAdminBundle') }}</span>
     {% endif %}
 {% endblock %}
+
+{% block datagrid_boolean %}
+    {% set label_class = value == true ? 'label-success' : 'label-danger' %}
+    {% set text = value == true ? 'Yes' : 'No' %}
+
+    <span class="label {{ label_class }}">{{ text }}</span>
+{% endblock %}

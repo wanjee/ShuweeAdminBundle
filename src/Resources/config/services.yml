@@ -71,3 +71,8 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeText
         tags:
             - { name: shuwee.datagrid_type , alias: text}
+
+    shuwee_admin.datagrid_type_boolean:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeBoolean
+        tags:
+            - { name: shuwee.datagrid_type , alias: boolean}
