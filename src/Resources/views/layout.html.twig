@@ -48,11 +48,11 @@
         <div class="row">
 
             <!-- sidebar -->
-            <div id="layer-sidebar" class="col-xs-6 col-sm-2 sidebar-offcanvas" role="navigation">
+            <div id="layer-sidebar" class="col-xs-12 col-sm-4 col-md-2 sidebar-offcanvas" role="navigation">
                 {{ knp_menu_render('ShuweeAdminBundle:Builder:sideMenu', {'currentClass': 'active', 'template': 'ShuweeAdminBundle:Menu:knp_menu_sidebar.html.twig'}) }}
             </div>
 
-            <div id="layer-content" class="col-xs-12 col-sm-10">
+            <div id="layer-content" class="col-xs-12 col-sm-8 col-md-10">
 
                 {% set has_header_title = block('header_title') %}
                 {% if has_header_title is not empty %}
