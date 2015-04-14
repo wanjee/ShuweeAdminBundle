@@ -52,8 +52,6 @@ class Builder extends ContainerAware
 
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Dashboard', array('route' => 'admin_dashboard'));
-
         // Content
         $contentMenuItem = $menu->addChild('Content');
 
