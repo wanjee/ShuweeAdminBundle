@@ -21,11 +21,6 @@ class DatagridField implements DatagridFieldInterface
     protected $type;
 
     /**
-     * @var string Entity class (ie.: Acme\BlogBundle\Entity\Post)
-     */
-    protected $entityClass;
-
-    /**
      * @var array
      */
     protected $options;
@@ -112,7 +107,6 @@ class DatagridField implements DatagridFieldInterface
     {
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        // TODO Add failure management
         $value = $accessor->getValue($entity, $this->name);
         return $value;
     }

@@ -111,11 +111,4 @@ class Datagrid implements DatagridInterface
     public function getDatagridManager() {
         return $this->admin->getDatagridManager();
     }
-
-    /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
-     */
-    public function getEntityClass() {
-        return $this->admin->getEntityClass();
-    }
 }
