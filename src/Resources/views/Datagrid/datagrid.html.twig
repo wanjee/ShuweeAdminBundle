@@ -38,8 +38,8 @@
             {% set size = datagrid.fields | length %}
             <tr>
                 <td colspan="{{ size+1 }}">
-                    {{ 'datagrid.empty_grid' | trans }}
-                    <a href="{{ admin_get_path(datagrid.admin, 'create') }}"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
+                    {{ 'datagrid.empty_grid' | trans({}, 'ShuweeAdminBundle') }}
+                    <a href="{{ admin_get_path(datagrid.admin, 'create') }}">{{ 'datagrid.empty_grid.add' | trans({}, 'ShuweeAdminBundle') }}</a>
                 </td>
             </tr>
         {% endfor %}
@@ -50,8 +50,6 @@
 {% block datagrid_text %}
     {% if value is not null %}
         {{ value | raw }}
-    {% else %}
-        <span class="empty-value">{{ 'datagrid.empty_value' | trans({}, 'ShuweeAdminBundle') }}</span>
     {% endif %}
 {% endblock %}
 
