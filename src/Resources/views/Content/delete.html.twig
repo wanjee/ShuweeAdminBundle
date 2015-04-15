@@ -13,6 +13,6 @@
 {% endblock %}
 
 {% block body %}
-    <p>{{ 'crud.delete.confirm' | trans({'%entity_id%' : entity.id}, 'ShuweeAdminBundle') }}</p>
+    <p>{{ 'crud.delete.confirm' | trans({'%entity%': admin_get_label(admin), '%entity_id%' : entity.id}, 'ShuweeAdminBundle') }}</p>
     {{ form(form) }}
 {% endblock %}
