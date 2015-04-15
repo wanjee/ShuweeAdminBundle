@@ -24,9 +24,11 @@
                 {% endfor %}
                 <td class="actions">
                     <div class="btn-toolbar">
+                        {#
                         <div class="btn-group btn-group-xs">
                             <a class="btn btn-default" role="button" href="{{ admin_get_path(datagrid.admin, 'view', {'id': entity.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
                         </div>
+                        #}
                         <div class="btn-group btn-group-xs">
                             <a class="btn btn-primary" role="button" href="{{ admin_get_path(datagrid.admin, 'update', {'id': entity.id}) }}"><i class="glyphicon glyphicon-edit"></i>  {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
                             <a class="btn btn-danger" role="button" href="{{ admin_get_path(datagrid.admin, 'delete', {'id': entity.id}) }}"><i class="glyphicon glyphicon-trash"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
