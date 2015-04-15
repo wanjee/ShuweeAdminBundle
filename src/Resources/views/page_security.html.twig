@@ -1,0 +1,22 @@
+{% extends "ShuweeAdminBundle::layout.html.twig" %}
+
+{% block page %}
+    <div class="page-login row">
+        <div id="layer-content" class="col-xs-12 col-sm-12 col-md-12">
+
+            {% set has_header_title = block('header_title') %}
+            {% if has_header_title is not empty %}
+                <h1>{% block header_title -%}{% endblock %}</h1>
+            {% endif %}
+
+            {% include "ShuweeAdminBundle:Partial:flash.html.twig" %}
+
+            <div id="layer-content-body">
+                {% block body -%}
+                {% endblock %}
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

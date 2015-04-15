@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{% block page_title %}Shuwee - Admin{% endblock %}</title>
+    <title>{% block page_title %}Admin{% endblock %}</title>
 
     {% block stylesheets %}
         {% stylesheets filter='cssrewrite' output='css/shuwee.css'
@@ -37,7 +37,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('admin_dashboard') }}">{% block brand %}Shuwee - admin{% endblock %}</a>
+            <a class="navbar-brand" href="{{ path('admin_dashboard') }}">{% block brand %}Admin{% endblock %}</a>
         </div>
         <div class="navbar-collapse navbar-ex1-collapse collapse">
             {{ knp_menu_render('ShuweeAdminBundle:Builder:userMenu', {'currentClass': 'active', 'template': 'ShuweeAdminBundle:Menu:knp_menu_navbar.html.twig'}) }}
@@ -45,45 +45,15 @@
     </div>
 
     <div id="page-wrapper" class="container-fluid">
-        <div class="row">
+        {% block page %}
+        {% endblock %}
 
-            <!-- sidebar -->
-            <div id="layer-sidebar" class="col-xs-12 col-sm-4 col-md-2 sidebar-offcanvas" role="navigation">
-                {{ knp_menu_render('ShuweeAdminBundle:Builder:sideMenu', {'currentClass': 'active', 'template': 'ShuweeAdminBundle:Menu:knp_menu_sidebar.html.twig'}) }}
-            </div>
-
-            <div id="layer-content" class="col-xs-12 col-sm-8 col-md-10">
-
-                {% set has_header_title = block('header_title') %}
-                {% if has_header_title is not empty %}
-                    <h1>{% block header_title -%}{% endblock %}</h1>
-                {% endif %}
-
-                {% include "ShuweeAdminBundle:Partial:flash.html.twig" %}
-
-                {% set has_action_links = block('action_links') %}
-                {% if has_action_links is not empty %}
-                    <div class="inner-navigation">
-                        <div class="btn-group">
-                            {% block action_links -%}{% endblock %}
-                        </div>
-                    </div>
-                {% endif %}
-
-                <div id="layer-content-body">
-                {% block body -%}
-                {% endblock %}
-                </div>
-
-
-                <!-- footer -->
-                {% block footer -%}
-                    <footer>
-                        {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
-                    </footer>
-                {% endblock %}
-            </div>
-        </div>
+        {% block footer -%}
+        <!-- footer -->
+            <footer>
+                {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
+            </footer>
+        {% endblock %}
     </div>
 
 
