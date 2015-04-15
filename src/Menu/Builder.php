@@ -33,8 +33,6 @@ class Builder extends ContainerAware
                 ->setAttribute('icon', 'glyphicon-user');
             $userMenuItem->addChild('Logout', array('route' => 'logout'))
                 ->setAttribute('icon', 'glyphicon-off');
-        } else {
-            $menu->addChild('Login', array('route' => 'login'));
         }
 
         return $menu;
