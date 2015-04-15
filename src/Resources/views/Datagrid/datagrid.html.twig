@@ -51,7 +51,7 @@
 
 {% block datagrid_text %}
     {% if value is not null %}
-        {{ value }}
+        {{ value | truncate(80) }}
     {% endif %}
 {% endblock %}
 
