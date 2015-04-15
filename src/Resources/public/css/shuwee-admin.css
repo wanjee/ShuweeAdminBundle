@@ -86,4 +86,7 @@ footer a {
     float: right;
     color: #b2b2b4;
 }
+footer .logo {
+    font-weight: bold;
+}
 
