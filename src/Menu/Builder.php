@@ -5,6 +5,10 @@ namespace Wanjee\Shuwee\AdminBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
+/**
+ * Class Builder
+ * @package Wanjee\Shuwee\AdminBundle\Menu
+ */
 class Builder extends ContainerAware
 {
     /**
@@ -15,27 +19,23 @@ class Builder extends ContainerAware
      */
     public function userMenu(FactoryInterface $factory, array $options)
     {
-        /*
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right navbar-user');
-        $menu->setCurrentUri($this->container->get('request')->getRequestUri());
 
+        /** @var \Symfony\Component\Security\Core\SecurityContext $securityContext */
         $securityContext = $this->container->get('security.context');
 
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $username = $securityContext->getToken()->getUser()->getUsername(); // Get username of the current logged in user
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $username = $securityContext->getToken()->getUser()->getUsername();
 
-            $menu->addChild($username, array('route' => 'logout', 'extras' => array('icon' => 'glyphicon-user')))
-              ->setAttribute('dropdown', true);
-            $menu[$username]->addChild('Logout', array('route' => 'logout', 'extras' => array('icon' => 'glyphicon-off')));
-        }
-        else {
+            $userMenuItem = $menu->addChild($username, array('route' => 'logout'))
+                ->setAttribute('dropdown', true)
+                ->setAttribute('icon', 'glyphicon-user');
+            $userMenuItem->addChild('Logout', array('route' => 'logout'))
+                ->setAttribute('icon', 'glyphicon-off');
+        } else {
             $menu->addChild('Login', array('route' => 'login'));
         }
-
-        return $menu;
-        */
-        $menu = $factory->createItem('root');
 
         return $menu;
     }
@@ -52,36 +52,42 @@ class Builder extends ContainerAware
 
         $menu = $factory->createItem('root');
 
-        // Content
-        $contentMenuItem = $menu->addChild('Content');
+        /** @var \Symfony\Component\Security\Core\SecurityContext $securityContext */
+        $securityContext = $this->container->get('security.context');
 
-        /** @var $adminRoutingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
-        $adminManager = $this->container->get('shuwee_admin.admin_manager');
-        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper */
-        $adminRoutingHelper = $this->container->get('shuwee_admin.admin_routing_helper');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 
-        /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
-        foreach ($adminManager->getAdmins() as $alias => $admin) {
-            $singularLabel = $translator->transchoice($admin->getLabel(), 1);
-            $pluralLabel = $translator->transchoice($admin->getLabel(), 10);
+            // Content
+            $contentMenuItem = $menu->addChild('Content');
 
-            $contentTypeMenuItem = $contentMenuItem->addChild($pluralLabel);
+            /** @var $adminRoutingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
+            $adminManager = $this->container->get('shuwee_admin.admin_manager');
+            /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper */
+            $adminRoutingHelper = $this->container->get('shuwee_admin.admin_routing_helper');
 
-            $contentTypeMenuItem->addChild('List', array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
-            $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'create')));
-        }
+            /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
+            foreach ($adminManager->getAdmins() as $alias => $admin) {
+                $singularLabel = $translator->transchoice($admin->getLabel(), 1);
+                $pluralLabel = $translator->transchoice($admin->getLabel(), 10);
 
-        // Sections
-        $sectionManager = $this->container->get('shuwee_admin.section_manager');
-        /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper */
-        $sectionRoutingHelper = $this->container->get('shuwee_admin.section_routing_helper');
+                $contentTypeMenuItem = $contentMenuItem->addChild($pluralLabel);
 
-        /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
-        foreach ($sectionManager->getSections() as $alias => $section) {
-            $sectionItems = $section->getSectionItems();
-            /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
-            foreach ($sectionItems as $sectionItem) {
-                $menu->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
+                $contentTypeMenuItem->addChild('List', array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
+                $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'create')));
+            }
+
+            // Sections
+            $sectionManager = $this->container->get('shuwee_admin.section_manager');
+            /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper */
+            $sectionRoutingHelper = $this->container->get('shuwee_admin.section_routing_helper');
+
+            /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
+            foreach ($sectionManager->getSections() as $alias => $section) {
+                $sectionItems = $section->getSectionItems();
+                /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
+                foreach ($sectionItems as $sectionItem) {
+                    $menu->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
+                }
             }
         }
 

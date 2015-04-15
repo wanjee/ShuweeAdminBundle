@@ -3,46 +3,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.5.7\n"
 
 msgid "nav.backtolist"
 msgstr "Back to list"
-
 msgid "crud.create"
 msgstr "Create"
-
 msgid "crud.edit"
 msgstr "Edit"
-
 msgid "crud.delete"
 msgstr "Delete"
-
 msgid "crud.list"
 msgstr "List"
-
 msgid "crud.update"
 msgstr "Update"
-
 msgid "crud.view"
 msgstr "View"
-
 msgid "crud.delete.confirm"
 msgstr "Are you sure you want to delete entity #%entity_id% ?"
-
 msgid "datagrid.actions"
 msgstr "Actions"
-
 msgid "datagrid.empty_value"
 msgstr "Empty"
-
 msgid "datagrid.empty_grid"
 msgstr "It's empty."
-
+msgid "datagrid.empty_grid.create"
+msgstr "Create some ?"
+msgid "security.login.title"
+msgstr "Login"
+msgid "security.login.form.invite"
+msgstr "Please login"
+msgid "security.login.form.username"
+msgstr "Username"
+msgid "security.login.form.password"
+msgstr "Password"
+msgid "security.login.form.action"
+msgstr "Log in"
 msgid "datagrid.empty_grid.add"
 msgstr "Add some ?"

@@ -2,24 +2,28 @@
 <div class="messages">
     {% for flashMessage in app.session.flashbag.get('success') %}
         <div class="alert bg-success">
+            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ flashMessage }}
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('error') %}
         <div class="alert bg-danger">
+            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ flashMessage }}
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('warning') %}
         <div class="alert bg-warning">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ flashMessage }}
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('info') %}
         <div class="alert bg-info">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ flashMessage }}
         </div>

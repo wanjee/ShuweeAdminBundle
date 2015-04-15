@@ -76,3 +76,8 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeBoolean
         tags:
             - { name: shuwee.datagrid_type , alias: boolean}
+
+    # Security
+    shuwee_admin.security.user_manager:
+        class: Wanjee\Shuwee\AdminBundle\Security\UserManager
+        arguments: [@security.encoder_factory, @doctrine.orm.entity_manager]

@@ -79,6 +79,8 @@ class ContentController extends Controller
     {
         // FIXME : Secure access
 
+        $translator = $this->getTranslator();
+
         // prepare entity
         $entityClass = $admin->getEntityClass();
         $entity = new $entityClass();
@@ -91,7 +93,7 @@ class ContentController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'created');
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.create.success', array(), 'ShuweeAdminBundle'));
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
@@ -109,6 +111,7 @@ class ContentController extends Controller
     public function updateAction(Request $request, Admin $admin)
     {
         // FIXME : Secure access
+        $translator = $this->getTranslator();
 
         $entity = $admin->loadEntity($request->attributes->get('id'));
 
@@ -124,7 +127,7 @@ class ContentController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'updated');
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.edit.success', array(), 'ShuweeAdminBundle'));
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
@@ -143,6 +146,7 @@ class ContentController extends Controller
     public function deleteAction(Request $request, Admin $admin)
     {
         // FIXME : Secure access
+        $translator = $this->getTranslator();
 
         $entity = $admin->loadEntity($request->attributes->get('id'));
 
@@ -158,7 +162,7 @@ class ContentController extends Controller
             $em->remove($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'deleted');
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.delete.success', array(), 'ShuweeAdminBundle'));
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
@@ -177,6 +181,8 @@ class ContentController extends Controller
      */
     private function getCreateForm(Admin $admin, $entity)
     {
+        $translator = $this->getTranslator();
+
         $formClass = $admin->getForm();
         $formType = new $formClass();
 
@@ -184,7 +190,14 @@ class ContentController extends Controller
           'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'create'),
           'method' => 'POST',
         ));
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add(
+            'submit',
+            'submit',
+            array(
+                'label' => $translator->trans('crud.create.action', array(), 'ShuweeAdminBundle'),
+                'attr' => array('class' => 'btn-success'),
+                )
+        );
 
         return $form;
     }
@@ -196,6 +209,8 @@ class ContentController extends Controller
      */
     private function getUpdateForm(Admin $admin, $entity)
     {
+        $translator = $this->getTranslator();
+
         $formClass = $admin->getForm();
         $formType = new $formClass();
 
@@ -203,7 +218,14 @@ class ContentController extends Controller
           'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
           'method' => 'PUT',
         ));
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add(
+            'submit',
+            'submit',
+            array(
+                'label' => $translator->trans('crud.edit.action', array(), 'ShuweeAdminBundle'),
+                'attr' => array('class' => 'btn-primary'),
+            )
+        );
 
         return $form;
     }
@@ -215,18 +237,36 @@ class ContentController extends Controller
      */
     private function getDeleteForm(Admin $admin, $entity)
     {
+        $translator = $this->getTranslator();
+
         return $this->createFormBuilder()
-          ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', array('id' => $entity->getId())))
-          ->setMethod('DELETE')
-          ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn-danger')))
-          ->getForm();
+            ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', array('id' => $entity->getId())))
+            ->setMethod('DELETE')
+            ->add(
+                'submit',
+                'submit',
+                array(
+                    'label' => $translator->trans('crud.delete.action', array(), 'ShuweeAdminBundle'),
+                    'attr' => array('class' => 'btn-danger'),
+                )
+            )
+            ->getForm();
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
+     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
      */
     public function getAdminRoutingHelper()
     {
         return $this->container->get('shuwee_admin.admin_routing_helper');
+    }
+
+    /**
+     * Get translator helper
+     * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->container->get('translator');
     }
 }

@@ -2,6 +2,10 @@ shuwee_admin_default:
     resource: "@ShuweeAdminBundle/Controller/AdminController.php"
     type:     annotation
 
+shuwee_security:
+    resource: "@ShuweeAdminBundle/Controller/SecurityController.php"
+    type:     annotation
+
 shuwee_admin_crud:
     resource: .
     type: shuwee_admin_extra
