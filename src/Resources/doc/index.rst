@@ -159,3 +159,11 @@ Register your admin class as a tagged service
         parent: shuwee_admin.admin_abstract
         tags:
           -  { name: shuwee.admin, alias: post }
+
+Change copyright
+----------------
+
+Overrides footer.html.twig template.  Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/footer.html.twig
+to app/Resources/ShuweeAdminBundle/views/Partial/footer.html.twig and modify the copy to suit your needs.
+
+See http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
