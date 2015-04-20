@@ -160,6 +160,54 @@ Register your admin class as a tagged service
         tags:
           -  { name: shuwee.admin, alias: post }
 
+
+Security
+--------
+
+If you want to use the build in admin user provider you will need to implement your security as follow
+
+.. code-block:: yaml
+
+    security:
+        encoders:
+            Wanjee\Shuwee\AdminBundle\Entity\User:
+                algorithm: sha1
+                iterations: 1
+                encode_as_base64: false
+
+        providers:
+            shuwee_provider:
+                entity:
+                    class: ShuweeAdminBundle:User
+                    property: username
+
+        firewalls:
+            admin_area:
+                pattern:    ^/admin
+                anonymous: ~
+                form_login:
+                    check_path: /admin/login_check
+                    login_path: /admin/login
+                    default_target_path: /admin
+                logout:
+                    path:   /admin/logout
+                    target: /
+                provider: shuwee_provider
+
+
+        access_control:
+                - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+                - { path: ^/admin, role: ROLE_ADMIN }
+
+Configure the encoder as you prefer.  Define ShuweeAdminBundle:User as a provider, use that provider in your firewall.
+You can define other firewalls for i.e. frontend or a webservice if needed.
+
+To generate a new user use the dedicated command
+
+.. code-block:: bash
+
+    bin/console shuwee:admin:generate:user user_name user_email user_password --roles=ROLE_ADMIN
+
 Change copyright
 ----------------
 
