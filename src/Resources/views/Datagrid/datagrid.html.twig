@@ -49,15 +49,24 @@
     </table>
 {% endblock %}
 
-{% block datagrid_text %}
-    {% if value is not null %}
-        {{ value | truncate(80) }}
-    {% endif %}
-{% endblock %}
-
 {% block datagrid_boolean %}
     {% set label_class = value == true ? 'label-success' : 'label-danger' %}
     {% set text = value == true ? 'Yes' : 'No' %}
 
     <span class="label {{ label_class }}">{{ text }}</span>
 {% endblock %}
+
+{% block datagrid_image %}
+    {% if value is not null %}
+        <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt=""/>
+    {% else %}
+        <img src="http://placehold.it/260x180" alt=""/>
+    {% endif %}
+{% endblock %}
+
+{% block datagrid_text %}
+    {% if value is not null %}
+        {{ value | truncate(80) }}
+    {% endif %}
+{% endblock %}
+

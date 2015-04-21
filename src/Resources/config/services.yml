@@ -67,15 +67,21 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
 
     # Datagrid types
+    shuwee_admin.datagrid_type_boolean:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeBoolean
+        tags:
+            - { name: shuwee.datagrid_type , alias: boolean}
+
+    shuwee_admin.datagrid_type_image:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeImage
+        tags:
+            - { name: shuwee.datagrid_type , alias: image}
+
     shuwee_admin.datagrid_type_text:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeText
         tags:
             - { name: shuwee.datagrid_type , alias: text}
 
-    shuwee_admin.datagrid_type_boolean:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeBoolean
-        tags:
-            - { name: shuwee.datagrid_type , alias: boolean}
 
     # Security
     shuwee_admin.security.user_manager:
