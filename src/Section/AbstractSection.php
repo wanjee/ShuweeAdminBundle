@@ -1,9 +1,5 @@
 <?php
 
-/**
- *
- */
-
 namespace Wanjee\Shuwee\AdminBundle\Section;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
