@@ -2,6 +2,12 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
+/**
+ * Interface AdminInterface
+ * @package Wanjee\Shuwee\AdminBundle\Admin
+ */
 interface AdminInterface
 {
     /**
@@ -36,4 +42,14 @@ interface AdminInterface
      * @return string
      */
     public function getLabel();
+
+    /**
+     * Should return one of VoterInterface::ACCESS_XXX constant
+     *
+     * @param UserInterface $user
+     * @param string $attribute
+     * @param mixed $object
+     * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
+     */
+    public function isGranted(UserInterface $user, $attribute, $object);
 }

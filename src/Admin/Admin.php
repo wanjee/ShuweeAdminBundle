@@ -9,6 +9,8 @@ namespace Wanjee\Shuwee\AdminBundle\Admin;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class Admin
@@ -91,6 +93,19 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
           $routingHelper->getRoute($this, 'delete', array('id'))
         );
 
+    }
+
+    /**
+     * By default, grant access
+     *
+     * @param UserInterface $user
+     * @param string $attribute
+     * @param mixed $object
+     * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
+     */
+    public function isGranted(UserInterface $user, $attribute, $object)
+    {
+        return VoterInterface::ACCESS_GRANTED;
     }
 
     /**

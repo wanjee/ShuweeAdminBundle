@@ -16,6 +16,8 @@ namespace Wanjee\Shuwee\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class CrudController
@@ -29,7 +31,8 @@ class ContentController extends Controller
      */
     public function indexAction(Request $request, Admin $admin)
     {
-        // FIXME : Secure access
+        // FIXME: $this->secure($admin, ContentVoter::LIST_CONTENT);
+
         $entities = $admin->loadEntities();
 
         if (!$entities) {
@@ -55,14 +58,14 @@ class ContentController extends Controller
      */
     public function viewAction(Request $request, Admin $admin)
     {
-        // FIXME : Secure access
-
         // load entity
         $entity = $admin->loadEntity($request->attributes->get('id'));
 
         if (!$entity) {
             throw $this->createNotFoundException('That resource cannot be found');
         }
+
+        $this->secure($admin, ContentVoter::VIEW_CONTENT, $entity);
 
         return $this->render('ShuweeAdminBundle:Content:view.html.twig', array(
             'admin' => $admin,
@@ -77,13 +80,13 @@ class ContentController extends Controller
      */
     public function createAction(Request $request, Admin $admin)
     {
-        // FIXME : Secure access
-
         $translator = $this->getTranslator();
 
         // prepare entity
         $entityClass = $admin->getEntityClass();
         $entity = new $entityClass();
+
+        $this->secure($admin, ContentVoter::CREATE_CONTENT, $entity);
 
         $form = $this->getCreateForm($admin, $entity);
 
@@ -110,7 +113,6 @@ class ContentController extends Controller
      */
     public function updateAction(Request $request, Admin $admin)
     {
-        // FIXME : Secure access
         $translator = $this->getTranslator();
 
         $entity = $admin->loadEntity($request->attributes->get('id'));
@@ -118,6 +120,8 @@ class ContentController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('That resource cannot be found');
         }
+
+        $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
 
         $form = $this->getUpdateForm($admin, $entity);
 
@@ -145,7 +149,6 @@ class ContentController extends Controller
      */
     public function deleteAction(Request $request, Admin $admin)
     {
-        // FIXME : Secure access
         $translator = $this->getTranslator();
 
         $entity = $admin->loadEntity($request->attributes->get('id'));
@@ -153,6 +156,8 @@ class ContentController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('That resource cannot be found');
         }
+
+        $this->secure($admin, ContentVoter::DELETE_CONTENT, $entity);
 
         $form = $this->getDeleteForm($admin, $entity);
 
@@ -251,6 +256,23 @@ class ContentController extends Controller
                 )
             )
             ->getForm();
+    }
+
+
+    /**
+     * @param mixed $attributes
+     * @param mixed $object
+     * @return mixed
+     */
+    protected function secure(Admin $admin, $attributes, $object = null)
+    {
+        if(!is_array($attributes)) {
+            $attributes = array($attributes);
+        }
+
+        if(!$this->get('security.authorization_checker')->isGranted($attributes, $object)) {
+            throw new AccessDeniedException();
+        }
     }
 
     /**

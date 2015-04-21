@@ -87,3 +87,10 @@ services:
     shuwee_admin.security.user_manager:
         class: Wanjee\Shuwee\AdminBundle\Security\UserManager
         arguments: [@security.encoder_factory, @doctrine.orm.entity_manager]
+
+    shuwee_admin.security.content_voter:
+        class:      Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter
+        arguments: [@shuwee_admin.admin_manager]
+        public:     false
+        tags:
+           - { name: security.voter }
