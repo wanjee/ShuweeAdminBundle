@@ -6,14 +6,40 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ShuweeAdminExtension extends Extension
+class ShuweeAdminExtension extends Extension implements PrependExtensionInterface
 {
+
+    /**
+     * Prepend configuration to external bundles used by ShuweeAdminbundle
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        // configure filter_sets for liip_imagine bundle
+        $config = array(
+            'filter_sets' => array(
+                'datagrid_thumb' => array(
+                   'quality' => 75,
+                    'filters' => array(
+                        'thumbnail' => array(
+                            'size' => array(100, 100),
+                            'mode' => 'outbound',
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        $container->prependExtensionConfig('liip_imagine', $config);
+    }
+
     /**
      * {@inheritDoc}
      */
