@@ -3,6 +3,10 @@
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
 
+/**
+ * Class DatagridTypeText
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ */
 class DatagridTypeText extends DatagridType
 {
     /**
