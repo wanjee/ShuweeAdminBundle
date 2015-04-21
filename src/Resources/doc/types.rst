@@ -23,7 +23,7 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
 * Field name : name of the field, in your entity, you want to expose
 * Field type : type of formatter to use for display
-* Options : array of option, depends on field type.  'label' is common.
+* Options : array of options, depends on field type.  'label' is common.
 
 Boolean
 -------
