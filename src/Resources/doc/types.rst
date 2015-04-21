@@ -8,6 +8,7 @@ In you admin controller define the datagrid as follow
 
 .. code-block:: php
 
+    /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
     $datagrid = new Datagrid($this);
 
         $datagrid
@@ -18,11 +19,11 @@ In you admin controller define the datagrid as follow
 
         return $datagrid;
 
-addField arguments are :
+Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
-    * Field name : name of the field, in your entity, you want to expose
-    * Field type : type of formatter to use for display
-    * Options : array of option, depends on field type.  'label' is common.
+* Field name : name of the field, in your entity, you want to expose
+* Field type : type of formatter to use for display
+* Options : array of option, depends on field type.  'label' is common.
 
 Boolean
 -------
