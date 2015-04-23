@@ -163,12 +163,12 @@ Register your admin class as a tagged service
 Datagrid
 --------
 
-See [types.rst](types.rst)
+See types.rst
 
 Security
 --------
 
-See [security.rst](security.rst)
+See security.rst
 
 Change copyright
 ----------------
