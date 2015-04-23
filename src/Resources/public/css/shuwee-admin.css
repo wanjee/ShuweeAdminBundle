@@ -45,6 +45,7 @@ body {
     text-decoration: none;
     line-height: 1;
     position: relative;
+    display: block;
 }
 
 #layer-sidebar a {
@@ -56,8 +57,9 @@ body {
 #layer-sidebar li > span {
     line-height: 1.3;
     padding: 5px 10px;
-    display: block;
     font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    display: block;
 }
 
 #layer-sidebar li.active a {
@@ -65,7 +67,10 @@ body {
 }
 
 #layer-sidebar li > ul > li {
-    padding-left: 25px;
+}
+
+#layer-sidebar li > ul > li:hover {
+    background-color: #f9f9f9;
 }
 
 /* layer-content */
