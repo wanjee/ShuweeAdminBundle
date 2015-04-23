@@ -14,21 +14,25 @@ use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 class ContentVoter implements VoterInterface
 {
     /**
+     * Crud list action
+     */
+    const LIST_CONTENT = 'LIST';
+    /**
      * Crud view action
      */
-    const VIEW = 'view';
+    const VIEW_CONTENT = 'VIEW';
     /**
      * Crud create action
      */
-    const CREATE = 'create';
+    const CREATE_CONTENT = 'CREATE';
     /**
-     * Crud edit action
+     * Crud update action
      */
-    const EDIT = 'edit';
+    const UPDATE_CONTENT = 'UPDATE';
     /**
      * Crud delete action
      */
-    const DELETE = 'delete';
+    const DELETE_CONTENT = 'DELETE';
 
     /**
      * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
@@ -52,10 +56,11 @@ class ContentVoter implements VoterInterface
         return in_array(
             $attribute,
             array(
-                self::VIEW,
-                self::CREATE,
-                self::EDIT,
-                self::DELETE,
+                self::LIST_CONTENT,
+                self::VIEW_CONTENT,
+                self::CREATE_CONTENT,
+                self::UPDATE_CONTENT,
+                self::DELETE_CONTENT,
             )
         );
     }
@@ -66,25 +71,56 @@ class ContentVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        $supportedClass = 'AppBundle\Entity\Post';
+        // check is done using $this::getSupportedAdmin()
+        return true;
+    }
 
-        return $supportedClass === $class || is_subclass_of($class, $supportedClass);
+
+    /**
+     * @param $class
+     * @return bool
+     */
+    public function getSupportedAdmin($class)
+    {
+        $admins = $this->adminManager->getAdmins();
+
+        /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
+        foreach ($admins as $admin) {
+            $supportedClass = $admin->getEntityClass();
+
+            if ($supportedClass === $class || is_subclass_of($class, $supportedClass)) {
+                return $admin;
+            }
+        }
+
+        return null;
     }
 
     /**
-     * @var mixed $post
+     * Returns the vote for the given parameters.
+     *
+     * This method must return one of the following constants:
+     * ACCESS_GRANTED, ACCESS_DENIED, or ACCESS_ABSTAIN.
+     *
+     * @param TokenInterface $token      A TokenInterface instance
+     * @param object $object     The object to secure
+     * @param array $attributes An array of attributes associated with the method being invoked
+     *
+     * @return integer either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */
     public function vote(TokenInterface $token, $entity, array $attributes)
     {
-        // check if class of this object is supported by this voter
-        if (!$this->supportsClass(get_class($entity))) {
+        /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
+        $admin = $this->getSupportedAdmin(get_class($entity));
+
+        if (!$admin) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
         // Simplify management by allowing only one attribute at a time
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
-                'Only one attribute is allowed for VIEW or EDIT'
+                'Only one attribute is allowed for VIEW or UPDATE'
             );
         }
 
@@ -104,24 +140,7 @@ class ContentVoter implements VoterInterface
             return VoterInterface::ACCESS_DENIED;
         }
 
-        switch ($attribute) {
-            case self::VIEW:
-                // the data object could have for example a method isPrivate()
-                // which checks the Boolean attribute $private
-                if (!$post->isPrivate()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-
-            case self::EDIT:
-                // we assume that our data object has a method getOwner() to
-                // get the current owner user entity for this data object
-                if ($user->getId() === $post->getOwner()->getId()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-        }
-
-        return VoterInterface::ACCESS_DENIED;
+        // delegate decision to admin
+        return $admin->hasAccess($user, $attribute, $entity);
     }
 }

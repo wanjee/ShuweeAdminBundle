@@ -2,6 +2,12 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
+/**
+ * Interface AdminInterface
+ * @package Wanjee\Shuwee\AdminBundle\Admin
+ */
 interface AdminInterface
 {
     /**
@@ -36,4 +42,27 @@ interface AdminInterface
      * @return string
      */
     public function getLabel();
+
+    /**
+     * Get grants for current user, a given action on a dedicated object
+     *
+     * @param string      $name
+     * @param object|null $object
+     *
+     * @return boolean
+     */
+    public function isGranted($name, $object = null);
+
+    /**
+     * Content voter callback.
+     * For a given user, a given attribute (action to take) and a given object
+     * it returns user authorization.
+     * This should not be called directly
+     *
+     * @param UserInterface $user
+     * @param string $attribute
+     * @param mixed $object
+     * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
+     */
+    public function hasAccess(UserInterface $user, $action, $object = null);
 }

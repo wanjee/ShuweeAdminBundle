@@ -30,8 +30,12 @@
                         </div>
                         #}
                         <div class="btn-group btn-group-xs">
+                            {% if datagrid.admin.isGranted('UPDATE', entity) %}
                             <a class="btn btn-primary" role="button" href="{{ admin_get_path(datagrid.admin, 'update', {'id': entity.id}) }}"><i class="glyphicon glyphicon-edit"></i>  {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
+                            {% endif %}
+                            {% if datagrid.admin.isGranted('DELETE', entity) %}
                             <a class="btn btn-danger" role="button" href="{{ admin_get_path(datagrid.admin, 'delete', {'id': entity.id}) }}"><i class="glyphicon glyphicon-trash"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
+                            {% endif %}
                         </div>
                     </div>
                 </td>
