@@ -15,9 +15,9 @@ namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class CrudController
@@ -44,10 +44,12 @@ class ContentController extends Controller
         // FIXME datagrid should be responsible for the entities retrieval as he will be for paging, sortering, filtering
         $dataGrid->setEntities($entities);
 
-        return $this->render('ShuweeAdminBundle:Content:index.html.twig', array(
-            'admin' => $admin,
-            'datagrid' => $dataGrid,
-          )
+        return $this->render(
+            'ShuweeAdminBundle:Content:index.html.twig',
+            array(
+                'admin' => $admin,
+                'datagrid' => $dataGrid,
+            )
         );
     }
 
@@ -67,10 +69,12 @@ class ContentController extends Controller
 
         $this->secure($admin, ContentVoter::VIEW_CONTENT, $entity);
 
-        return $this->render('ShuweeAdminBundle:Content:view.html.twig', array(
-            'admin' => $admin,
-            'entity' => $entity,
-          )
+        return $this->render(
+            'ShuweeAdminBundle:Content:view.html.twig',
+            array(
+                'admin' => $admin,
+                'entity' => $entity,
+            )
         );
     }
 
@@ -97,13 +101,16 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.create.success', array(), 'ShuweeAdminBundle'));
+
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
-        return $this->render('ShuweeAdminBundle:Content:create.html.twig', array(
-            'admin' => $admin,
-            'form' => $form->createView(),
-          )
+        return $this->render(
+            'ShuweeAdminBundle:Content:create.html.twig',
+            array(
+                'admin' => $admin,
+                'form' => $form->createView(),
+            )
         );
     }
 
@@ -132,14 +139,17 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.edit.success', array(), 'ShuweeAdminBundle'));
+
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
-        return $this->render('ShuweeAdminBundle:Content:update.html.twig', array(
-            'admin' => $admin,
-            'entity' => $entity,
-            'form' => $form->createView(),
-          )
+        return $this->render(
+            'ShuweeAdminBundle:Content:update.html.twig',
+            array(
+                'admin' => $admin,
+                'entity' => $entity,
+                'form' => $form->createView(),
+            )
         );
     }
 
@@ -168,14 +178,17 @@ class ContentController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.delete.success', array(), 'ShuweeAdminBundle'));
+
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
-        return $this->render('ShuweeAdminBundle:Content:delete.html.twig', array(
-            'admin' => $admin,
-            'entity' => $entity,
-            'form' => $form->createView(),
-          )
+        return $this->render(
+            'ShuweeAdminBundle:Content:delete.html.twig',
+            array(
+                'admin' => $admin,
+                'entity' => $entity,
+                'form' => $form->createView(),
+            )
         );
     }
 
@@ -191,17 +204,21 @@ class ContentController extends Controller
         $formClass = $admin->getForm();
         $formType = new $formClass();
 
-        $form = $this->createForm($formType, $entity, array(
-          'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'create'),
-          'method' => 'POST',
-        ));
+        $form = $this->createForm(
+            $formType,
+            $entity,
+            array(
+                'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'create'),
+                'method' => 'POST',
+            )
+        );
         $form->add(
             'submit',
             'submit',
             array(
                 'label' => $translator->trans('crud.create.action', array(), 'ShuweeAdminBundle'),
                 'attr' => array('class' => 'btn-success'),
-                )
+            )
         );
 
         return $form;
@@ -219,10 +236,14 @@ class ContentController extends Controller
         $formClass = $admin->getForm();
         $formType = new $formClass();
 
-        $form = $this->createForm($formType, $entity, array(
-          'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
-          'method' => 'PUT',
-        ));
+        $form = $this->createForm(
+            $formType,
+            $entity,
+            array(
+                'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
+                'method' => 'PUT',
+            )
+        );
         $form->add(
             'submit',
             'submit',
@@ -258,7 +279,6 @@ class ContentController extends Controller
             ->getForm();
     }
 
-
     /**
      * @param mixed $attributes
      * @param mixed $object
@@ -266,11 +286,11 @@ class ContentController extends Controller
      */
     protected function secure(Admin $admin, $attributes, $object = null)
     {
-        if(!is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = array($attributes);
         }
 
-        if(!$this->get('security.authorization_checker')->isGranted($attributes, $object)) {
+        if (!$admin->isGranted($attributes, $object)) {
             throw new AccessDeniedException();
         }
     }
