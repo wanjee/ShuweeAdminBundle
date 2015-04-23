@@ -44,12 +44,25 @@ interface AdminInterface
     public function getLabel();
 
     /**
-     * Should return one of VoterInterface::ACCESS_XXX constant
+     * Get grants for current user, a given action on a dedicated object
+     *
+     * @param string      $name
+     * @param object|null $object
+     *
+     * @return boolean
+     */
+    public function isGranted($name, $object = null);
+
+    /**
+     * Content voter callback.
+     * For a given user, a given attribute (action to take) and a given object
+     * it returns user authorization.
+     * This should not be called directly
      *
      * @param UserInterface $user
      * @param string $attribute
      * @param mixed $object
      * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
      */
-    public function isGranted(UserInterface $user, $attribute, $object);
+    public function getAccess(UserInterface $user, $action, $object = null);
 }
