@@ -3,9 +3,15 @@
 {% block page_title %}{{ 'crud.view' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
 
 {% block action_links %}
+    {% if admin.isGranted('LIST') %}
     <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
+    {% endif %}
+    {% if admin.isGranted('UPDATE', entity) %}
     <a href="{{ admin_get_path(admin, 'update', {'id': entity.id}) }}" class="btn btn-sm btn-primary" type="button"><i class="glyphicon glyphicon-edit"></i> {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
+    {% endif %}
+    {% if admin.isGranted('DELETE', entity) %}
     <a href="{{ admin_get_path(admin, 'delete', {'id': entity.id}) }}" class="btn btn-sm btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
+    {% endif %}
 {%  endblock %}
 
 {% block header_title %}
