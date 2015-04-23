@@ -16,23 +16,23 @@ class ContentVoter implements VoterInterface
     /**
      * Crud list action
      */
-    const LIST_CONTENT = 'list';
+    const LIST_CONTENT = 'LIST';
     /**
      * Crud view action
      */
-    const VIEW_CONTENT = 'view';
+    const VIEW_CONTENT = 'VIEW';
     /**
      * Crud create action
      */
-    const CREATE_CONTENT = 'create';
+    const CREATE_CONTENT = 'CREATE';
     /**
      * Crud update action
      */
-    const UPDATE_CONTENT = 'update';
+    const UPDATE_CONTENT = 'UPDATE';
     /**
      * Crud delete action
      */
-    const DELETE_CONTENT = 'delete';
+    const DELETE_CONTENT = 'DELETE';
 
     /**
      * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
@@ -141,6 +141,6 @@ class ContentVoter implements VoterInterface
         }
 
         // delegate decision to admin
-        return $admin->isGranted($user, $attribute, $entity);
+        return $admin->hasAccess($user, $attribute, $entity);
     }
 }
