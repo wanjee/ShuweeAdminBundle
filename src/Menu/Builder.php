@@ -51,40 +51,42 @@ class Builder extends ContainerAware
         $menu = $factory->createItem('root');
 
         /** @var \Symfony\Component\Security\Core\SecurityContext $securityContext */
-        $securityContext = $this->container->get('security.context');
+        $securityContext = $this->container->get('security.authorization_checker');
 
         if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-
-            // Content
-            $contentMenuItem = $menu->addChild('Content');
 
             /** @var $adminRoutingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
             $adminManager = $this->container->get('shuwee_admin.admin_manager');
             /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper */
             $adminRoutingHelper = $this->container->get('shuwee_admin.admin_routing_helper');
 
+            // Content
+            $contentMenuItem = $menu->addChild('Content');
+
             /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
             foreach ($adminManager->getAdmins() as $alias => $admin) {
-                $singularLabel = $translator->transchoice($admin->getLabel(), 1);
                 $pluralLabel = $translator->transchoice($admin->getLabel(), 10);
 
-                $contentTypeMenuItem = $contentMenuItem->addChild($pluralLabel);
-
-                $contentTypeMenuItem->addChild('List', array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
-                $contentTypeMenuItem->addChild('Create new ' . $singularLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'create')));
+                $contentMenuItem->addChild($pluralLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
             }
+
 
             // Sections
             $sectionManager = $this->container->get('shuwee_admin.section_manager');
             /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper */
             $sectionRoutingHelper = $this->container->get('shuwee_admin.section_routing_helper');
 
-            /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
-            foreach ($sectionManager->getSections() as $alias => $section) {
-                $sectionItems = $section->getSectionItems();
-                /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
-                foreach ($sectionItems as $sectionItem) {
-                    $menu->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
+            if ($sectionManager->getSections()) {
+                // Other admin pages
+                $administrationMenuItem = $menu->addChild('Administration');
+
+                /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
+                foreach ($sectionManager->getSections() as $alias => $section) {
+                    $sectionItems = $section->getSectionItems();
+                    /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
+                    foreach ($sectionItems as $sectionItem) {
+                        $administrationMenuItem->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
+                    }
                 }
             }
         }
