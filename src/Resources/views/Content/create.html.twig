@@ -5,7 +5,7 @@
 {% block page_title %}{{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
 
 {% block action_links %}
-    {% if grants['list'] %}
+    {% if admin.isGranted('LIST') %}
     <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
 {%  endblock %}
