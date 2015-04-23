@@ -18,9 +18,7 @@ $ composer require wanjee/shuwee-admin-bundle
 
 ## Usage
 
-``` php
-To be completed
-```
+See [Documentation](src/Resources/doc/index.rst)
 
 ## Testing
 
