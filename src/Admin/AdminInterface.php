@@ -64,5 +64,5 @@ interface AdminInterface
      * @param mixed $object
      * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
      */
-    public function getAccess(UserInterface $user, $action, $object = null);
+    public function hasAccess(UserInterface $user, $action, $object = null);
 }

@@ -123,7 +123,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getAccess(UserInterface $user, $action, $object = null)
+    public function hasAccess(UserInterface $user, $action, $object = null)
     {
         // allow access by default
         return VoterInterface::ACCESS_GRANTED;
