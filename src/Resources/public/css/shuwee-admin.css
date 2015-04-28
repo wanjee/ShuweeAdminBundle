@@ -1,20 +1,42 @@
-body {
-    padding-top: 71px;
+body > #body-wrapper {
+    overflow: hidden;
+    padding-top: 51px;
+    padding-bottom: 51px;
 }
 
+
+
 /* Login form */
+body.page-login {
+    background-color: #f5f5f5;
+}
+
+body.page-login footer {
+    display: none;
+
+}
+
+body.page-login #layer-content-body img {
+    max-width: 100%;
+    width: 600px;
+    padding: 19px 29px 29px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
 .form-signin {
     max-width: 300px;
     padding: 19px 29px 29px;
     margin: 0 auto 20px;
-    background-color: #f5f5f5;
     border: 1px solid #e5e5e5;
+    background-color: #ffffff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    box-shadow: 0 2px 2px rgba(0,0,0,.10);
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -26,6 +48,12 @@ body {
     height: auto;
     margin-bottom: 15px;
     padding: 7px 9px;
+    width: 100%;
+}
+
+.form-signin button {
+    margin-top: 5px;
+    width: 100%;
 }
 
 /* Navbar */
@@ -34,6 +62,15 @@ body {
 }
 
 /* Menu */
+#layer-sidebar {
+    /*
+    margin: -25px 0 -9999em;
+    padding: 25px 0 9999em;
+    background-color: #f5f5f5;
+    */
+    padding-top: 20px;
+}
+
 #layer-sidebar ul,
 #layer-sidebar li,
 #layer-sidebar a {
@@ -84,8 +121,7 @@ footer {
     margin-top: 25px;
     overflow: hidden;
     padding: 5px;
-    color: #b2b2b4;
-    font-size: 13px;
+    font-size: 12px;
 }
 footer a {
     float: right;

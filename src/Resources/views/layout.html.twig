@@ -24,39 +24,24 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body {% if block('body_classes') %} class="{% block body_classes %}{% endblock %}"{% endif %}>
 
-<div id="wrapper">
+<div id="body-wrapper">
 
-    <div id="layer-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-            <!-- Navbar toggle menu -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ path('admin_dashboard') }}">{% block brand %}Admin{% endblock %}</a>
-        </div>
-        <div class="navbar-collapse navbar-ex1-collapse collapse">
-            {{ knp_menu_render('ShuweeAdminBundle:Builder:userMenu', {'currentClass': 'active', 'template': 'ShuweeAdminBundle:Menu:knp_menu_navbar.html.twig'}) }}
-        </div><!--/.nav-collapse -->
-    </div>
+    {% block navbar -%}
+    {% endblock %}
 
     <div id="page-wrapper" class="container-fluid">
         {% block page %}
         {% endblock %}
-
-        {% block footer -%}
-        <!-- footer -->
-            <footer>
-                {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
-            </footer>
-        {% endblock %}
     </div>
 
-
+    {% block footer -%}
+    <!-- footer -->
+        <footer>
+            {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
+        </footer>
+    {% endblock %}
 </div><!--/#wrapper -->
 
 {% javascripts output='js/shuwee_late.js'

@@ -1,0 +1,18 @@
+{% extends "ShuweeAdminBundle::layout.html.twig" %}
+
+{% block body_classes %}page-login{% endblock %}
+
+{% block page %}
+    <div class="row">
+        <div id="layer-content" class="col-xs-12 col-sm-12 col-md-12">
+            <div id="layer-content-body">
+                {% include "ShuweeAdminBundle:Partial:login_header.html.twig" %}
+
+                {% include "ShuweeAdminBundle:Partial:flash.html.twig" %}
+
+                {% block body -%}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
