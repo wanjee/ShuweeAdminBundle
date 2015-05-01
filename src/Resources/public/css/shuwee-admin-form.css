@@ -1,0 +1,10 @@
+/* file_widget */
+
+.file-widget-container .file-upload-widget { display: block; }
+.file-widget-container .file-preview { display: none; }
+.file-widget-container.show-preview .file-upload-widget { display: none; }
+.file-widget-container.show-preview .file-preview { display: block; }
+.file-widget-container .file-preview img {
+    margin-right: 10px;
+}
+

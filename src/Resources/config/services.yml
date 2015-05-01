@@ -94,3 +94,9 @@ services:
         public:     false
         tags:
            - { name: security.voter }
+
+    # Form type extensions
+    shuwee_admin.file_preview_type_extension:
+        class: Wanjee\Shuwee\AdminBundle\Form\Extension\FilePreviewTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }
