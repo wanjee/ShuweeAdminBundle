@@ -26,11 +26,20 @@ class ShuweeAdminExtension extends Extension implements PrependExtensionInterfac
         $config = array(
             'filter_sets' => array(
                 'datagrid_thumb' => array(
-                   'quality' => 75,
+                   'quality' => 85,
                     'filters' => array(
                         'thumbnail' => array(
-                            'size' => array(100, 100),
+                            'size' => array(200, 75),
                             'mode' => 'outbound',
+                        ),
+                    ),
+                ),
+                'form_file_preview' => array(
+                   'quality' => 85,
+                    'filters' => array(
+                        'thumbnail' => array(
+                            'size' => array(200, 200),
+                            'mode' => 'inset',
                         ),
                     ),
                 ),
