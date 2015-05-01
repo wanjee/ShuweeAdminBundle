@@ -62,9 +62,9 @@
 
 {% block datagrid_image %}
     {% if value is not null %}
-        <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt=""/>
+        <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt="" class="img-rounded" />
     {% else %}
-        <img src="http://placehold.it/260x180" alt=""/>
+        -
     {% endif %}
 {% endblock %}
 
