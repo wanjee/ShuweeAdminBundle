@@ -1,0 +1,28 @@
+{%  extends 'bootstrap_3_layout.html.twig' %}
+
+{% block file_widget %}
+    {% spaceless %}
+        {% set container_class = 'file-widget-container' %}
+        {% if preview_url is defined %}
+            {% set container_class = container_class ~ ' show-preview' %}
+        {% endif %}
+
+        <div class="{{ container_class }}">
+            {% if preview_url is defined %}
+            <div class="file-preview">
+                {# TODO if not an image, display a link #}
+                <img src="{{ preview_url | imagine_filter('form_file_preview') }}" data-src="{{ asset(preview_url) }}" alt="{{ preview_basename }}" title="{{ preview_basename }}" class="img-rounded" />
+
+                <div class="btn-group btn-group-xs">
+                    <a class="btn btn-primary" role="button" href="#"><i class="glyphicon glyphicon-edit"></i> {{'form.upload.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="file-upload-widget">
+                {{ block('form_widget') }}
+            </div>
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
