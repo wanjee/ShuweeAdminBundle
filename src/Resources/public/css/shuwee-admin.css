@@ -61,6 +61,10 @@ body.page-login #layer-content-body img {
     margin-right: 0;
 }
 
+.navbar-brand img {
+    max-height: 100%;
+}
+
 /* Menu */
 #layer-sidebar {
     /*
