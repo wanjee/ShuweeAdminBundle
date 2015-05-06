@@ -11,13 +11,13 @@ In you admin controller define the datagrid as follow
     /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
     $datagrid = new Datagrid($this);
 
-        $datagrid
-            ->addField('status', 'boolean', array('label' => 'Published'))
-            ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
-            ->addField('id', 'text', array('label' => '#'))
-        ;
+    $datagrid
+        ->addField('status', 'boolean', array('label' => 'Published'))
+        ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
+        ->addField('id', 'text', array('label' => '#'))
+    ;
 
-        return $datagrid;
+    return $datagrid;
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
