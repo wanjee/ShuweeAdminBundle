@@ -51,12 +51,19 @@ Ask composer to install the bundle and its dependencies
 
     composer update wanjee/shuwee-admin-bundle
 
-Register ShuweeAdminBundle and KnpMenuBundle in AppKernel.php
+Register required bundles in AppKernel.php :
+
+* ShuweeAdminBundle
+* KnpMenuBundle
+* LiipImagineBundle
 
 .. code-block:: php
 
     new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+    new Liip\ImagineBundle\LiipImagineBundle(),
     new Wanjee\Shuwee\AdminBundle\ShuweeAdminBundle(),
+
+
 
 Add ShuweeAdminBundle to the list of Assetic supported bundles in config.yml (or comment the bundles line)
 
@@ -66,6 +73,46 @@ Add ShuweeAdminBundle to the list of Assetic supported bundles in config.yml (or
         debug:          "%kernel.debug%"
         use_controller: false
         #bundles:        [ ]
+
+
+Add basic LiipImagineBundle configuration in your main config file
+
+.. code-block:: yaml
+
+    liip_imagine:
+        resolvers:
+           default:
+              web_path: ~
+
+        filter_sets:
+            cache: ~
+
+You'll also need to register LiipImagineBundle routes in your routing.yml file
+
+.. code-block:: yaml
+
+    _liip_imagine:
+        resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+Refer to LiipImagineBundle official documentation : http://symfony.com/doc/current/bundles/LiipImagineBundle/index.html
+
+
+You will need to register default Symfony Twig extensions in your main config file to be able to use Datagrid text type
+
+.. code-block:: yaml
+
+    services:
+        twig.extension.text:
+            class: Twig_Extensions_Extension_Text
+            tags:
+                - { name: twig.extension }
+
+Enable translation in your main config file
+
+.. code-block:: yaml
+
+    framework:
+        translator:      { fallbacks: ["%locale%"] }
 
 Bundle usage
 ------------
