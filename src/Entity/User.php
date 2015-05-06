@@ -62,7 +62,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $salt;
 
