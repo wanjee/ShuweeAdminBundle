@@ -74,3 +74,9 @@
     {% endif %}
 {% endblock %}
 
+{% block datagrid_collection %}
+    {% if value is not null %}
+        {{ value | truncate(80) }}
+    {% endif %}
+{% endblock %}
+

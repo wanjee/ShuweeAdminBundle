@@ -64,3 +64,22 @@ You will need to register default Symfony Twig extensions in your main config fi
             class: Twig_Extensions_Extension_Text
             tags:
                 - { name: twig.extension }
+
+Collection
+----------
+
+.. code-block:: php
+
+    ->addField('things', 'collection', array('label' => 'Things'));
+
+Field value is escaped and truncated (80 chars) by default. Your collection must be an array or implement the ``Traversable`` interface, and its elements must have a ``__toString()`` method.
+
+You will need to register default Symfony Twig extensions in your main config file to be able to use this type
+
+.. code-block:: yaml
+
+    services:
+        twig.extension.text:
+            class: Twig_Extensions_Extension_Text
+            tags:
+                - { name: twig.extension }
