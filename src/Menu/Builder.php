@@ -4,6 +4,7 @@ namespace Wanjee\Shuwee\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
 
 /**
  * Class Builder
@@ -39,66 +40,23 @@ class Builder extends ContainerAware
     }
 
     /**
-     * Main administration menu builder method
+     * Build main menu.
+     *
+     * Let any bundle add items to this menu by subscribing to ConfigureMenuEvent::CONFIGURE
+     * @see ConfigureMenuContentListener for example
      *
      * @param FactoryInterface $factory
      * @param array $options
      */
     public function sideMenu(FactoryInterface $factory, array $options)
     {
-        $translator = $this->getTranslator();
-
         $menu = $factory->createItem('root');
 
-        /** @var \Symfony\Component\Security\Core\SecurityContext $securityContext */
-        $securityContext = $this->container->get('security.authorization_checker');
-
-        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-
-            /** @var $adminRoutingHelper \Wanjee\Shuwee\AdminBundle\Manager\AdminManager */
-            $adminManager = $this->container->get('shuwee_admin.admin_manager');
-            /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper */
-            $adminRoutingHelper = $this->container->get('shuwee_admin.admin_routing_helper');
-
-            // Content
-            $contentMenuItem = $menu->addChild('Content');
-
-            /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
-            foreach ($adminManager->getAdmins() as $alias => $admin) {
-                $pluralLabel = $translator->transchoice($admin->getLabel(), 10);
-
-                $contentMenuItem->addChild($pluralLabel, array('route' => $adminRoutingHelper->getRouteName($admin, 'index')));
-            }
-
-
-            // Sections
-            $sectionManager = $this->container->get('shuwee_admin.section_manager');
-            /** @var $routingHelper \Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper */
-            $sectionRoutingHelper = $this->container->get('shuwee_admin.section_routing_helper');
-
-            if ($sectionManager->getSections()) {
-                // Other admin pages
-                $administrationMenuItem = $menu->addChild('Administration');
-
-                /** @var  $admin \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface */
-                foreach ($sectionManager->getSections() as $alias => $section) {
-                    $sectionItems = $section->getSectionItems();
-                    /** @var $sectionItem \Wanjee\Shuwee\AdminBundle\Section\SectionItem */
-                    foreach ($sectionItems as $sectionItem) {
-                        $administrationMenuItem->addChild($sectionItem->getLabel(), array('route' => $sectionRoutingHelper->getRouteName($section, $sectionItem)));
-                    }
-                }
-            }
-        }
+        $this->container->get('event_dispatcher')->dispatch(
+            ConfigureMenuEvent::CONFIGURE,
+            new ConfigureMenuEvent($factory, $menu)
+        );
 
         return $menu;
-    }
-
-    /**
-     * Get translator helper
-     */
-    public function getTranslator()
-    {
-        return $this->container->get('translator');
     }
 }

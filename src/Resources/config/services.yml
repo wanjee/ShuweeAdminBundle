@@ -100,3 +100,11 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\FilePreviewTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+
+
+    # Events listeners
+    app.admin_configure_menu_listener:
+        class: Wanjee\Shuwee\AdminBundle\EventListener\ConfigureMenuContentListener
+        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator, @security.authorization_checker]
+        tags:
+            - { name: kernel.event_listener, event: shuwee_admin.menu_configure, method: onMenuConfigure }
