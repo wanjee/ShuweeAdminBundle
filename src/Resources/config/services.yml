@@ -9,16 +9,6 @@ services:
         calls:
             - [ setContainer, [@service_container]]
 
-    # Section manager
-    shuwee_admin.section_manager:
-        class: Wanjee\Shuwee\AdminBundle\Manager\SectionManager
-
-    shuwee_admin.section_abstract:
-        class: Wanjee\Shuwee\AdminBundle\Section\Section
-        abstract: true
-        calls:
-            - [ setContainer, [@service_container]]
-
     # Routing
     shuwee_admin.admin_routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
@@ -27,16 +17,6 @@ services:
     shuwee_admin.admin_routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
         arguments: [@shuwee_admin.admin_manager]
-        tags:
-            - { name: routing.loader }
-
-    shuwee_admin.section_routing_helper:
-        class: Wanjee\Shuwee\AdminBundle\Routing\Helper\SectionRoutingHelper
-        arguments: [@router]
-
-    shuwee_admin.section_routing_loader:
-        class: Wanjee\Shuwee\AdminBundle\Routing\Loader\SectionLoader
-        arguments: [@shuwee_admin.section_manager]
         tags:
             - { name: routing.loader }
 
