@@ -1,5 +1,5 @@
-Shuwee Datagrid field types
-===========================
+Shuwee Admin Datagrid field types
+=================================
 
 Datagrid configuration
 ----------------------
@@ -53,7 +53,7 @@ Text
 
     ->addField('id', 'text', array('label' => '#'));
 
-Field value is escaped and truncated (80 chars) by default.  Option will come later to
+Field value is escaped and truncated (80 chars) by default.
 
 You will need to register default Symfony Twig extensions in your main config file to be able to use this type
 
