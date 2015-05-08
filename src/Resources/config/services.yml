@@ -88,7 +88,7 @@ services:
 
 
     # Events listeners
-    app.admin_configure_menu_listener:
+    shuwee_admin.admin_configure_menu_listener:
         class: Wanjee\Shuwee\AdminBundle\EventListener\ConfigureMenuContentListener
         arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator, @security.authorization_checker]
         tags:
