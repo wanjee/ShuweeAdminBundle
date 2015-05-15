@@ -202,7 +202,12 @@ class ContentController extends Controller
         $translator = $this->getTranslator();
 
         $formClass = $admin->getForm();
-        $formType = new $formClass();
+
+        if (class_exists($formClass)) {
+            $formType = new $formClass();
+        } else {
+            $formType = $this->get($formClass);
+        }
 
         $form = $this->createForm(
             $formType,
@@ -234,7 +239,12 @@ class ContentController extends Controller
         $translator = $this->getTranslator();
 
         $formClass = $admin->getForm();
-        $formType = new $formClass();
+
+        if (class_exists($formClass)) {
+            $formType = new $formClass();
+        } else {
+            $formType = $this->get($formClass);
+        }
 
         $form = $this->createForm(
             $formType,
