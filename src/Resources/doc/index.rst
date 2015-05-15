@@ -149,12 +149,14 @@ Define admin services in your bundle.
     class PostAdmin extends Admin
     {
         /**
-         * Return the main admin form for this content
+         * Return the main admin form for this content.
          *
          * @return \Symfony\Component\Form\Form
          */
         public function getForm()
         {
+            // Return either a fully qualified class name
+            // or the service id of your form if it is defined as a service
             return 'Acme\Bundle\DemoBundle\Form\PostType';
         }
     

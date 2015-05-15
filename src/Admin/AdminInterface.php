@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface AdminInterface
 {
     /**
-     * Get Create/Edit form (form class or \Symfony\Component\Form\Form instance)
+     * Get Create/Edit form (Form type class or service key if you defined you form as a service)
      */
     public function getForm();
 
