@@ -139,8 +139,8 @@ Define admin services in your bundle.
     <?php
     namespace Acme\Bundle\DemoBundle\Admin;
     
-    use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-    use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
+    use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+    use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
     
     /**
      * Class PostAdmin
