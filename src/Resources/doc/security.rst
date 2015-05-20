@@ -53,7 +53,7 @@ To generate a new user use the dedicated command
 
 .. code-block:: bash
 
-    bin/console shuwee:admin:generate:user user_name user_email user_password --roles=ROLE_ADMIN
+    bin/console shuwee:admin:user:add username password email --roles=ROLE_ADMIN
 
 
 A simple voter solution has been implemented.  It's far from perfect but usable for simple use cases.
