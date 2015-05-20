@@ -11,10 +11,10 @@ use Symfony\Component\Console\Question\Question;
 use Wanjee\Shuwee\AdminBundle\Security\UserManager;
 
 /**
- * Class GenerateUserCommand
+ * Class UserAddCommand
  * @package Wanjee\Shuwee\AdminBundle\Command
  */
-class GenerateUserCommand extends ContainerAwareCommand
+class UserAddCommand extends ContainerAwareCommand
 {
     /**
      * Max number of attempts in interactive mode
