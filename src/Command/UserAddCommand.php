@@ -33,7 +33,7 @@ class UserAddCommand extends ContainerAwareCommand
             ->addArgument('username', InputArgument::REQUIRED, 'Username of the new user')
             ->addArgument('password', InputArgument::REQUIRED, 'Plain password of the new user')
             ->addArgument('email', InputArgument::REQUIRED, 'Email of the new user')
-            ->addOption('roles', 'r', InputOption::VALUE_NONE, 'Roles to assign to the new user');
+            ->addOption('roles', 'r', InputOption::VALUE_OPTIONAL, 'Roles to assign to the new user');
     }
 
     /**
@@ -54,7 +54,9 @@ class UserAddCommand extends ContainerAwareCommand
         // Username
         $username = null;
         try {
-            $username = $input->getArgument('username') ? $this->usernameValidator($input->getArgument('username')) : null;
+            $username = $input->getArgument('username') ? $this->usernameValidator(
+                $input->getArgument('username')
+            ) : null;
         } catch (\Exception $error) {
             $output->writeln($console->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
@@ -66,13 +68,15 @@ class UserAddCommand extends ContainerAwareCommand
             $username = $console->ask($input, $output, $question);
             $input->setArgument('username', $username);
         } else {
-            $output->writeln('<info>Username</info>: ' . $username);
+            $output->writeln('<info>Username</info>: '.$username);
         }
 
         // Password
         $password = null;
         try {
-            $password = $input->getArgument('password') ? $this->passwordValidator($input->getArgument('password')) : null;
+            $password = $input->getArgument('password') ? $this->passwordValidator(
+                $input->getArgument('password')
+            ) : null;
         } catch (\Exception $error) {
             $output->writeln($console->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
@@ -85,7 +89,7 @@ class UserAddCommand extends ContainerAwareCommand
             $password = $console->ask($input, $output, $question);
             $input->setArgument('password', $password);
         } else {
-            $output->writeln('<info>Password</info>: ' . str_repeat('*', strlen($password)));
+            $output->writeln('<info>Password</info>: '.str_repeat('*', strlen($password)));
         }
 
         // Email
@@ -103,7 +107,7 @@ class UserAddCommand extends ContainerAwareCommand
             $email = $console->ask($input, $output, $question);
             $input->setArgument('email', $email);
         } else {
-            $output->writeln('<info>Email</info>: ' . $email);
+            $output->writeln('<info>Email</info>: '.$email);
         }
 
         $output->writeln('');
@@ -125,7 +129,13 @@ class UserAddCommand extends ContainerAwareCommand
 
         $userManager->createUser($username, $email, $password, explode(',', $roles));
 
-        $output->writeln(sprintf('Created user <info>%s</info>', $username));
+        $output->writeln(sprintf('Created user: <info>%s</info>', $username));
+
+        if (!empty($roles)) {
+            $output->writeln(sprintf('Assigned roles: <info>%s</info>', $roles));
+        } else {
+            $output->writeln(sprintf('No role.'));
+        }
 
         if ($output->isVerbose()) {
             $finishTime = microtime(true);
