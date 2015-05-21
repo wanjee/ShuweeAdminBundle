@@ -57,6 +57,11 @@ services:
             tags:
                 - { name: shuwee.datagrid_type , alias: collection}
 
+    shuwee_admin.datagrid_type_date:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeDate
+        tags:
+            - { name: shuwee.datagrid_type , alias: date}
+
     shuwee_admin.datagrid_type_image:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeImage
         tags:
