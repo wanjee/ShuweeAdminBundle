@@ -37,6 +37,7 @@ Boolean
 
 Cast field value to a boolean and display it as "yes" or "no"
 
+
 Date
 ----
 
@@ -47,6 +48,7 @@ Date
 Expects field column to be a \Datetime instance ('datetime' column type), will throw an exception otherwise.
 date_format must be any format supported by PHP date() function.  See http://php.net/manual/en/function.date.php
 
+
 Image
 -----
 
@@ -54,9 +56,9 @@ Image
 
     ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
 
-base_path option is required if the full path to image (relative to project root) is not stored in field value.
+base_path option is required if the full path to image (relative to project web root) is not stored in field value.
 If specified it is appended to the image value.  No trailing slash.
-This use type use liipImagineBundle to resize the image.
+This type use LiipImagineBundle to resize the image.
 
 
 Text
@@ -77,6 +79,7 @@ You will need to register default Symfony Twig extensions in your main config fi
             class: Twig_Extensions_Extension_Text
             tags:
                 - { name: twig.extension }
+
 
 Collection
 ----------
