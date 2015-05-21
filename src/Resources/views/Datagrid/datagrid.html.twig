@@ -60,6 +60,20 @@
     <span class="label {{ label_class }}">{{ text }}</span>
 {% endblock %}
 
+{% block datagrid_collection %}
+    {% if value is not null %}
+        {{ value | truncate(80) }}
+    {% endif %}
+{% endblock %}
+
+{% block datagrid_date %}
+    {% if value is not null %}
+        <time datetime="{{ datetime }}">
+            {{ value }}
+        </time>
+    {% endif %}
+{% endblock %}
+
 {% block datagrid_image %}
     {% if value is not null %}
         <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt="" class="img-rounded" />
@@ -74,9 +88,4 @@
     {% endif %}
 {% endblock %}
 
-{% block datagrid_collection %}
-    {% if value is not null %}
-        {{ value | truncate(80) }}
-    {% endif %}
-{% endblock %}
 
