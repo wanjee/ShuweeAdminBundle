@@ -38,9 +38,15 @@ class DatagridTypeImage extends DatagridType
     public function getBlockVariables($field, $entity)
     {
         $base_path = $field->getOption('base_path', 'uploads');
+        $image = $field->getData($entity);
+
+        $value = null;
+        if (!empty($image)) {
+            $value = $base_path . '/' . $image;
+        }
 
         return array(
-            'value' => $base_path . '/' . $field->getData($entity),
+            'value' => $value,
         );
     }
 }
