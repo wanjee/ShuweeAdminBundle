@@ -12,9 +12,12 @@ In you admin controller define the datagrid as follow
     $datagrid = new Datagrid($this);
 
     $datagrid
-        ->addField('status', 'boolean', array('label' => 'Published'))
-        ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
         ->addField('id', 'text', array('label' => '#'))
+        ->addField('title', 'text', array('label' => 'Title'))
+        ->addField('status', 'boolean', array('label' => 'Published'))
+        ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
+        ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
+        ->addField('comments', 'collection', array('label' => 'Comments'))
     ;
 
     return $datagrid;
@@ -33,6 +36,16 @@ Boolean
     ->addField('status', 'boolean', array('label' => 'Published'))
 
 Cast field value to a boolean and display it as "yes" or "no"
+
+Date
+----
+
+.. code-block:: php
+
+    ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
+
+Expects field column to be a \Datetime instance ('datetime' column type), will throw an exception otherwise.
+date_format must be any format supported by PHP date() function.  See http://php.net/manual/en/function.date.php
 
 Image
 -----
@@ -70,7 +83,7 @@ Collection
 
 .. code-block:: php
 
-    ->addField('things', 'collection', array('label' => 'Things'));
+    ->addField('comments', 'collection', array('label' => 'Comments'));
 
 Field value is escaped and truncated (80 chars) by default. Your collection must be an array or implement the ``Traversable`` interface, and its elements must have a ``__toString()`` method.
 
