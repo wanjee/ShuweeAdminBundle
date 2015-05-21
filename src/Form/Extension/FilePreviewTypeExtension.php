@@ -47,17 +47,18 @@ class FilePreviewTypeExtension extends AbstractTypeExtension
         if (array_key_exists('preview_base_path', $options)) {
             $parentData = $form->getParent()->getData();
 
+            $previewUrl = null;
             if (null !== $parentData) {
                 $accessor = PropertyAccess::createPropertyAccessor();
                 $previewUrl = $accessor->getValue($parentData, $options['preview_base_path']);
-            } else {
-                $previewUrl = null;
             }
 
-            $pathInfo = pathinfo($previewUrl);
-            // define path to preview resource
-            $view->vars['preview_url'] = $previewUrl;
-            $view->vars['preview_basename'] = $pathInfo['basename'];
+            if (!empty($previewUrl)) {
+                $pathInfo = pathinfo($previewUrl);
+                // define path to preview resource
+                $view->vars['preview_url'] = $previewUrl;
+                $view->vars['preview_basename'] = $pathInfo['basename'];
+            }
         }
     }
 }
