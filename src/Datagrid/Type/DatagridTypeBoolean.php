@@ -3,8 +3,32 @@
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class DatagridTypeBoolean extends DatagridType
 {
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefaults(
+                array(
+                    'label_true' => 'Yes',
+                    'label_false' => 'No'
+                )
+            )
+            ->setAllowedTypes(
+                array(
+                    'label_true' => array('null', 'string'),
+                    'label_false' => array('null', 'string'),
+                )
+            );
+    }
+
     /**
      * Get administrative name of this type
      * @return string Name of the type
@@ -33,8 +57,12 @@ class DatagridTypeBoolean extends DatagridType
      */
     public function getBlockVariables($field, $entity)
     {
+        $defaults = parent::getBlockVariables($field, $entity);
+
         return array(
-            'value' => (bool) $field->getData($entity),
-        );
+            'value' => (bool)$field->getData($entity),
+            'label_true' => $field->getOption('label_true', 'Yes'),
+            'label_false' => $field->getOption('label_false', 'No'),
+        ) + $defaults;
     }
 }

@@ -55,14 +55,19 @@
 
 {% block datagrid_boolean %}
     {% set label_class = value == true ? 'label-success' : 'label-danger' %}
-    {% set text = value == true ? 'Yes' : 'No' %}
+    {% set text = value == true ?
+    label_true|trans({}, 'ShuweeAdminBundle') :
+    label_false|trans({}, 'ShuweeAdminBundle') %}
 
     <span class="label {{ label_class }}">{{ text }}</span>
 {% endblock %}
 
 {% block datagrid_collection %}
     {% if value is not null %}
-        {{ value | truncate(80) }}
+        {% if truncate is defined %}{% set value = value | truncate(truncate) %}{% endif %}
+        {{ value }}
+    {% else %}
+        <span class="text-muted">{{ default_value | default('-') }}</span>
     {% endif %}
 {% endblock %}
 
@@ -76,15 +81,19 @@
 
 {% block datagrid_image %}
     {% if value is not null %}
-        <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt="" class="img-rounded" />
+        <img src="{{ value | imagine_filter('datagrid_thumb') }}" data-src="{{ asset(value) }}" alt=""
+             class="img-rounded"/>
     {% else %}
-        -
+        <span class="text-muted">{{ default_value | default('-') }}</span>
     {% endif %}
 {% endblock %}
 
 {% block datagrid_text %}
     {% if value is not null %}
-        {{ value | truncate(80) }}
+        {% if truncate is defined %}{% set value = value | truncate(truncate) %}{% endif %}
+        {% if escape %}{{ value }}{% else %}{{ value | raw }}{% endif %}
+    {% else %}
+        <span class="text-muted">{{ default_value | default('-') }}</span>
     {% endif %}
 {% endblock %}
 

@@ -1,7 +1,9 @@
 <?php
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+
 use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class DatagridTypeCollection
@@ -9,6 +11,26 @@ use Doctrine\ORM\PersistentCollection;
  */
 class DatagridTypeCollection extends DatagridType
 {
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefaults(
+                array(
+                    'truncate' => 80,
+                )
+            )
+            ->setAllowedTypes(
+                array(
+                    'truncate' => array('null', 'integer'),
+                )
+            );
+    }
+
     /**
      * Get administrative name of this type
      * @return string Name of the type
@@ -37,23 +59,24 @@ class DatagridTypeCollection extends DatagridType
      */
     public function getBlockVariables($field, $entity)
     {
+        $defaults = parent::getBlockVariables($field, $entity);
+
         $data = $field->getData($entity);
-        $dataArray = [];
 
         if ($data instanceof \Traversable) {
+            $dataArray = [];
             foreach ($data as $element) {
                 $dataArray[] = $element->__toString();
             }
+
+            $string = implode(', ', $dataArray);
         } else {
-            return array(
-              'value' => 'Unsupported.'
-            );
+            $string = 'Unsupported.';
         }
 
-        $string = join(', ', $dataArray);
-
         return array(
-          'value' => $string
-        );
+            'value' => $string,
+            'truncate' => $field->getOption('truncate', 80),
+        ) + $defaults;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 /**
  * Class DatagridTypeDate
@@ -9,6 +11,26 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
  */
 class DatagridTypeDate extends DatagridType
 {
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefaults(
+                array(
+                    'date_format' => 'F j, Y',
+                )
+            )
+            ->setAllowedTypes(
+                array(
+                    'date_format' => array('string'),
+                )
+            );
+    }
+
     /**
      * Get administrative name of this type
      * @return string Name of the type
@@ -37,6 +59,8 @@ class DatagridTypeDate extends DatagridType
      */
     public function getBlockVariables($field, $entity)
     {
+        $defaults = parent::getBlockVariables($field, $entity);
+
         // Date_format should be any format supported by http://php.net/manual/en/function.date.php
         $date_format = $field->getOption('date_format', 'c');
 
@@ -49,6 +73,6 @@ class DatagridTypeDate extends DatagridType
         return array(
           'value' => $date->format($date_format),
           'datetime' => $date->format(\DateTime::RFC3339),
-        );
+        ) + $defaults;
     }
 }
