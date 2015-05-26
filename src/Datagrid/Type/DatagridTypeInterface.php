@@ -2,12 +2,19 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 /**
  * Interface DatagridTypeInterface
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
  */
 interface DatagridTypeInterface
 {
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver);
+
     /**
      * Get administrative name of this type
      * @return string Name of the type

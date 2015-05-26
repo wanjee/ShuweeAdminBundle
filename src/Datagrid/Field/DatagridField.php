@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -35,13 +36,14 @@ class DatagridField implements DatagridFieldInterface
     {
         $this->name = $name;
         $this->type = $type;
-        $this->options = $options;
 
-        // add mandatory label option if missing
-        // TODO use optionResolver instead
-        if (!$this->hasOption('label')) {
-            $this->setOption('label', $name);
-        }
+        // manage options
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(array('label' => ucfirst($name)));
+
+        $type->configureOptions($resolver);
+
+        $this->options = $resolver->resolve($options);
     }
 
     /**

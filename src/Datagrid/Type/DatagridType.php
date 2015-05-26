@@ -1,6 +1,8 @@
 <?php
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 /**
  * Class DatagridType
@@ -8,6 +10,16 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
  */
 abstract class DatagridType implements DatagridTypeInterface
 {
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'default_value' => null,
+        ));
+    }
+
     /**
      * Get prepared view parameters
      *
@@ -20,6 +32,7 @@ abstract class DatagridType implements DatagridTypeInterface
     {
         return array(
             'value' => $field->getData($entity),
+            'default_value' => $field->getOption('default_value', 'null'),
         );
     }
 }
