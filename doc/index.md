@@ -95,68 +95,68 @@ Define admin services in your bundle.
 
 ``` php
 
-    <?php
-    namespace Acme\Bundle\DemoBundle\Admin;
-    
-    use Wanjee\Shuwee\AdminBundle\Admin\Admin;
-    use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
-    
+<?php
+namespace Acme\Bundle\DemoBundle\Admin;
+
+use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
+
+/**
+ * Class PostAdmin
+ * @package Acme\Bundle\DemoBundle\Admin
+ */
+class PostAdmin extends Admin
+{
     /**
-     * Class PostAdmin
-     * @package Acme\Bundle\DemoBundle\Admin
+     * Return the main admin form for this content.
+     *
+     * @return \Symfony\Component\Form\Form
      */
-    class PostAdmin extends Admin
+    public function getForm()
     {
-        /**
-         * Return the main admin form for this content.
-         *
-         * @return \Symfony\Component\Form\Form
-         */
-        public function getForm()
-        {
-            // Return either a fully qualified class name
-            // or the service id of your form if it is defined as a service
-            return 'Acme\Bundle\DemoBundle\Form\PostType';
-        }
-    
-        /**
-         * @return Datagrid
-         */
-        public function getDatagrid()
-        {
-            $datagrid = new Datagrid($this);
-    
-            $datagrid
-              ->addField('id', 'text')
-              ->addField('title', 'text');
-    
-            return $datagrid;
-        }
-    
-        /**
-         * @return string
-         */
-        public function getEntityName()
-        {
-            return 'AcmeDemoBundle:Post';
-        }
-    
-        /**
-         * @return string
-         */
-        public function getEntityClass()
-        {
-            return 'Acme\Bundle\DemoBundle\Entity\Post';
-        }
-    
-        /**
-         * @return string
-         */
-        public function getLabel()
-        {
-            return '{0} Posts|{1} Post|]1,Inf] Posts';
-        }
+        // Return either a fully qualified class name
+        // or the service id of your form if it is defined as a service
+        return 'Acme\Bundle\DemoBundle\Form\PostType';
     }
+
+    /**
+     * @return Datagrid
+     */
+    public function getDatagrid()
+    {
+        $datagrid = new Datagrid($this);
+
+        $datagrid
+          ->addField('id', 'text')
+          ->addField('title', 'text');
+
+        return $datagrid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'AcmeDemoBundle:Post';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityClass()
+    {
+        return 'Acme\Bundle\DemoBundle\Entity\Post';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return '{0} Posts|{1} Post|]1,Inf] Posts';
+    }
+}
 ```
 
 Register your admin class as a tagged service

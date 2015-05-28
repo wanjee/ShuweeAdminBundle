@@ -11,31 +11,30 @@ a "property" of your entity that will return the complete web path to your file.
 can create a fake accessor to it.
 
 ``` php
+// in the form type
 
-    // in the form type
-
-    ->add(
-        'file',
-        'file',
-        array(
-            'label' => 'Image',
-            'required' => false,
-            // The extension will try to get value for WebPath property
-            // If the property does not exist it will try accessors i.e. getYourPropertyName()
-            'preview_base_path' => 'WebPath',
-        )
+->add(
+    'file',
+    'file',
+    array(
+        'label' => 'Image',
+        'required' => false,
+        // The extension will try to get value for WebPath property
+        // If the property does not exist it will try accessors i.e. getYourPropertyName()
+        'preview_base_path' => 'WebPath',
     )
+)
 
 
-    // in your entity
+// in your entity
 
-    /**
-     * @return null|string
-     */
-    public function getWebPath()
-    {
-        return null === $this->image
-            ? null
-            : $this->getUploadDir().'/'.$this->image;
-    }
+/**
+ * @return null|string
+ */
+public function getWebPath()
+{
+    return null === $this->image
+        ? null
+        : $this->getUploadDir().'/'.$this->image;
+}
 ```     

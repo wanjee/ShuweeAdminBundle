@@ -1,11 +1,10 @@
 # Datagrid
 
-# Main configuration
+## Main configuration
 
 In you admin controller define the datagrid as follow
 
 ``` php
-
 /**
  * @return Datagrid
  */
@@ -44,7 +43,7 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 ### Boolean
 
 ``` php
-    ->addField('status', 'boolean', array('label' => 'Published'))
+->addField('status', 'boolean', array('label' => 'Published'))
 ``` 
 
 Cast field value to a boolean and display it as a "yes" or "no" label.
@@ -58,7 +57,7 @@ Cast field value to a boolean and display it as a "yes" or "no" label.
 ### Collection
 
 ``` php
-    ->addField('comments', 'collection', array('label' => 'Comments'));
+->addField('comments', 'collection', array('label' => 'Comments'));
 ``` 
 
 Field value is escaped and truncated (80 chars) by default. Your collection must be an array or implement the ``Traversable`` interface, and its elements must have a ``__toString()`` method.
@@ -66,11 +65,11 @@ Field value is escaped and truncated (80 chars) by default. Your collection must
 You will need to register default Symfony Twig extensions in your main config file to be able to use this type
 
 ``` yaml
-    services:
-        twig.extension.text:
-            class: Twig_Extensions_Extension_Text
-            tags:
-                - { name: twig.extension }
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
 ``` 
 
 #### Options
@@ -80,7 +79,7 @@ You will need to register default Symfony Twig extensions in your main config fi
 ### Date
 
 ``` php
-    ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
+->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
 ``` 
 
 Expects field column to be a \Datetime instance ('datetime' column type), will throw an exception otherwise.
@@ -93,7 +92,7 @@ Expects field column to be a \Datetime instance ('datetime' column type), will t
 ### Image
 
 ``` php
-    ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
+->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
 ``` 
 
 If specified it is appended to the image value.  No trailing slash.
@@ -107,7 +106,7 @@ This type use LiipImagineBundle to resize the image.
 ### Text
 
 ``` php
-    ->addField('id', 'text', array('label' => '#'));
+->addField('id', 'text', array('label' => '#'));
 ``` 
 
 Field value is escaped and truncated (80 chars) by default.
@@ -115,11 +114,11 @@ Field value is escaped and truncated (80 chars) by default.
 You will need to register default Symfony Twig extensions in your main config file to be able to use this type
 
 ``` yaml
-    services:
-        twig.extension.text:
-            class: Twig_Extensions_Extension_Text
-            tags:
-                - { name: twig.extension }
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
 ``` 
 #### Options
 
