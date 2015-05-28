@@ -1,18 +1,16 @@
-Shuwee Admin form type extension
-================================
+# Form type extensions
 
-ShuweeAdminBundle comes with form extension you can use in your admin form types.
+ShuweeAdminBundle comes with form extensions you can use in your admin form types.
 
 
-FilePreviewTypeExtension
-------------------------
+## FilePreviewTypeExtension
 
 Displays a preview of a previously uploaded image next to the upload form.
 All you need to do is to add preview_base_path options to a field of type 'file'.  The value of this option should be
 a "property" of your entity that will return the complete web path to your file. If you do not have such a property you
 can create a fake accessor to it.
 
-.. code-block:: php
+``` php
 
     // in the form type
 
@@ -40,3 +38,4 @@ can create a fake accessor to it.
             ? null
             : $this->getUploadDir().'/'.$this->image;
     }
+```     

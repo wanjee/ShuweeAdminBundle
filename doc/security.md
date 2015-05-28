@@ -1,12 +1,10 @@
-Shuwee Admin Security
-=====================
+# Security
 
-Firewall and admin users
-------------------------
+## Firewall and admin users
 
 If you want to use the build in admin user provider you will need to implement your security as follow
 
-.. code-block:: yaml
+``` yaml
 
     security:
         encoders:
@@ -42,27 +40,25 @@ If you want to use the build in admin user provider you will need to implement y
         role_hierarchy:
             ROLE_ADMIN:       [ROLE_USER]
             ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+``` 
 
-Configure the encoder as you prefer.  Define ShuweeAdminBundle:User as a provider, use that provider in your firewall.
+Configure the encoder as you prefer.  Define *ShuweeAdminBundle:User* as a provider, use that provider in your firewall.
 You can define other firewalls for i.e. frontend or a webservice if needed.
 
-Create admin user
------------------
+## Create admin user
 
 To generate a new user use the dedicated command
 
-.. code-block:: bash
-
-    bin/console shuwee:admin:user:add username password email --roles=ROLE_ADMIN
+``` bash
+bin/console shuwee:admin:user:add username password email --roles=ROLE_ADMIN
+```
 
 
 A simple voter solution has been implemented.  It's far from perfect but usable for simple use cases.
-
-It has to be implemented per Admin (so per entity to edit)
-
+It has to be implemented per Admin (so per entity to edit).
 You need to implement hasAccess method in your Admin class.  Here is a simple example that will match actions against roles.
 
-.. code-block:: php
+``` php
 
     <?php
     namespace Acme\Bundle\DemoBundle\Admin;
@@ -114,3 +110,4 @@ You need to implement hasAccess method in your Admin class.  Here is a simple ex
             }
         }
     }
+```     

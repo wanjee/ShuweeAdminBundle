@@ -5,7 +5,9 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/wanjee/shuwee-admin-bundle.svg?style=flat-square)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
 
 
-Shuwee name comes from a Lakota word : čhuwí. It's defined as the upper back of the body.
+ShuweeAdminBundle is part of Shuwee project.  It is the administration part of the project.
+
+Shuwee name comes from a Lakota word : čhuwí. It's defined as the upper back of the body.  It is aimed to manage single page applications. 
 
 
 ## Install

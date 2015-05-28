@@ -1,13 +1,16 @@
-Shuwee Admin Datagrid field types
-=================================
+# Datagrid
 
-Datagrid configuration
-----------------------
+# Main configuration
 
 In you admin controller define the datagrid as follow
 
-.. code-block:: php
+``` php
 
+/**
+ * @return Datagrid
+ */
+public function getDatagrid()
+{
     /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
     $datagrid = new Datagrid($this);
 
@@ -21,107 +24,104 @@ In you admin controller define the datagrid as follow
     ;
 
     return $datagrid;
+}
+```
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
-* Field name : name of the field, in your entity, you want to expose
-* Field type : type of formatter to use for display
-* Options : array of options, depends on field type.  'label' is common.
+* *Field name* : name of the field, in your entity, you want to expose
+* *Field type* : type of formatter to use for display
+* *Options* : array of options, depends on field type.  'label' is common.
 
-Shared options
---------------
+## Datagrid field types
 
-* 'label': Column title in datagrid. Expects string. Defaults to field name (ucfirst).
-* 'default_value': what to display when field value cannot be displayed for the given type.  Defaults to null.
+### Shared options
+
+* *label*: Column title in datagrid. Expects string. Defaults to field name (ucfirst).
+* *default_value*: what to display when field value cannot be displayed for the given type.  Defaults to null.
 
 
-Boolean
--------
+### Boolean
 
-.. code-block:: php
-
+``` php
     ->addField('status', 'boolean', array('label' => 'Published'))
+``` 
 
-Cast field value to a boolean and display it as "yes" or "no"
+Cast field value to a boolean and display it as a "yes" or "no" label.
 
-*Options*
+#### Options
 
-* 'label_true': Label to show when field value resolves to TRUE. Expects null or string. Defaults to 'Yes'.
-* 'label_false': Label to show when field value resolves to FALSE. Expects null or string. Defaults to 'No'.
+* *label_true*: Label to show when field value resolves to TRUE. Expects null or string. Defaults to 'Yes'.
+* *label_false*: Label to show when field value resolves to FALSE. Expects null or string. Defaults to 'No'.
 
 
-Collection
-----------
+### Collection
 
-.. code-block:: php
-
+``` php
     ->addField('comments', 'collection', array('label' => 'Comments'));
+``` 
 
 Field value is escaped and truncated (80 chars) by default. Your collection must be an array or implement the ``Traversable`` interface, and its elements must have a ``__toString()`` method.
 
 You will need to register default Symfony Twig extensions in your main config file to be able to use this type
 
-.. code-block:: yaml
-
+``` yaml
     services:
         twig.extension.text:
             class: Twig_Extensions_Extension_Text
             tags:
                 - { name: twig.extension }
+``` 
 
-*Options*
+#### Options
 
-* 'truncate': Length of max string length to display for the complete list.  Expects null or string. Defaults to 80.
+* *truncate*: Length of max string length to display for the complete list.  Expects null or string. Defaults to 80.
 
-Date
-----
+### Date
 
-.. code-block:: php
-
+``` php
     ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
+``` 
 
 Expects field column to be a \Datetime instance ('datetime' column type), will throw an exception otherwise.
 
-*Options*
+#### Options
 
-* 'date_format': Format of the outputted date string.  Expects string. Must be any format supported by PHP date() function.  See http://php.net/manual/en/function.date.php.  Defaults to 'F j, Y'.
+* *date_format*: Format of the outputted date string.  Expects string. Must be any format supported by PHP date() function.  See http://php.net/manual/en/function.date.php.  Defaults to 'F j, Y'.
 
 
-Image
------
+### Image
 
-.. code-block:: php
-
+``` php
     ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
+``` 
 
 If specified it is appended to the image value.  No trailing slash.
 This type use LiipImagineBundle to resize the image.
 
-*Options*
+#### Options
 
-* 'base_path': Path in which images are stored relative to the project web root.  Should not include trailing slash.  Expects string.  Defaults to 'uploads'.
+* *base_path*: Path in which images are stored relative to the project web root.  Should not include trailing slash.  Expects string.  Defaults to 'uploads'.
 
 
-Text
-----
+### Text
 
-.. code-block:: php
-
+``` php
     ->addField('id', 'text', array('label' => '#'));
+``` 
 
 Field value is escaped and truncated (80 chars) by default.
 
 You will need to register default Symfony Twig extensions in your main config file to be able to use this type
 
-.. code-block:: yaml
-
+``` yaml
     services:
         twig.extension.text:
             class: Twig_Extensions_Extension_Text
             tags:
                 - { name: twig.extension }
+``` 
+#### Options
 
-*Options*
-
-* 'truncate': Length of max string length to display for the complete list.  Expects null or string. Defaults to 80.
-* 'escape': Set to FALSE if you need to output raw HTML.  Expects a boolean.  Defaults to TRUE (value is escaped).
+* *truncate*: Length of max string length to display for the complete list.  Expects null or string. Defaults to 80.
+* *escape*: Set to FALSE if you need to output raw HTML.  Expects a boolean.  Defaults to TRUE (value is escaped).
