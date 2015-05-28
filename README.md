@@ -20,7 +20,7 @@ $ composer require wanjee/shuwee-admin-bundle
 
 ## Usage
 
-See [Documentation](doc/index.rst)
+See [Documentation](doc/index.md)
 
 ## Testing
 
