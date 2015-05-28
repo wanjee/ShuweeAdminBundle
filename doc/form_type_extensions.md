@@ -10,9 +10,9 @@ All you need to do is to add preview_base_path options to a field of type 'file'
 a "property" of your entity that will return the complete web path to your file. If you do not have such a property you
 can create a fake accessor to it.
 
-``` php
-// in the form type
+In the form type: 
 
+``` php
 ->add(
     'file',
     'file',
@@ -24,10 +24,11 @@ can create a fake accessor to it.
         'preview_base_path' => 'WebPath',
     )
 )
+```
 
+In your entity:
 
-// in your entity
-
+``` php
 /**
  * @return null|string
  */
