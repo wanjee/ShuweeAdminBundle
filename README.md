@@ -18,7 +18,7 @@ $ composer require wanjee/shuwee-admin-bundle
 
 ## Usage
 
-See [Documentation](src/Resources/doc/index.rst)
+See [Documentation](doc/index.rst)
 
 ## Testing
 
