@@ -48,7 +48,7 @@ interface AdminInterface
      *
      * @return string
      */
-    public function getMenuParent();
+    public function getMenuSection();
 
     /**
      * Get grants for current user, a given action on a dedicated object

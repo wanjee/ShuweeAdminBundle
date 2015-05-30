@@ -104,7 +104,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getMenuParent()
+    public function getMenuSection()
     {
         return 'content';
     }

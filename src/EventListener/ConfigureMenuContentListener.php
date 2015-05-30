@@ -54,22 +54,26 @@ class ConfigureMenuContentListener
     {
         if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $menu = $event->getMenu();
-            // list of parent menu items
-            $parents = array();
+
+            // list of configured sections
+            $sections = array();
 
             /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
             foreach ($this->adminManager->getAdmins() as $alias => $admin) {
 
                 // Get parent menu item label
-                $parent = $admin->getMenuParent();
+                $section = $admin->getMenuSection();
+                if (!is_string($section)) {
+                    throw new \Exception(sprintf('AdminInterface::getMenuSection() must return a string, %s returned.', gettype($section)));
+                }
 
                 // Create parent menu item if it does not exist yet
-                if (!isset($parents[$parent])) {
-                    $parents[$parent] = $menu->addChild(ucfirst($this->translator->trans($parent)));
+                if (!isset($sections[$section])) {
+                    $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section)));
                 }
 
                 $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10);
-                $parents[$parent]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
+                $sections[$section]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
             }
         }
     }
