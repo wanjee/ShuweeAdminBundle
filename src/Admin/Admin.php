@@ -98,7 +98,15 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
             $routingHelper->getRouteName($this, 'delete'),
             $routingHelper->getRoute($this, 'delete', array('id'))
         );
+    }
 
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMenuParent()
+    {
+        return 'content';
     }
 
     /**

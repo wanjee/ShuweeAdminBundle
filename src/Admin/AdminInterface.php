@@ -44,6 +44,13 @@ interface AdminInterface
     public function getLabel();
 
     /**
+     * Define the parent of the menu item
+     *
+     * @return string
+     */
+    public function getMenuParent();
+
+    /**
      * Get grants for current user, a given action on a dedicated object
      *
      * @param string      $name

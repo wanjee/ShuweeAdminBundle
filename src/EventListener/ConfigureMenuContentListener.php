@@ -52,17 +52,24 @@ class ConfigureMenuContentListener
      */
     public function onMenuConfigure(ConfigureMenuEvent $event)
     {
-        $menu = $event->getMenu();
-
         if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $menu = $event->getMenu();
+            // list of parent menu items
+            $parents = array();
 
-            // Content
-            $contentMenuItem = $menu->addChild('Content');
-
+            /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
             foreach ($this->adminManager->getAdmins() as $alias => $admin) {
-                $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10);
 
-                $contentMenuItem->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
+                // Get parent menu item label
+                $parent = $admin->getMenuParent();
+
+                // Create parent menu item if it does not exist yet
+                if (!isset($parents[$parent])) {
+                    $parents[$parent] = $menu->addChild(ucfirst($this->translator->trans($parent)));
+                }
+
+                $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10);
+                $parents[$parent]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
             }
         }
     }
