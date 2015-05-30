@@ -86,7 +86,9 @@ body.page-login #layer-content-body img {
 
 #layer-sidebar > ul {
     border: 1px solid #ddd;
+    border-bottom: none;
     border-radius: 6px;
+    overflow: hidden;
 }
 
 #layer-sidebar a {
@@ -106,6 +108,7 @@ body.page-login #layer-content-body img {
 #layer-sidebar li.active {
     background-color: #f9f9f9;
 }
+
 #layer-sidebar li.active a {
     font-weight: bold;
 }
@@ -113,11 +116,6 @@ body.page-login #layer-content-body img {
 #layer-sidebar li > ul > li {
     padding-left: 10px;
     border-bottom: 1px solid #ddd;
-}
-#layer-sidebar li > ul > li:last-child {
-    border-bottom: none;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
 }
 
 #layer-sidebar li > ul > li:hover {
