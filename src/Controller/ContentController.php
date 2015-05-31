@@ -31,7 +31,7 @@ class ContentController extends Controller
      */
     public function indexAction(Request $request, Admin $admin)
     {
-        // FIXME: $this->secure($admin, ContentVoter::LIST_CONTENT);
+        $this->secure($admin, ContentVoter::LIST_CONTENT);
 
         $entities = $admin->loadEntities();
 
