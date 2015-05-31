@@ -72,6 +72,11 @@ services:
         tags:
             - { name: shuwee.datagrid_type , alias: text}
 
+    shuwee_admin.datagrid_type_link:
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeLink
+        tags:
+            - { name: shuwee.datagrid_type , alias: link}
+
 
     # Security
     shuwee_admin.security.user_manager:

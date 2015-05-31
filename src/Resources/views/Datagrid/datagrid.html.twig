@@ -97,4 +97,19 @@
     {% endif %}
 {% endblock %}
 
+{% block datagrid_url %}
+    {% if value is not null %}
+        {% if mailto %}
+            {% set link = 'mailto:' ~ value %}
+        {% else %}
+            {% set link = value %}
+        {% endif %}
+
+        <a href="{{ link }}" title="{{ value }}">
+            {{ label_link }}
+        </a>
+    {% else %}
+        <span class="text-muted">{{ default_value | default('-') }}</span>
+    {% endif %}
+{% endblock %}
 
