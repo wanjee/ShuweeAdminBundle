@@ -166,7 +166,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @return
+     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationChecker
      */
     public function getAuthorizationChecker()
     {
