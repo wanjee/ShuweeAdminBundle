@@ -122,5 +122,18 @@ services:
 ``` 
 #### Options
 
-* *truncate*: Length of max string length to display for the complete list.  Expects null or string. Defaults to 80.
+* *truncate*: Length of max string length to display for the complete list.  Expects null or integer. Defaults to 80.
 * *escape*: Set to FALSE if you need to output raw HTML.  Expects a boolean.  Defaults to TRUE (value is escaped).
+
+### Link
+
+``` php
+->addField('id', 'link', array('label' => '#', 'label_link' => 'Link', 'mailto' => false));
+``` 
+
+Displays text value as link or mailto.
+
+#### Options
+
+* *label_link*: Text to display on the link.  Expects null or string.
+* *mailto*: Set to TRUE if you need to output an email address.  Expects a boolean.  Defaults to FALSE (no "mailto:").
