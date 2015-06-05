@@ -10,7 +10,9 @@ All you need to do is to add preview_base_path options to a field of type 'file'
 a "property" of your entity that will return the complete web path to your file. If you do not have such a property you
 can create a fake accessor to it.
 
-In the form type: 
+### Usage
+
+#### In form type 
 
 ``` php
 ->add(
@@ -26,7 +28,7 @@ In the form type:
 )
 ```
 
-In your entity:
+#### In the related entity class
 
 ``` php
 /**
@@ -39,3 +41,21 @@ public function getWebPath()
         : $this->getUploadDir().'/'.$this->image;
 }
 ```     
+
+## HelpExtension
+
+Displays a help text after a form field element.
+
+### Usage
+
+#### In form type 
+
+``` php
+->add(
+    'summary',
+    'textarea',
+    array(
+        'Help' => 'Keep is short and easy to understand.  It is a catchy introduction to your main content.',
+    )
+)
+```
