@@ -96,6 +96,11 @@ services:
         tags:
             - { name: form.type_extension, alias: file }
 
+    shuwee_admin.help_extension:
+        class: Wanjee\Shuwee\AdminBundle\Form\Extension\HelpExtension
+        tags:
+            - { name: form.type_extension, alias: form }
+
 
     # Events listeners
     shuwee_admin.admin_configure_menu_listener:

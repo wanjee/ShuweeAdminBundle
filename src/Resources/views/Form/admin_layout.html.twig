@@ -1,5 +1,20 @@
 {%  extends 'bootstrap_3_layout.html.twig' %}
 
+{% block form_row -%}
+    {% spaceless %}
+        <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+            {{ form_label(form) }}
+            <div class="{{ block('form_group_class') }}">
+                {{ form_widget(form) }}
+                {{ form_errors(form) }}
+            </div>
+            {% if help is defined and help != '' %}
+                <span class="help-block">{{ help }}</span>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{%- endblock form_row %}
+
 {% block file_widget %}
     {% spaceless %}
         {% set container_class = 'file-widget-container' %}
