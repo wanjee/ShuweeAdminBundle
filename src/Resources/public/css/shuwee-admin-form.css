@@ -8,3 +8,5 @@
     margin-right: 10px;
 }
 
+/* Markdown flavored textarea */
+.md-editor > textarea { background-color: #fff; border-bottom: none; padding: 10px; }

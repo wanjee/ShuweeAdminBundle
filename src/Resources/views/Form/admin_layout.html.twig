@@ -15,6 +15,13 @@
     {% endspaceless %}
 {%- endblock form_row %}
 
+{% block textarea_widget -%}
+    {% if markdown %}
+        {% set attr = attr|merge({'data-provide': 'markdown'}) %}
+    {% endif %}
+    {{- parent() -}}
+{%- endblock textarea_widget %}
+
 {% block file_widget %}
     {% spaceless %}
         {% set container_class = 'file-widget-container' %}
@@ -38,6 +45,5 @@
                 {{ block('form_widget') }}
             </div>
         </div>
-
     {% endspaceless %}
 {% endblock %}
