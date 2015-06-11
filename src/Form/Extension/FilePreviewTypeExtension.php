@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
 /**
- * Class FileTypeExtension
+ * Class FilePreviewTypeExtension
  * @package Wanjee\Shuwee\AdminBundle\Form\Extension
  */
 class FilePreviewTypeExtension extends AbstractTypeExtension
