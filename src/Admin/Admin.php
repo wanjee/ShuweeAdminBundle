@@ -137,6 +137,23 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
         return VoterInterface::ACCESS_GRANTED;
     }
 
+
+    /**
+     * Get basic QueryBuilder to populate Datagrid
+     *
+     * @return \Doctrine\DBAL\Query\QueryBuilder;
+     */
+    public function getQueryBuilder()
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder
+            ->select('e')
+            ->from($this->getEntityClass(), 'e')
+            ->orderBy('e.id', 'DESC');
+
+        return $queryBuilder;
+    }
+
     /**
      * Load multiple entities
      *
