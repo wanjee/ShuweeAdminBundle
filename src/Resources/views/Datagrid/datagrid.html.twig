@@ -1,6 +1,5 @@
 {% block datagrid %}
     {{ block('datagrid_table') }}
-    {{ block('paginator') }}
 {% endblock %}
 
 {% block datagrid_table %}
@@ -16,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in datagrid.datasource %}
+        {% for entity in datagrid.entities %}
             <tr>
                 {% for field in datagrid.fields %}
                     <td>
@@ -113,71 +112,3 @@
         <span class="text-muted">{{ default_value | default('-') }}</span>
     {% endif %}
 {% endblock %}
-
-{% block paginator %}
-
-    {% if datagrid.paginator.pageCount > 1 %}
-        <nav class="text-center">
-            <ul class="pagination">
-                {% if (datagrid.paginator.page == 1) %}
-                    <li class="disabled">
-                    <span>
-                        <span aria-hidden="true">&laquo;</span>
-                    </span>
-                    </li>
-                    <li class="disabled">
-                    <span>
-                        <span aria-hidden="true">&lsaquo;</span>
-                    </span>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{{ admin_get_path(datagrid.admin, 'index') }}?page=1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ admin_get_path(datagrid.admin, 'index') }}?page={{ datagrid.paginator.page - 1 }}" aria-label="Previous">
-                            <span aria-hidden="true">&lsaquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-                {% for i in 1..datagrid.paginator.pageCount %}
-                    {% if datagrid.paginator.page == i %}
-                        <li class="active">
-                            <span>{{ i }}</span>
-                        </li>
-                    {% else %}
-
-                        <li>
-                            <a href="{{ admin_get_path(datagrid.admin, 'index') }}?page={{ i }}">{{ i }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-                {% if (datagrid.paginator.page == datagrid.paginator.pageCount) %}
-                    <li class="disabled">
-                    <span>
-                        <span aria-hidden="true">&rsaquo;</span>
-                    </span>
-                    </li>
-                    <li class="disabled">
-                    <span>
-                        <span aria-hidden="true">&raquo;</span>
-                    </span>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{{ admin_get_path(datagrid.admin, 'index') }}?page={{ datagrid.paginator.page + 1 }}" aria-label="Next">
-                            <span aria-hidden="true">&rsaquo;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ admin_get_path(datagrid.admin, 'index') }}?page={{ datagrid.paginator.pageCount }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
-    {% endif %}
-{% endblock paginator %}
