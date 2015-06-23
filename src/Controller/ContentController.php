@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Datasource\DoctrineORMDatasource;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
 /**
@@ -34,17 +33,22 @@ class ContentController extends Controller
     {
         $this->secure($admin, ContentVoter::LIST_CONTENT);
 
+        $entities = $admin->loadEntities();
 
-        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $datagrid */
-        $datagrid = $admin->getDatagrid();
-        $datagrid->setDatasource(new DoctrineORMDatasource($admin->getQueryBuilder()));
-        $datagrid->bind($request);
+        if (!$entities) {
+            $entities = array();
+        }
+
+        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $dataGrid */
+        $dataGrid = $admin->getDatagrid();
+        // FIXME datagrid should be responsible for the entities retrieval as he will be for paging, sortering, filtering
+        $dataGrid->setEntities($entities);
 
         return $this->render(
             'ShuweeAdminBundle:Content:index.html.twig',
             array(
                 'admin' => $admin,
-                'datagrid' => $datagrid,
+                'datagrid' => $dataGrid,
             )
         );
     }
