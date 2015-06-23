@@ -23,6 +23,7 @@ Register required bundles in *AppKernel.php* :
 
 ``` php
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Liip\ImagineBundle\LiipImagineBundle(),
 new Wanjee\Shuwee\AdminBundle\ShuweeAdminBundle(),
 ```
@@ -47,6 +48,15 @@ liip_imagine:
     filter_sets:
         cache: ~
 ```
+
+Add KnpPaginator templates configuration in your main config file
+
+``` yaml
+knp_paginator:
+    template:
+        pagination: ShuweeAdminBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        sortable: ShuweeAdminBundle:Pagination:sortable_link.html.twig
+``` 
 
 You'll also need to register LiipImagineBundle routes in your *routing.yml* file
 

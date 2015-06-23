@@ -11,11 +11,11 @@ In you admin controller define the datagrid as follow
 public function getDatagrid()
 {
     /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
-    $datagrid = new Datagrid($this);
+    $datagrid = new Datagrid($this, );
 
     $datagrid
         ->addField('id', 'text', array('label' => '#'))
-        ->addField('title', 'text', array('label' => 'Title'))
+        ->addField('title', 'text', array('label' => 'Title', 'sortable' => true))
         ->addField('status', 'boolean', array('label' => 'Published'))
         ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
         ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
@@ -25,6 +25,10 @@ public function getDatagrid()
     return $datagrid;
 }
 ```
+
+Wanjee\Shuwee\AdminBundle\Datagrid::_construct() arguments are :
+ 
+* *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.  
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
@@ -37,7 +41,8 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 ### Shared options
 
 * *label*: Column title in datagrid. Expects string. Defaults to field name (ucfirst).
-* *default_value*: what to display when field value cannot be displayed for the given type.  Defaults to null.
+* *sortable: Is the column sortable? Defaults to false.
+* *default_value*: What to display when field value cannot be displayed for the given type.  Defaults to null.
 
 
 ### Boolean
