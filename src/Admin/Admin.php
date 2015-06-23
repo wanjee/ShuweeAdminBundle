@@ -155,16 +155,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * Load multiple entities
-     *
-     * @param int $id
-     */
-    public function loadEntities()
-    {
-        return $this->getEntityManager()->getRepository($this->getEntityClass())->findAll();
-    }
-
-    /**
      * Load a single entity by its id
      *
      * @param int $id
@@ -212,5 +202,13 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     public function getAdminRoutingHelper()
     {
         return $this->container->get('shuwee_admin.admin_routing_helper');
+    }
+
+    /**
+     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
+     */
+    public function getKnpPaginator()
+    {
+        return $this->container->get('knp_paginator');
     }
 }
