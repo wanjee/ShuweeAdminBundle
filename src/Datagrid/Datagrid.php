@@ -5,7 +5,6 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 use Symfony\Component\HttpFoundation\Request;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Datasource\DatasourceInterface;
 
 /**
  * Class Datagrid
@@ -24,9 +23,9 @@ class Datagrid implements DatagridInterface
     protected $fields = array();
 
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datasource\DatasourceInterface
+     * @var array List of entities for this datagrid
      */
-    protected $dataSource;
+    protected $entities = array();
 
     /**
      *
@@ -52,36 +51,7 @@ class Datagrid implements DatagridInterface
     public function setAdmin($admin)
     {
         $this->admin = $admin;
-
-        return $this;
     }
-
-    /**
-     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Datasource\DatasourceInterface $datasource
-     */
-    public function setDatasource(DatasourceInterface $datasource)
-    {
-        $this->dataSource = $datasource;
-
-        return $this;
-    }
-
-    /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Datasource\DatasourceInterface
-     */
-    public function getDataSource()
-    {
-        return $this->dataSource;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPaginator()
-    {
-        return $this->dataSource->getPaginator();
-    }
-
 
     /**
      * @param string $name
@@ -109,15 +79,30 @@ class Datagrid implements DatagridInterface
     }
 
     /**
+     * Set all entities
+     * FIXME datagrid should be responsible for the entities retrieval as it will be for paging, sortering, filtering
+     */
+    public function setEntities($entities = array())
+    {
+        $this->entities = $entities;
+    }
+
+    /**
+     * Return entities
+     *
+     * @return array
+     */
+    public function getEntities()
+    {
+        return $this->entities;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function bind(Request $request)
+    public function setRequest(Request $request)
     {
-        $query = $request->query->all();
 
-        if (isset($query['page'])) {
-            $this->dataSource->setPage($query['page']);
-        }
     }
 
     /**
