@@ -33,22 +33,15 @@ class ContentController extends Controller
     {
         $this->secure($admin, ContentVoter::LIST_CONTENT);
 
-        $entities = $admin->loadEntities();
-
-        if (!$entities) {
-            $entities = array();
-        }
-
-        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $dataGrid */
-        $dataGrid = $admin->getDatagrid();
-        // FIXME datagrid should be responsible for the entities retrieval as he will be for paging, sortering, filtering
-        $dataGrid->setEntities($entities);
+        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $datagrid */
+        $datagrid = $admin->getDatagrid();
+        $datagrid->bind($request);
 
         return $this->render(
             'ShuweeAdminBundle:Content:index.html.twig',
             array(
                 'admin' => $admin,
-                'datagrid' => $dataGrid,
+                'datagrid' => $datagrid,
             )
         );
     }

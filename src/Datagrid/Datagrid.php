@@ -3,6 +3,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
 
@@ -23,18 +24,52 @@ class Datagrid implements DatagridInterface
     protected $fields = array();
 
     /**
-     * @var array List of entities for this datagrid
+     * @var AdminInterface $admin
      */
-    protected $entities = array();
+    protected $pagination;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
+    /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @var array
+     */
+    protected $options;
 
     /**
      *
      */
-    function __construct(AdminInterface $admin)
+    public function __construct(AdminInterface $admin, $options = array())
     {
         $this->admin = $admin;
 
+        // Manage options
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+
+        $this->options = $resolver->resolve($options);
+
         return $this;
+    }
+
+    /**
+     * Configure options
+     *
+     * @param OptionsResolver $resolver
+     */
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+                'limit_per_page' => 10,
+            )
+        );
     }
 
     /**
@@ -51,6 +86,8 @@ class Datagrid implements DatagridInterface
     public function setAdmin($admin)
     {
         $this->admin = $admin;
+
+        return $this;
     }
 
     /**
@@ -79,30 +116,43 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * Set all entities
-     * FIXME datagrid should be responsible for the entities retrieval as it will be for paging, sortering, filtering
+     * @return
      */
-    public function setEntities($entities = array())
+    public function getPagination()
     {
-        $this->entities = $entities;
+        $this->initialize();
+
+        return $this->pagination;
     }
 
     /**
-     * Return entities
+     * Load the collection
      *
-     * @return array
      */
-    public function getEntities()
+    protected function initialize()
     {
-        return $this->entities;
+        if ($this->initialized) {
+            return;
+        }
+
+        // Handle pagination & order
+        $paginator  = $this->admin->getKnpPaginator();
+
+        $this->pagination = $paginator->paginate(
+            $this->admin->getQueryBuilder(),
+            $this->request->query->getInt('page', 1),
+            $this->options['limit_per_page']
+        );
+
+        $this->initialized = true;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function setRequest(Request $request)
+    public function bind(Request $request)
     {
-
+        $this->request = $request;
     }
 
     /**

@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in datagrid.entities %}
+        {% for entity in datagrid.pagination %}
             <tr>
                 {% for field in datagrid.fields %}
                     <td>
@@ -51,6 +51,7 @@
         {% endfor %}
         </tbody>
     </table>
+    {{ knp_pagination_render(datagrid.pagination) }}
 {% endblock %}
 
 {% block datagrid_boolean %}
