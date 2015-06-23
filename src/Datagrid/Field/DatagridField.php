@@ -39,7 +39,11 @@ class DatagridField implements DatagridFieldInterface
 
         // manage options
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(array('label' => ucfirst($name)));
+        $resolver->setDefaults(array(
+                'label' => ucfirst($name),
+                'sortable' => false,
+            )
+        );
 
         $type->configureOptions($resolver);
 
