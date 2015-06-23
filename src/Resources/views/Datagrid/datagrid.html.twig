@@ -3,13 +3,20 @@
 {% endblock %}
 
 {% block datagrid_table %}
-    <table class="table table-striped table-hover datalist">
+    <table class="table table-striped table-hover datagrid">
         <thead>
         <tr>
             {% for field in datagrid.fields %}
-                <th>
-                    {{ field.options['label'] | trans({}, 'ShuweeAdminBundle') }}
-                </th>
+                {% if field.getOption('sortable') %}
+                    {% set sort_field = 'e.' ~ field.name %}
+                    <th>
+                        {{ knp_pagination_sortable(datagrid.pagination, field.options['label'] | trans({}, 'ShuweeAdminBundle'), sort_field) }}
+                    </th>
+                {% else %}
+                    <th>
+                        {{ field.options['label'] | trans({}, 'ShuweeAdminBundle') }}
+                    </th>
+                {% endif %}
             {% endfor %}
             <th class="actions">{{ "datagrid.actions" | trans({}, 'ShuweeAdminBundle') }}</th>
         </tr>

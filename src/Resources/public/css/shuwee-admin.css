@@ -127,6 +127,24 @@ body.page-login #layer-content-body img {
     margin-top: 25px;
 }
 
+/* Datagrid */
+.datagrid thead th a {
+    display: block;
+}
+
+.datagrid thead th a.sortable span {
+    opacity: 0.2;
+}
+
+.datagrid thead th a span {
+    opacity: 0.4;
+    float: right;
+}
+
+.datagrid thead th a:hover span {
+    opacity: 0.6;
+}
+
 /* footer */
 footer {
     border-top: 1px solid #e7e7e7;
