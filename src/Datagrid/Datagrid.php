@@ -24,7 +24,7 @@ class Datagrid implements DatagridInterface
     protected $fields = array();
 
     /**
-     * @var AdminInterface $admin
+     * @var \Knp\Component\Pager\Pagination\PaginationInterface
      */
     protected $pagination;
 

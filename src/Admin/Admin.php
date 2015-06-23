@@ -205,7 +205,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
+     * @return \Knp\Component\Pager\Paginator
      */
     public function getKnpPaginator()
     {
