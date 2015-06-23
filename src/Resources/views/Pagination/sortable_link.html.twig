@@ -1,0 +1,15 @@
+<a{% for attr, value in options %} {{ attr }}="{{ value }}"{% endfor %}>
+    {{ title }}
+    {% if sorted %}
+        {% if direction == 'asc' %}
+            <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+        {% else %}
+            <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+        {% endif %}
+
+    {% else %}
+        <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+    {% endif %}
+</a>
+
+
