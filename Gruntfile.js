@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 separator: grunt.util.linefeed,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd h:i:s") %> */'
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd HH:MM") %> */'
                         + grunt.util.linefeed
             },
             js_vendors: {
