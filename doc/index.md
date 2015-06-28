@@ -28,15 +28,6 @@ new Liip\ImagineBundle\LiipImagineBundle(),
 new Wanjee\Shuwee\AdminBundle\ShuweeAdminBundle(),
 ```
 
-Add ShuweeAdminBundle to the list of Assetic supported bundles in *config.yml* (or comment the bundles line)
-
-``` yaml
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    #bundles:        [ ]
-```
-
 Add basic LiipImagineBundle configuration in your main config file
 
 ``` yaml
