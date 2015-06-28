@@ -35,5 +35,7 @@ app/bootstrap*
 
 build
 composer.lock
-docs
-vendor
+
+node_modules
+
+assets/vendors
