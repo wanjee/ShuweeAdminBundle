@@ -12,8 +12,9 @@ module.exports = function (grunt) {
         // TODO copy fonts ?
         concat: {
             options: {
-                separator: ';',
+                separator: grunt.util.linefeed,
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd h:i:s") %> */'
+                        + grunt.util.linefeed
             },
             js_vendors: {
                 src: [
