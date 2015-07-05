@@ -1,6 +1,11 @@
-/* file_widget */
+(function(){
+    "use strict";
 
-$('.file-widget-container .file-preview a').click(function(e) {
-    $(this).closest('.file-widget-container').removeClass('show-preview');
-    e.preventDefault();
-});
+    /* file_widget */
+
+    $('.file-widget-container .file-preview a').click(function(e) {
+        $(this).closest('.file-widget-container').removeClass('show-preview');
+        e.preventDefault();
+    });
+
+})();
