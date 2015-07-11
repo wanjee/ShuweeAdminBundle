@@ -30,12 +30,10 @@ nb-configuration.xml
 /*.sublime-project
 *.sublime-workspace
 
-# Bootstrap
-app/bootstrap*
-
 build
-composer.lock
+/composer.lock
+# Bower dependencies
+/assets/vendors
+# npm dependencies
+/node_modules
 
-node_modules
-
-assets/vendors
