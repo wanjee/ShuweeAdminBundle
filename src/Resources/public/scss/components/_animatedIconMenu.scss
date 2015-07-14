@@ -1,0 +1,54 @@
+.burger{
+    cursor: pointer;
+    display: inline-block;
+    font-size: 10px;
+    height: 25px;
+    margin:13px 0 0 10px;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    @include transitionTwo;
+    width: 22px;
+    -webkit-tap-highlight-color: transparent;
+    float:left;
+    span{
+        background: #fff;
+        border-radius: 2em;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        height: 3px;
+        position: absolute;
+        @include transitionTwo;
+        width: 100%;
+        -webkit-tap-highlight-color: transparent;
+        left: 0;
+        &:nth-child(1){
+            top:5px;
+        }
+        &:nth-child(2){
+            top:12px;
+        }
+        &:nth-child(3){
+            top:19px;
+        }
+    }
+    &.open{
+        span{
+            height:4px;
+            &:nth-child(1){
+                @include transform;
+                top: -4px;
+            }
+            &:nth-child(2){
+                opacity: 0;
+            }
+            &:nth-child(3){
+                @include transformNeg;
+                top: 27px;
+            }
+        }
+    }
+}
+

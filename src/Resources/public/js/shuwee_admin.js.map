@@ -1,1 +1,0 @@
-{"version":3,"file":"shuwee_admin.js","sources":["../../../../assets/js/shuwee-admin-form.js"],"names":["$","click","e","this","closest","removeClass","preventDefault"],"mappings":"CAAA,WACI,YAIAA,GAAE,0CAA0CC,MAAM,SAASC,GACvDF,EAAEG,MAAMC,QAAQ,0BAA0BC,YAAY,gBACtDH,EAAEI"}

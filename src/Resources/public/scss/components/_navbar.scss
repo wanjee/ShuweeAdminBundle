@@ -1,0 +1,34 @@
+#layer-navbar{
+    background: $grey_555;
+    color: $white;
+    border-color: transparent;
+    @include shadow;
+    &.navbar-default{
+        .navbar-brand{
+            color: $white;
+        }
+        .navbar-nav{
+            > li > a{
+                color: $white;
+            }
+        }
+    }
+}
+
+.navbar-nav{
+    .dropdown{
+        .caret{
+            @include arrowDown;
+        }
+        &.open{
+            .caret{
+                @include arrowUp;
+            }
+        }
+    }
+    &:hover{
+        .caret{
+            @include arrowHover;
+        } 
+    }
+}

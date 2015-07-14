@@ -1,0 +1,66 @@
+/* ================================== */
+@mixin transition() {
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+@mixin transitionTwo() {
+	-webkit-transition: 0.2s ease-in-out;
+	-moz-transition: 0.2s ease-in-out;
+	-o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+
+/* ================================== */
+@mixin transform() {
+	-webkit-transform: rotate(45deg) translate(1.1em, 1.1em);
+    -ms-transform: rotate(45deg) translate(1.1em, 1.1em);
+    transform: rotate(45deg) translate(1.1em, 1.1em);
+}
+
+@mixin transformNeg() {
+	-webkit-transform: rotate(-45deg) translate(1.1em, -1.1em);
+	-ms-transform: rotate(-45deg) translate(1.1em, -1.1em);
+	transform: rotate(-45deg) translate(1.1em, -1.1em);
+}
+
+/* ================================== */
+@mixin shadow() {
+	box-shadow: 0 -3px 24px #000;
+	-moz-box-shadow: 0 -3px 24px #000;
+	-webkit-box-shadow: 0 -3px 24px #000;
+}
+
+@mixin shadowRight() {
+	box-shadow: -20px -22px 31px #000;
+	-moz-box-shadow: -20px -22px 31px #000;
+	-webkit-box-shadow: -20px -22px 31px #000;
+}
+
+/* ================================== */
+@mixin arrowDown() {
+	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+}
+
+@mixin arrowUp() {
+	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #fff;
+    border-top:0 none;
+}
+
+@mixin arrowHover() {
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	transform: rotate(360deg);
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
