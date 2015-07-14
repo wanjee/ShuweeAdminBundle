@@ -2,60 +2,14 @@
 
 module.exports = function (grunt) {
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: ['src/Resources/public/*'],
-        concat: {
-            options: {
-                separator: grunt.util.linefeed,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd HH:MM") %> */' + grunt.util.linefeed
-            },
-            js_shuwee: {
-                src: [
-                    'assets/js/shuwee-admin-form.js'
-                ],
-                dest: 'src/Resources/public/js/shuwee_admin.js'
-            },
-            js_vendors: {
-                src: [
-                    'assets/vendors/jquery/dist/jquery.min.js',
-                    'assets/vendors/bootstrap/dist/js/bootstrap.min.js',
-                    'assets/vendors/markdown/bin/markdown.js',
-                    'assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js'
-                ],
-                dest: 'src/Resources/public/js/vendors.js'
-            },
-            css_shuwee: {
-                src: [
-                    'assets/css/shuwee-admin.css',
-                    'assets/css/shuwee-admin-form.css'
-                ],
-                dest: 'src/Resources/public/css/shuwee_admin.css'
-            },
-            css_vendors: {
-                src: [
-                    'assets/vendors/bootstrap/dist/css/bootstrap.min.css',
-                    'assets/vendors/bootstrap/dist/css/bootstrap-theme.min.css',
-                    'assets/vendors/bootstrap-markdown/css/bootstrap-markdown.min.css'
-                ],
-                dest: 'src/Resources/public/css/vendors.css'
-            }
-        },
-        copy: {
-            fonts: {
-                files: [
-                    {expand: true, flatten: true, src: ['assets/fonts/*'], dest: 'src/Resources/public/fonts/', filter: 'isFile'},
-                ]
-            }
-        },
         cssmin: {
             options: {
                 shorthandCompacting: false,
@@ -64,26 +18,43 @@ module.exports = function (grunt) {
             },
             css_shuwee: {
                 files: {
-                    'src/Resources/public/css/shuwee_admin.css': [
-                        'assets/css/shuwee-admin.css',
-                        'assets/css/shuwee-admin-form.css'
+                    'src/Resources/public/css/shuwee_admin.min.css': [
+                        'src/Resources/public/css/shuwee_admin/base.css',
+                        'src/Resources/public/css/shuwee_admin/shuwee_admin.css'
                     ]
                 }
             },
             css_vendors: {
                 files: {
-                    'src/Resources/public/css/vendors.css': [
-                        'assets/vendors/bootstrap/dist/css/bootstrap.min.css',
-                        'assets/vendors/bootstrap/dist/css/bootstrap-theme.min.css',
-                        'assets/vendors/bootstrap-markdown/css/bootstrap-markdown.min.css'
+                    'src/Resources/public/css/vendors.min.css': [
+                        'src/Resources/public/css/vendors/bootstrap.min.css',
+                        'src/Resources/public/css/vendors/bootstrap-markdown.min.css'
                     ]
                 }
             }
         },
         jshint: {
             shuwee: [
-                'assets/js/*'
+                'src/Resources/public/js/shuwee_admin/*.js'
             ]
+        },
+        sass: {
+            dist: {
+                options: {
+                    style: 'expanded',
+                    debugInfo: false,
+                    lineNumbers: false
+                },
+                files: [{
+                    expand: true,
+                    debugInfo: false,
+                    lineNumbers: false,
+                    cwd: 'src/Resources/public/scss/',
+                    src: ['*.scss'],
+                    dest: 'src/Resources/public/css/shuwee_admin/',
+                    ext: '.css'
+                }]
+            }
         },
         uglify: {
             options: {
@@ -93,18 +64,22 @@ module.exports = function (grunt) {
             // Uglify both Shuwee and vendors are all vendors are not minified by default (and so it generates a map for us
             js_vendors: {
                 files: {
-                    'src/Resources/public/js/vendors.js': [
-                        'assets/vendors/jquery/dist/jquery.min.js',
-                        'assets/vendors/bootstrap/dist/js/bootstrap.min.js',
-                        'assets/vendors/markdown/bin/markdown.js',
-                        'assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js'
+                    'src/Resources/public/js/vendors.min.js': [
+                        // do not use *.js as order is important
+                        'src/Resources/public/js/vendors/jquery.min.js',
+                        'src/Resources/public/js/vendors/bootstrap.min.js',
+                        'src/Resources/public/js/vendors/markdown.js',
+                        'src/Resources/public/js/vendors/bootstrap-markdown.js',
+                        'src/Resources/public/js/vendors/stacktable.js'
                     ]
                 }
             },
             js_shuwee: {
                 files: {
-                    'src/Resources/public/js/shuwee_admin.js': [
-                        'assets/js/shuwee-admin-form.js'
+                    'src/Resources/public/js/shuwee_admin.min.js': [
+                        // do not use *.js as order is important
+                        'src/Resources/public/js/shuwee_admin/common.js',
+                        'src/Resources/public/js/shuwee_admin/forms.js'
                     ]
                 }
             }
@@ -113,39 +88,34 @@ module.exports = function (grunt) {
             options: {
                 livereload: true
             },
-            assets: {
-                files: [
-                    'assets/css/*.css',
-                    'assets/js/*.js',
-                ],
-                tasks: [
-                    'concat'
-                ]
+            sass: {
+                files: 'src/Resources/public/scss/**',
+                tasks: ['sass'],
+                options: {
+                    interrupt: true,
+                }
             }
         }
     });
 
     grunt.registerTask('default', [
-        'dev'
+        'dev',
     ]);
 
     /**
      * Build and watch easy to debug resources for development.
      */
     grunt.registerTask('dev', [
-        'clean',
+        'sass',
         'jshint',
-        'copy',
-        'concat',
-        'watch'
+        'watch',
     ]);
 
     /**
      * Build minified resources for production
      */
-    grunt.registerTask('prod', [
-        'clean',
-        'copy',
+    grunt.registerTask('dist', [
+        'sass',
         'uglify',
         'cssmin'
     ]);
