@@ -55,7 +55,7 @@ Displays a help text after a form field element.
     'summary',
     'textarea',
     array(
-        'Help' => 'Keep is short and easy to understand.  It is a catchy introduction to your main content.',
+        'help' => 'Keep is short and easy to understand.  It is a catchy introduction to your main content.',
     )
 )
 ```
