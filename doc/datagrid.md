@@ -20,6 +20,7 @@ public function getDatagrid()
         ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
         ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
         ->addField('comments', 'collection', array('label' => 'Comments'))
+        ->addField('id', 'link', array('label' => '#', 'label_link' => 'Link', 'mailto' => false))
     ;
 
     return $datagrid;
