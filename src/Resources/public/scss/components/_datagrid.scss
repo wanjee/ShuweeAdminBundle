@@ -1,0 +1,28 @@
+
+.datagrid {
+  thead {
+    th {
+      a {
+        display: block;
+        line-height: 15px;
+
+        &:hover {
+          span {
+            opacity: 0.6;
+          }
+        }
+
+        &.sortable {
+          span {
+            opacity: 0.2;
+          }
+        }
+
+        span {
+          opacity: 0.4;
+          float: right;
+        }
+      }
+    }
+  }
+}

@@ -1,34 +1,44 @@
-#layer-navbar{
-    background: $grey_555;
-    color: $white;
-    border-color: transparent;
-    @include shadow;
-    &.navbar-default{
-        .navbar-brand{
-            color: $white;
-        }
-        .navbar-nav{
-            > li > a{
-                color: $white;
-            }
-        }
+#layer-navbar {
+  background: $grey_ececec;
+  color: $black;
+  border-color: transparent;
+
+  &.navbar-default {
+    .navbar-brand {
+      color: $black;
     }
+    .navbar-nav {
+      > li > a {
+        color: $black;
+      }
+    }
+  }
 }
 
-.navbar-nav{
-    .dropdown{
-        .caret{
-            @include arrowDown;
-        }
-        &.open{
-            .caret{
-                @include arrowUp;
-            }
-        }
+.navbar-nav {
+  .dropdown {
+    .caret {
+      @include arrowDown;
     }
-    &:hover{
-        .caret{
-            @include arrowHover;
-        } 
+    &.open {
+      .caret {
+        @include arrowUp;
+      }
     }
+  }
+  &:hover {
+    .caret {
+      @include arrowHover;
+    }
+  }
+}
+
+.navbar-user {
+  &.navbar-right {
+    margin-right: 0;
+  }
+}
+
+.navbar-brand img {
+  max-height: 100%;
 }
