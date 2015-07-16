@@ -19,8 +19,7 @@ module.exports = function (grunt) {
             css_shuwee: {
                 files: {
                     'src/Resources/public/css/shuwee_admin.min.css': [
-                        'src/Resources/public/css/shuwee_admin/base.css',
-                        'src/Resources/public/css/shuwee_admin/shuwee_admin.css'
+                        'src/Resources/public/css/shuwee_admin/base.css'
                     ]
                 }
             },
@@ -90,16 +89,16 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: 'src/Resources/public/scss/**',
-                tasks: ['sass'],
+                tasks: ['sass', 'cssmin'],
                 options: {
-                    interrupt: true,
+                    interrupt: true
                 }
             }
         }
     });
 
     grunt.registerTask('default', [
-        'dev',
+        'dev'
     ]);
 
     /**
@@ -108,7 +107,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', [
         'sass',
         'jshint',
-        'watch',
+        'watch'
     ]);
 
     /**
