@@ -1,48 +1,50 @@
-body.page-login {
-  background-color: #edecec;
-}
+body {
+  &.page-login {
+    background-color: #edecec;
 
-body.page-login footer {
-  display: none;
+    #layer-content-body {
+      background-color: transparent;
+      img {
+        max-width: 100%;
+        width: 300px;
+        padding: 19px 29px 29px;
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+      }
+    }
 
-}
+    .alert {
+      max-width: 300px;
+      margin: 0 auto 15px;
+    }
 
-body.page-login #layer-content-body img {
-  max-width: 100%;
-  width: 300px;
-  padding: 19px 29px 29px;
-  margin-right: auto;
-  margin-left: auto;
-  display: block;
-}
+    .panel {
+      max-width: 300px;
+      margin: 0 auto 15px;
 
-.form-signin {
-  max-width: 300px;
-  padding: 19px 29px 29px;
-  margin: 0 auto 20px;
-  border: 1px solid #e5e5e5;
-  background-color: #ffffff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-  -moz-box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin input[type="text"],
-.form-signin input[type="password"] {
-  font-size: 16px;
-  height: auto;
-  margin-bottom: 15px;
-  padding: 7px 9px;
-  width: 100%;
-}
+      .form-signin {
 
-.form-signin button {
-  margin-top: 5px;
-  width: 100%;
+        .form-signin-heading,
+        .checkbox {
+          margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+          font-size: 14px;
+          height: auto;
+          margin-bottom: 15px;
+          padding: 7px 9px;
+          width: 100%;
+        }
+
+        button {
+          margin-top: 5px;
+          width: 100%;
+
+        }
+      }
+    }
+  }
 }

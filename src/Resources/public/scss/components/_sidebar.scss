@@ -1,6 +1,7 @@
 #layer-sidebar {
   @include transition;
-  background: $grey_ececec;
+  background: $sidebar_bg_color;
+  border-right: 1px solid #D6D6D6;
   height: 100%;
   padding: 20px 0 0 0;
 
@@ -132,7 +133,7 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
   #layer-sidebar {
     .navbar-collapse {
       display: block !important;

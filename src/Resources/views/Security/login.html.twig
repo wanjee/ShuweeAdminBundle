@@ -8,16 +8,27 @@
             <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ error.message }}
-            </div>
+        </div>
     {% endif %}
 
-    <form class="form-signin" action="{{ path('login_check') }}" method="post">
-        <h2 class="form-signin-heading">{{ 'security.login.form.invite' | trans({}, 'ShuweeAdminBundle') }}</h2>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" class="input-block-level" placeholder="{{ 'security.login.form.username' | trans({}, 'ShuweeAdminBundle') }}" />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-lock"></span>
+            {{ 'security.login.form.invite' | trans({}, 'ShuweeAdminBundle') }}
+        </div>
+        <div class="panel-body">
+            <form class="form-signin" action="{{ path('login_check') }}" method="post">
+                <input type="text" id="username" name="_username" value="{{ last_username }}"
+                       class="input-block-level"
+                       placeholder="{{ 'security.login.form.username' | trans({}, 'ShuweeAdminBundle') }}"/>
 
-        <input type="password" id="password" name="_password" class="input-block-level" placeholder="{{ 'security.login.form.password' | trans({}, 'ShuweeAdminBundle') }}" />
-        <button class="btn btn-large btn-primary" type="submit">{{ 'security.login.form.action' | trans({}, 'ShuweeAdminBundle') }}</button>
-    </form>
+                <input type="password" id="password" name="_password" class="input-block-level"
+                       placeholder="{{ 'security.login.form.password' | trans({}, 'ShuweeAdminBundle') }}"/>
+                <button class="btn btn-large btn-primary"
+                        type="submit">{{ 'security.login.form.action' | trans({}, 'ShuweeAdminBundle') }}</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 

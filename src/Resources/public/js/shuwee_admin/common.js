@@ -41,7 +41,7 @@
 
 	// responsive table plugin
 	var stacktablePlugin = function(){
-		$('#responsive-example-table').stacktable({myClass:'stacktable small-only'});
+		$('table.datagrid').cardtable({myClass:'stacktable small-only'});
 	};
 
 	// sidebar height 100%
@@ -56,7 +56,6 @@
 		$('#layer-sidebar').each( function(){
 			var item = $(this).find('ul li span');
 			var itemP = item.parent();
-			var itemChild = $(this).find('ul li > span');
 
 			// open/collapse menu on sidebar
 			item.on('click', function(){

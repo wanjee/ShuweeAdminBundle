@@ -1,7 +1,8 @@
 #layer-navbar {
-  background: $grey_ececec;
+  background: #F9F9F9;
   color: $black;
-  border-color: transparent;
+  border: none;
+  border-bottom: 1px solid #C9C9C9;
 
   &.navbar-default {
     .navbar-brand {
@@ -19,6 +20,7 @@
   .dropdown {
     .caret {
       @include arrowDown;
+
     }
     &.open {
       .caret {
@@ -30,6 +32,19 @@
     .caret {
       @include arrowHover;
     }
+  }
+  &.nav {
+    .open > a {
+      background: none;
+      &:focus,
+      &:hover {
+        background: none;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    background: #F9F9F9;
   }
 }
 

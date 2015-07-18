@@ -4,6 +4,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "dashboard"
+msgstr "Dashboard"
 msgid "nav.backtolist"
 msgstr "Back to list"
 msgid "crud.create"

@@ -3,45 +3,24 @@
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
+  background: #E8E8E8;
 }
 
 #body-wrapper {
   overflow: hidden;
   padding-top: 51px;
-  padding-bottom: 51px;
 }
 
 a {
   color: $blue_0fa2ce;
 }
 
+#layer-content {
+}
+
 #layer-content-body {
   margin-top: 25px;
-  table {
-    td {
-      vertical-align: middle;
-    }
-    .label-danger {
-      background: none;
-      color: $red;
-    }
-    .label-success {
-      background: none;
-      color: $green;
-    }
-    .btn-primary {
-      background: none;
-      color: $blue_0fa2ce;
-      border: 0 none;
-      box-shadow: none;
-    }
-    .btn-danger {
-      background: none;
-      color: $red;
-      border: 0 none;
-      box-shadow: none;
-    }
-  }
+  background: #fff;
 }
 
 /* btn */
@@ -85,27 +64,25 @@ a {
   text-shadow: none;
 }
 
-.navbar-nav {
-  &.nav {
-    .open > a {
-      background: none;
-      &:focus,
-      &:hover {
-        background: none;
-      }
+/* Headers */
+h1 {
+  border-bottom: 1px dashed #CCCCCC;
+}
+
+/* Panels */
+.panel {
+  border: 1px solid #CCCCCC;
+  border-radius: 2px;
+
+  .panel-heading {
+    .glyphicon {
+      border-right: 1px solid #ccc;
+      padding-right: 6px;
+      margin-right: 2px;
     }
   }
 }
 
-.dropdown-menu {
-  > li {
-    > a:focus,
-    > a:hover {
-      background: none;
-      color: $grey;
-    }
-  }
-}
 
 @media (max-width: 480px) {
   .glyphicon-sort {
