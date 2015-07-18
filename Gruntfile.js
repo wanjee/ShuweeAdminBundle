@@ -16,14 +16,14 @@ module.exports = function (grunt) {
                 roundingPrecision: -1,
                 sourceMap: true
             },
-            css_shuwee: {
+            shuwee: {
                 files: {
                     'src/Resources/public/css/shuwee_admin.min.css': [
                         'src/Resources/public/css/shuwee_admin/base.css'
                     ]
                 }
             },
-            css_vendors: {
+            vendors: {
                 files: {
                     'src/Resources/public/css/vendors.min.css': [
                         'src/Resources/public/css/vendors/bootstrap.min.css',
@@ -61,7 +61,16 @@ module.exports = function (grunt) {
                 sourceMap: true
             },
             // Uglify both Shuwee and vendors are all vendors are not minified by default (and so it generates a map for us
-            js_vendors: {
+            shuwee: {
+                files: {
+                    'src/Resources/public/js/shuwee_admin.min.js': [
+                        // do not use *.js as order is important
+                        'src/Resources/public/js/shuwee_admin/common.js',
+                        'src/Resources/public/js/shuwee_admin/forms.js'
+                    ]
+                }
+            },
+            vendors: {
                 files: {
                     'src/Resources/public/js/vendors.min.js': [
                         // do not use *.js as order is important
@@ -72,24 +81,22 @@ module.exports = function (grunt) {
                         'src/Resources/public/js/vendors/stacktable.js'
                     ]
                 }
-            },
-            js_shuwee: {
-                files: {
-                    'src/Resources/public/js/shuwee_admin.min.js': [
-                        // do not use *.js as order is important
-                        'src/Resources/public/js/shuwee_admin/common.js',
-                        'src/Resources/public/js/shuwee_admin/forms.js'
-                    ]
-                }
             }
         },
         watch: {
             options: {
                 livereload: true
             },
-            sass: {
+            css: {
                 files: 'src/Resources/public/scss/**',
-                tasks: ['sass', 'cssmin'],
+                tasks: ['sass', 'cssmin:shuwee'],
+                options: {
+                    interrupt: true
+                }
+            },
+            js: {
+                files: 'src/Resources/public/js/shuwee_admin/**',
+                tasks: ['jshint', 'uglify:shuwee'],
                 options: {
                     interrupt: true
                 }
