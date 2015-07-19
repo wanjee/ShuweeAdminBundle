@@ -5,11 +5,15 @@
 
 	// addclass mobile and desktop
 	var onMobile = function(){
-		if ($(window).width() <= tablet) {
-			$('#body-wrapper').addClass('toggle').find('.burger').removeClass('open');
-		}else{
-			$('#body-wrapper').removeClass('toggle').find('.burger').addClass('open');
-		}
+        if ($('body').hasClass('has-sidebar')) {
+            if ($(window).width() <= tablet) {
+                $('#body-wrapper').addClass('toggle').find('.burger').removeClass('open');
+                $('#layer-content').removeClass('col-md-offset-2');
+            }else{
+                $('#body-wrapper').removeClass('toggle').find('.burger').addClass('open');
+                $('#layer-content').addClass('col-md-offset-2');
+            }
+        }
 	};
 
 	var adminMobile = function(){

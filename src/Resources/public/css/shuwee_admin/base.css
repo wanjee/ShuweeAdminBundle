@@ -115,7 +115,6 @@
   transition: all 0.5s ease;
   background: #FCFCFC;
   border-right: 1px solid #D6D6D6;
-  height: 100%;
   padding: 20px 0 0 0;
   position: fixed;
   top: 51px;
@@ -233,6 +232,9 @@
 }
 .toggle #layer-content {
   width: 100%;
+}
+
+#layer-content {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -247,14 +249,6 @@
 
   #page-wrapper {
     position: relative;
-  }
-  #page-wrapper #layer-sidebar {
-    position: absolute;
-    width: 50%;
-    top: 0;
-    left: 0;
-    z-index: 20;
-    height: 100% !important;
   }
   #page-wrapper #layer-content {
     width: 100%;

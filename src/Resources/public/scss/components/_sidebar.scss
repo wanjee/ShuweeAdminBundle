@@ -2,10 +2,7 @@
   @include transition;
   background: $sidebar_bg_color;
   border-right: 1px solid #D6D6D6;
-  height: 100%;
   padding: 20px 0 0 0;
-
-
   position: fixed;
   top: 51px;
   bottom: 0px;
@@ -114,8 +111,12 @@
   }
   #layer-content {
     width: 100%;
-    @include transition;
   }
+}
+
+// Add transition for both on and off behaviors
+#layer-content {
+  @include transition;
 }
 
 @media (max-width: 1023px) {
@@ -129,14 +130,6 @@
   }
   #page-wrapper {
     position: relative;
-    #layer-sidebar {
-      position: absolute;
-      width: 50%;
-      top: 0;
-      left: 0;
-      z-index: 20;
-      height: 100% !important;
-    }
     #layer-content {
       width: 100%;
     }
