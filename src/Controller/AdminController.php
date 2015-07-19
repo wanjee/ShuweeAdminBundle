@@ -22,11 +22,11 @@ class AdminController extends Controller
         /** @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 
-        /** @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin */
-        foreach ($adminManager->getAdmins() as $alias => $admin) {
-
-        }
-
-        return $this->render('ShuweeAdminBundle:Admin:dashboard.html.twig');
+        return $this->render('ShuweeAdminBundle:Admin:dashboard.html.twig',
+            array(
+                /** @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin */
+                'admins' => $adminManager->getAdmins(),
+            )
+        );
     }
 }

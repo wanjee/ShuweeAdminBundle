@@ -1,0 +1,31 @@
+/* file_widget */
+.file-widget-container {
+  .file-upload-widget {
+    display: block;
+  }
+
+  .file-preview {
+    display: none;
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  &.show-preview {
+    .file-upload-widget {
+      display: none;
+    }
+    .file-preview {
+      display: block;
+    }
+  }
+}
+
+/* Markdown flavored textarea */
+.md-editor {
+  > textarea {
+    background-color: #fff;
+    border-bottom: none;
+    padding: 10px;
+  }
+}

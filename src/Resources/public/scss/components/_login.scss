@@ -1,0 +1,51 @@
+body {
+  &.page-login {
+    background-color: #edecec;
+    box-shadow: 0px 0px 175px rgba(0, 0, 0, 0.3) inset;
+
+    #layer-content-body {
+      background-color: transparent;
+      img {
+        max-width: 100%;
+        width: 300px;
+        padding: 19px 29px 29px;
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+      }
+    }
+
+    .alert {
+      max-width: 300px;
+      margin: 0 auto 15px;
+    }
+
+    .panel {
+      max-width: 300px;
+      margin: 0 auto 15px;
+
+      .form-signin {
+
+        .form-signin-heading,
+        .checkbox {
+          margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+          font-size: 14px;
+          height: auto;
+          margin-bottom: 15px;
+          padding: 7px 9px;
+          width: 100%;
+        }
+
+        button {
+          margin-top: 5px;
+          width: 100%;
+
+        }
+      }
+    }
+  }
+}

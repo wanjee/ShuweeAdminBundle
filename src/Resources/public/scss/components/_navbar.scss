@@ -1,0 +1,59 @@
+#layer-navbar {
+  background: #F9F9F9;
+  color: $black;
+  border: none;
+  border-bottom: 1px solid #C9C9C9;
+
+  &.navbar-default {
+    .navbar-brand {
+      color: $black;
+    }
+    .navbar-nav {
+      > li > a {
+        color: $black;
+      }
+    }
+  }
+}
+
+.navbar-nav {
+  .dropdown {
+    .caret {
+      @include arrowDown;
+
+    }
+    &.open {
+      .caret {
+        @include arrowUp;
+      }
+    }
+  }
+  &:hover {
+    .caret {
+      @include arrowHover;
+    }
+  }
+  &.nav {
+    .open > a {
+      background: none;
+      &:focus,
+      &:hover {
+        background: none;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    background: #F9F9F9;
+  }
+}
+
+.navbar-user {
+  &.navbar-right {
+    margin-right: 0;
+  }
+}
+
+.navbar-brand img {
+  max-height: 100%;
+}

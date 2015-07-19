@@ -8,8 +8,8 @@
     <title>{% block page_title %}Admin{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/shuweeadmin/css/vendors.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/shuweeadmin/css/shuwee_admin.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/shuweeadmin/css/vendors.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/shuweeadmin/css/shuwee_admin.min.css') }}"/>
     {% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -29,19 +29,13 @@
     <div id="page-wrapper" class="container-fluid">
         {% block page %}
         {% endblock %}
-    </div>
 
-    {% block footer -%}
-    <!-- footer -->
-        <footer>
-            {% include "ShuweeAdminBundle:Partial:footer.html.twig" %}
-        </footer>
-    {% endblock %}
+    </div>
 </div><!--/#wrapper -->
 
 {% block javascript_bottom %}
-    <script type="text/javascript" src="{{ asset('bundles/shuweeadmin/js/vendors.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/shuweeadmin/js/shuwee_admin.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/shuweeadmin/js/vendors.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/shuweeadmin/js/shuwee_admin.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>
