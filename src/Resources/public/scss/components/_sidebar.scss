@@ -5,6 +5,16 @@
   height: 100%;
   padding: 20px 0 0 0;
 
+
+  position: fixed;
+  top: 51px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+
   ul {
     margin: 0;
     padding: 0;

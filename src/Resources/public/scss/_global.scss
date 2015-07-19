@@ -1,14 +1,24 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   background: #E8E8E8;
+  height: 100%;
 }
 
 #body-wrapper {
   overflow: hidden;
   padding-top: 51px;
+  height: 100%;
+}
+
+#page-wrapper {
+  height: 100%;
 }
 
 a {
@@ -20,7 +30,6 @@ a {
 
 #layer-content-body {
   margin-top: 25px;
-  background: #fff;
 }
 
 /* btn */

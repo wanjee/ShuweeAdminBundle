@@ -50,7 +50,22 @@
 }
 
 .small-only {
-  .datagrid {
-    margin-bottom: 10px;
+  table.datagrid {
+    margin-bottom: 0;
+    &:not(:first-child) {
+      border-top: 2px solid #ccc;
+    }
+    // reset internal table stripping
+    &.table-striped {
+      > tbody {
+        > tr:nth-of-type(2n+1) {
+          background-color: transparent;
+        }
+      }
+    }
+    // strip tables instead
+    &.table-striped:nth-of-type(2n+1) {
+      background-color: #F9F9F9;
+    }
   }
 }

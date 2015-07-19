@@ -31,9 +31,11 @@
 				if(t.hasClass('toggle')){
 					t.removeClass('toggle');
 					$(this).addClass('open');
+                    $('#layer-content').addClass('col-md-offset-2');
 				}else{
 					t.addClass('toggle');
 					$(this).removeClass('open');
+                    $('#layer-content').removeClass('col-md-offset-2');
 				}
 			});
 		});
@@ -42,13 +44,6 @@
 	// responsive table plugin
 	var stacktablePlugin = function(){
 		$('table.datagrid').cardtable({myClass:'stacktable small-only'});
-	};
-
-	// sidebar height 100%
-	var documentHeight = function(){
-		var documentH = $( document ).height();
-
-		$('#layer-sidebar').height(documentH);
 	};
 
 	// sidebar open/collapse
@@ -82,7 +77,6 @@
 		stacktablePlugin();
 		onMobile();
 		adminMobile();
-		documentHeight();
 		collapse();
 
 		$(window).bind('resize', function(){
