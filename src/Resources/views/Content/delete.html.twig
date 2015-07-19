@@ -8,7 +8,7 @@
     {% if admin.isGranted('LIST') %}
     <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
-    {% if admin.isGranted('CREATE') %}
+    {% if admin.isGranted('UPDATE') %}
     <a href="{{ admin_get_path(admin, 'update', {'id': entity.id}) }}" class="btn btn-sm btn-primary" type="button"><i class="glyphicon glyphicon-edit"></i> {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
 {%  endblock %}
