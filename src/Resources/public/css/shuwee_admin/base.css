@@ -480,12 +480,7 @@ body {
 }
 
 #body-wrapper {
-  overflow: hidden;
   padding-top: 51px;
-  height: 100%;
-}
-
-#page-wrapper {
   height: 100%;
 }
 
