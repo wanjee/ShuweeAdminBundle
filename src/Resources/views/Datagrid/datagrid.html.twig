@@ -52,7 +52,9 @@
             <tr>
                 <td colspan="{{ size+1 }}">
                     {{ 'datagrid.empty_grid' | trans({}, 'ShuweeAdminBundle') }}
+                    {% if datagrid.admin.isGranted('CREATE') %}
                     <a href="{{ admin_get_path(datagrid.admin, 'create') }}">{{ 'datagrid.empty_grid.create' | trans({}, 'ShuweeAdminBundle') }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
