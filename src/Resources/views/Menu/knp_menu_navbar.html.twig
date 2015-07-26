@@ -105,4 +105,10 @@
     </a>
 {% endblock %}
 
-{% block label %}{{ item.label|trans }}{% endblock %}
+{% block label %}
+    {% if (item.getExtra('translation_domain')) %}
+        {{ item.label | trans({}, item.getExtra('translation_domain')) }}
+    {% else %}
+        {{ item.label }}
+    {% endif %}
+{% endblock %}
