@@ -11,7 +11,12 @@ In you admin controller define the datagrid as follow
 public function getDatagrid()
 {
     /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
-    $datagrid = new Datagrid($this, );
+    $datagrid = new Datagrid($this, array(
+            'limit_per_page' => 10,
+            'default_sort_column' => 'id',
+            'default_sort_order' => 'asc',
+        )
+    );
 
     $datagrid
         ->addField('id', 'text', array('label' => '#'))
@@ -30,6 +35,8 @@ public function getDatagrid()
 Wanjee\Shuwee\AdminBundle\Datagrid::_construct() arguments are :
  
 * *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.  
+* *default_sort_column* : Column used for default ordering. Defaults to 'id'.  
+* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'.  
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
