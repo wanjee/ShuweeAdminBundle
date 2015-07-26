@@ -59,3 +59,21 @@ Displays a help text after a form field element.
     )
 )
 ```
+
+## MarkdownTextareaExtension
+
+Displays a markdown editor on a text area.
+
+### Usage
+
+#### In form type 
+
+``` php
+->add(
+    'summary',
+    'textarea',
+    array(
+        'markdown' => true,
+    )
+)
+```
