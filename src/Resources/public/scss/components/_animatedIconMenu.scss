@@ -25,13 +25,13 @@
         -webkit-tap-highlight-color: transparent;
         left: 0;
         &:nth-child(1){
-            top:5px;
+            top:4px;
         }
         &:nth-child(2){
-            top:12px;
+            top:11px;
         }
         &:nth-child(3){
-            top:19px;
+            top:18px;
         }
     }
     &.open{
@@ -39,14 +39,14 @@
             height:4px;
             &:nth-child(1){
                 @include transform;
-                top: -4px;
+                top: -5px;
             }
             &:nth-child(2){
                 opacity: 0;
             }
             &:nth-child(3){
                 @include transformNeg;
-                top: 27px;
+                top: 26px;
             }
         }
     }

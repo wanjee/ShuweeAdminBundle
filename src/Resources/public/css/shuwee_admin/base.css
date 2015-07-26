@@ -39,13 +39,13 @@
   left: 0;
 }
 .burger span:nth-child(1) {
-  top: 5px;
+  top: 4px;
 }
 .burger span:nth-child(2) {
-  top: 12px;
+  top: 11px;
 }
 .burger span:nth-child(3) {
-  top: 19px;
+  top: 18px;
 }
 .burger.open span {
   height: 4px;
@@ -54,7 +54,7 @@
   -webkit-transform: rotate(45deg) translate(1.1em, 1.1em);
   -ms-transform: rotate(45deg) translate(1.1em, 1.1em);
   transform: rotate(45deg) translate(1.1em, 1.1em);
-  top: -4px;
+  top: -5px;
 }
 .burger.open span:nth-child(2) {
   opacity: 0;
@@ -63,7 +63,7 @@
   -webkit-transform: rotate(-45deg) translate(1.1em, -1.1em);
   -ms-transform: rotate(-45deg) translate(1.1em, -1.1em);
   transform: rotate(-45deg) translate(1.1em, -1.1em);
-  top: 27px;
+  top: 26px;
 }
 
 .stacktable {
