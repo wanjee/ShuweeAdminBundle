@@ -389,6 +389,10 @@
   background-color: #F9F9F9;
 }
 
+.panel-body form .form-group:last-of-type {
+  margin-bottom: 0;
+}
+
 /* file_widget */
 .file-widget-container .file-upload-widget {
   display: block;
