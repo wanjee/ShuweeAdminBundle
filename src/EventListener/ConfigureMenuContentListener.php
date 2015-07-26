@@ -69,10 +69,10 @@ class ConfigureMenuContentListener
 
                 // Create parent menu item if it does not exist yet
                 if (!isset($sections[$section])) {
-                    $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section)));
+                    $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section, array(), 'ShuweeAdminBundle')));
                 }
 
-                $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10);
+                $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10, array(), 'ShuweeAdminBundle');
                 $sections[$section]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
             }
         }

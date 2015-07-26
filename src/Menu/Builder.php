@@ -32,8 +32,9 @@ class Builder extends ContainerAware
             $userMenuItem = $menu->addChild($username, array('route' => 'logout'))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'glyphicon-user');
-            $userMenuItem->addChild('Logout', array('route' => 'logout'))
-                ->setAttribute('icon', 'glyphicon-off');
+            $userMenuItem->addChild('security.logout.action', array('route' => 'logout'))
+                ->setAttribute('icon', 'glyphicon-off')
+                ->setExtra('translation_domain', 'ShuweeAdminBundle');
         }
 
         return $menu;
