@@ -66,10 +66,26 @@ class Datagrid implements DatagridInterface
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-                'limit_per_page' => 10,
+        $resolver
+            ->setDefaults(
+                array(
+                    'limit_per_page' => 10,
+                    'default_sort_column' => 'id',
+                    'default_sort_order' => 'asc',
+                )
             )
-        );
+            ->setAllowedTypes(
+                array(
+                    'limit_per_page' => array('integer'),
+                    'default_sort_column' => array('string'),
+                    'default_sort_order' => array('string'),
+                )
+            )
+            ->setAllowedValues(
+                array(
+                    'default_sort_order' => array('asc', 'desc'),
+                )
+            );
     }
 
     /**
@@ -141,7 +157,8 @@ class Datagrid implements DatagridInterface
         $this->pagination = $paginator->paginate(
             $this->admin->getQueryBuilder(),
             $this->request->query->getInt('page', 1),
-            $this->options['limit_per_page']
+            $this->options['limit_per_page'],
+            array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
         );
 
         $this->initialized = true;
