@@ -17,7 +17,7 @@
                         </div>
                         <div class="panel-body">
                             {% if admin.isGranted('LIST') %}
-                                <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button">{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}</a>
+                                <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}</a>
                             {% endif %}
                             {% if admin.isGranted('CREATE') %}
                                 <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
