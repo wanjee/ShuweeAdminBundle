@@ -374,6 +374,7 @@
 .datagrid thead th a span {
   opacity: 0.4;
   float: right;
+  line-height: inherit;
 }
 
 .small-only table.datagrid {
