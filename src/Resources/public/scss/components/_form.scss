@@ -7,6 +7,18 @@
   }
 }
 
+// Finetune helptext position
+.form-group-checkbox {
+  &.has-help {
+    .checkbox {
+      margin-bottom: 0px;
+    }
+    .help-block {
+      margin-top: 0px;
+    }
+  }
+}
+
 /* file_widget */
 .file-widget-container {
   .file-upload-widget {

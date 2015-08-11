@@ -1,19 +1,31 @@
 {%  extends 'bootstrap_3_layout.html.twig' %}
 
 {% block form_row -%}
+    {% set has_help = help is defined and help != '' %}
     {% spaceless %}
-        <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}{% if has_help %} has-help{% endif %}">
             {{ form_label(form) }}
             <div class="{{ block('form_group_class') }}">
                 {{ form_widget(form) }}
                 {{ form_errors(form) }}
             </div>
-            {% if help is defined and help != '' %}
+            {% if has_help %}
                 <span class="help-block">{{ help }}</span>
             {% endif %}
         </div>
     {% endspaceless %}
 {%- endblock form_row %}
+
+{% block checkbox_row -%}
+    {% set has_help = help is defined and help != '' %}
+    <div class="form-group form-group-checkbox{% if not valid %} has-error{% endif %}{% if has_help %} has-help{% endif %}">
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+        {% if has_help %}
+            <span class="help-block">{{ help }}</span>
+        {% endif %}
+    </div>
+{%- endblock checkbox_row %}
 
 {% block textarea_widget -%}
     {% if markdown %}

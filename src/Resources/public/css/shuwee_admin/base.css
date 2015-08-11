@@ -394,6 +394,13 @@
   margin-bottom: 0;
 }
 
+.form-group-checkbox.has-help .checkbox {
+  margin-bottom: 0px;
+}
+.form-group-checkbox.has-help .help-block {
+  margin-top: 0px;
+}
+
 /* file_widget */
 .file-widget-container .file-upload-widget {
   display: block;
