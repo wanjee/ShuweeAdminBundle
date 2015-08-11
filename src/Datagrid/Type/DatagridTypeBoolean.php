@@ -60,7 +60,7 @@ class DatagridTypeBoolean extends DatagridType
         $defaults = parent::getBlockVariables($field, $entity);
 
         return array(
-            'value' => (bool)$field->getData($entity),
+            'value' => (bool) $defaults['value'],
             'label_true' => $field->getOption('label_true', 'Yes'),
             'label_false' => $field->getOption('label_false', 'No'),
         ) + $defaults;

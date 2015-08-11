@@ -61,7 +61,7 @@ class DatagridTypeCollection extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        $data = $field->getData($entity);
+        $data = $defaults['value'];
 
         if ($data instanceof \Traversable) {
             $dataArray = [];

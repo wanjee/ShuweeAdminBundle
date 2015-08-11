@@ -62,7 +62,7 @@ class DatagridTypeImage extends DatagridType
         $defaults = parent::getBlockVariables($field, $entity);
 
         $base_path = $field->getOption('base_path', 'uploads');
-        $image = $field->getData($entity);
+        $image = $defaults['value'];
 
         $value = null;
         if (!empty($image)) {

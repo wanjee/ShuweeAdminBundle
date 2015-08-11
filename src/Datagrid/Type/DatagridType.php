@@ -15,9 +15,22 @@ abstract class DatagridType implements DatagridTypeInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'default_value' => null,
-        ));
+        $resolver
+            ->setDefaults(
+                array(
+                    'default_value' => null,
+                )
+            )
+            ->setDefined(
+                array(
+                    'callback'
+                )
+            )
+            ->setAllowedTypes(
+                array(
+                    'callback' => 'callable'
+                )
+            );
     }
 
     /**
@@ -30,8 +43,15 @@ abstract class DatagridType implements DatagridTypeInterface
      */
     public function getBlockVariables($field, $entity)
     {
+        if ($field->getOption('callback')) {
+            $value = call_user_func($field->getOption('callback'), $entity);
+        }
+        else {
+            $value = $field->getData($entity);
+        }
+
         return array(
-            'value' => $field->getData($entity),
+            'value' => $value,
             'default_value' => $field->getOption('default_value', 'null'),
         );
     }

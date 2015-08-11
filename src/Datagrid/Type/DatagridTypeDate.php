@@ -64,7 +64,7 @@ class DatagridTypeDate extends DatagridType
         // Date_format should be any format supported by http://php.net/manual/en/function.date.php
         $date_format = $field->getOption('date_format', 'c');
 
-        $date = $field->getData($entity);
+        $date = $defaults['value'];
 
         if (!$date instanceof \DateTime) {
             throw new \Exception(sprintf('Datagrid \'date\' type expects an instance of Datetime. \'%s\' given for field \'%s\'.', gettype($date), $field->getName()));

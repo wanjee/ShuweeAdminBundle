@@ -64,7 +64,7 @@ class DatagridTypeText extends DatagridType
         $defaults = parent::getBlockVariables($field, $entity);
 
         return array(
-            'value' => $field->getData($entity),
+            'value' => $defaults['value'],
             'truncate' => $field->getOption('truncate', 80),
             'escape' => $field->getOption('escape', true),
         ) + $defaults;

@@ -64,7 +64,7 @@ class DatagridTypeLink extends DatagridType
         $defaults = parent::getBlockVariables($field, $entity);
 
         return array(
-            'value' => $field->getData($entity),
+            'value' => $defaults['value'],
             'label_link' => $field->getOption('label_link', 'Link'),
             'mailto' => $field->getOption('mailto', false),
         ) + $defaults;
