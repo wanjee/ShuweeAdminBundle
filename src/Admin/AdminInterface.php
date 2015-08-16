@@ -21,13 +21,6 @@ interface AdminInterface
     public function getDatagrid();
 
     /**
-     * Get entity shortcut name (ie.:  AcmeBlogBundle:Post)
-     *
-     * @return string
-     */
-    public function getEntityName();
-
-    /**
      * Get entity class (ie.: Acme\BlogBundle\Entity\Post)
      *
      * @return string
