@@ -137,14 +137,6 @@ class PostAdmin extends Admin
     /**
      * @return string
      */
-    public function getEntityName()
-    {
-        return 'AcmeDemoBundle:Post';
-    }
-
-    /**
-     * @return string
-     */
     public function getEntityClass()
     {
         return 'Acme\Bundle\DemoBundle\Entity\Post';

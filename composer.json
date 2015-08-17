@@ -27,7 +27,7 @@
   ],
   "require": {
     "php": ">=5.4",
-    "symfony/framework-bundle": "~2.6",
+    "symfony/framework-bundle": "~2.7",
     "twig/twig": "~1.5",
     "knplabs/knp-menu-bundle": ">=2.0,<3.0.0",
     "knplabs/knp-menu": ">=2.0,<3.0",
