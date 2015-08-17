@@ -6,6 +6,7 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
 
+
 /**
  * Class Builder
  * @package Wanjee\Shuwee\AdminBundle\Menu
@@ -17,17 +18,20 @@ class Builder extends ContainerAware
      *
      * @param FactoryInterface $factory
      * @param array $options
+     * @return \Knp\Menu\ItemInterface
      */
     public function userMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right navbar-user');
 
-        /** @var \Symfony\Component\Security\Core\SecurityContext $securityContext */
-        $securityContext = $this->container->get('security.context');
+        /** @var \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $securityToken */
+        /** @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $securityAuthorizationChecker */
+        $securityToken = $this->get('security.token_storage');
+        $securityAuthorizationChecker = $this->get('security.authorization_checker');
 
-        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $username = $securityContext->getToken()->getUser()->getUsername();
+        if ($securityAuthorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $username = $securityToken->getToken()->getUser()->getUsername();
 
             $userMenuItem = $menu->addChild($username, array('route' => 'logout'))
                 ->setAttribute('dropdown', true)
@@ -48,6 +52,7 @@ class Builder extends ContainerAware
      *
      * @param FactoryInterface $factory
      * @param array $options
+     * @return \Knp\Menu\ItemInterface
      */
     public function sideMenu(FactoryInterface $factory, array $options)
     {
