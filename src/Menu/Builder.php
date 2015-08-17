@@ -27,8 +27,8 @@ class Builder extends ContainerAware
 
         /** @var \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $securityToken */
         /** @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $securityAuthorizationChecker */
-        $securityToken = $this->get('security.token_storage');
-        $securityAuthorizationChecker = $this->get('security.authorization_checker');
+        $securityToken = $this->container->get('security.token_storage');
+        $securityAuthorizationChecker = $this->container->get('security.authorization_checker');
 
         if ($securityAuthorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $username = $securityToken->getToken()->getUser()->getUsername();
