@@ -394,11 +394,31 @@
   margin-bottom: 0;
 }
 
+fieldset {
+  border: 1px solid #E5E5E5;
+  padding: 10px;
+  margin-bottom: 15px;
+  position: relative;
+  padding-top: 45px;
+  border-radius: 2px;
+}
+fieldset legend {
+  padding: 8px 10px;
+  margin-bottom: 0;
+  background: #FAFAFA;
+  color: #777;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 13px;
+  font-weight: bold;
+}
+
 .form-group-checkbox.has-help .checkbox {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .form-group-checkbox.has-help .help-block {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 /* file_widget */
