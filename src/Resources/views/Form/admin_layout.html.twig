@@ -66,9 +66,9 @@
             {{ form_errors(form) }}
         {% endif %}
         {% for group,items in form.vars.groups %}
-            {% if items|length > 1 %}
+            {% if items | length > 1 %}
                 <fieldset data-group="{{ group }}">
-                    <legend>{{ group|title|trans({}, translation_domain) }}</legend>
+                    <legend>{{ group | title | trans({}, translation_domain) }}</legend>
                     {% for item in items %}
                         {{ form_row(form[item]) }}
                     {% endfor %}

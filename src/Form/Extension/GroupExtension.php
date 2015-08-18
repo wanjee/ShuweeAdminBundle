@@ -24,11 +24,17 @@ class GroupExtension extends AbstractTypeExtension
         return 'form';
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array(
-            'group'
-        ));
+        $resolver
+            ->setDefined(
+                array(
+                    'group'
+                )
+            );
     }
 
     /**
@@ -43,8 +49,8 @@ class GroupExtension extends AbstractTypeExtension
         if (!empty($options['group'])) {
             $group = $options['group'];
         } else {
-            //If no group is set, make sure we have a unique index.
-            //This is needed to maintain the correct order of the fields.
+            // If no group is set, make sure we have a unique index.
+            // This is needed to maintain the correct order of the fields.
             $group = $form->getName();
         }
 
