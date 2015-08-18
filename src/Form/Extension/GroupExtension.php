@@ -48,14 +48,23 @@ class GroupExtension extends AbstractTypeExtension
     {
         if (!empty($options['group'])) {
             $group = $options['group'];
+            $type = 'group';
         } else {
             // If no group is set, make sure we have a unique index.
             // This is needed to maintain the correct order of the fields.
-            $group = $form->getName();
+            $group = 'single_' . $form->getName();
+            $type = 'single';
         }
 
         $root = $this->getRootView($view);
-        $root->vars['groups'][$group][] = $form->getName();
+
+        if (!isset($root->vars['groups'][$group])) {
+            $root->vars['groups'][$group] = array(
+                'type' => $type,
+                'items' => array(),
+            );
+        }
+        $root->vars['groups'][$group]['items'][] = $form->getName();
     }
 
     /**

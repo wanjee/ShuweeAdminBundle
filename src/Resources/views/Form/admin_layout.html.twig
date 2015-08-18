@@ -65,16 +65,16 @@
         {% if form.parent is empty %}
             {{ form_errors(form) }}
         {% endif %}
-        {% for group,items in form.vars.groups %}
-            {% if items | length > 1 %}
-                <fieldset data-group="{{ group }}">
-                    <legend>{{ group | title | trans({}, translation_domain) }}</legend>
-                    {% for item in items %}
+        {% for group_name, group in form.vars.groups %}
+            {% if group.type == 'group' %}
+                <fieldset data-group="{{ group_name }}">
+                    <legend>{{ group_name | title | trans({}, translation_domain) }}</legend>
+                    {% for item in group.items %}
                         {{ form_row(form[item]) }}
                     {% endfor %}
                 </fieldset>
             {% else %}
-                {% for item in items %}
+                {% for item in group.items %}
                     {{ form_row(form[item]) }}
                 {% endfor %}
             {% endif %}
