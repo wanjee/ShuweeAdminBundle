@@ -32,6 +32,11 @@ $ phpunit
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+### Contributors
+
+- [Pierre-Louis Peeters](https://github.com/PLPeeters)
+- [Jeroen Meeus](https://github.com/pinoniq)
+
 ## Security
 
 If you discover any security related issues, please contact me directly instead of using the issue tracker.
