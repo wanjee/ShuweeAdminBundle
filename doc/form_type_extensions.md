@@ -42,6 +42,38 @@ public function getWebPath()
 }
 ```     
 
+## GroupExtension
+
+Group form elements into fieldset.
+
+### Usage 
+
+#### In form type
+
+``` php
+->add(
+    'summary',
+    'textarea',
+    array(
+        'group' => 'Content',
+    )
+)
+->add(
+    'body',
+    'textarea',
+    array(
+        'group' => 'Content',
+    )
+)
+->add(
+    'created',
+    'textarea',
+    array(
+        'group' => 'Metadata',
+    )
+)
+```
+
 ## HelpExtension
 
 Displays a help text after a form field element.

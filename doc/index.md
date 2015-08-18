@@ -1,6 +1,5 @@
 # Getting started
 
-
 ## Installation
 
 Add ShuweeAdminBundle in your *composer.json*
