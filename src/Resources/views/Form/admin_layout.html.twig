@@ -59,3 +59,26 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block form_widget_compound %}
+    <div {{ block('widget_container_attributes') }}>
+        {% if form.parent is empty %}
+            {{ form_errors(form) }}
+        {% endif %}
+        {% for group_name, group in form.vars.groups %}
+            {% if group.type == 'group' %}
+                <fieldset data-group="{{ group_name }}">
+                    <legend>{{ group_name | title | trans({}, translation_domain) }}</legend>
+                    {% for item in group.items %}
+                        {{ form_row(form[item]) }}
+                    {% endfor %}
+                </fieldset>
+            {% else %}
+                {% for item in group.items %}
+                    {{ form_row(form[item]) }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        {{ form_rest(form) }}
+    </div>
+{% endblock form_widget_compound %}
