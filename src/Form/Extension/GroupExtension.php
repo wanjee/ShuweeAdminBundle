@@ -46,17 +46,24 @@ class GroupExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $formName = $form->getName();
+        //Make sure to exclude all form names starting with 2 underscores.
+        //For instance the prototype of a Collection starts with 2 underscores
+        if ('__' === substr($formName,0,2)) {
+            return;
+        }
+
         if (!empty($options['group'])) {
             $group = $options['group'];
             $type = 'group';
         } else {
             // If no group is set, make sure we have a unique index.
             // This is needed to maintain the correct order of the fields.
-            $group = 'single_' . $form->getName();
+            $group = 'single_' . $formName;
             $type = 'single';
         }
 
-        $root = $this->getRootView($view);
+        $root = $view->parent;
 
         if (!isset($root->vars['groups'][$group])) {
             $root->vars['groups'][$group] = array(
@@ -64,21 +71,6 @@ class GroupExtension extends AbstractTypeExtension
                 'items' => array(),
             );
         }
-        $root->vars['groups'][$group]['items'][] = $form->getName();
-    }
-
-    /**
-     * @param FormView $view
-     * @return FormView
-     */
-    public function getRootView(FormView $view)
-    {
-        $root = $view->parent;
-
-        while (null === $root && is_object($root)) {
-            $root = $root->parent;
-        }
-
-        return $root;
+        $root->vars['groups'][$group]['items'][] = $formName;
     }
 }
