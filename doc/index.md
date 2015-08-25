@@ -169,6 +169,10 @@ See [Datagrid](./datagrid.md)
 
 See [Menu](./menu.md)
 
+## Forms
+
+See [Forms](./forms.md)
+
 ## Form type extensions
 
 See [Form type extensions](./form_type_extensions.md)
