@@ -7,26 +7,34 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        {% for admin in admins %}
-            {% if admin.isGranted('LIST') or admin.isGranted('CREATE') %}
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            {{ admin_get_label(admin, true) }}
-                        </div>
-                        <div class="panel-body">
-                            {% if admin.isGranted('LIST') %}
-                                <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}</a>
-                            {% endif %}
-                            {% if admin.isGranted('CREATE') %}
-                                <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
-                                </a>
-                            {% endif %}
+    {% for section in sections %}
+        <h4>{{ section.label }}</h4>
+        <div class="row">
+            {% for admin in section.admins %}
+                {% if admin.isGranted('LIST') or admin.isGranted('CREATE') %}
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {{ admin_get_label(admin, true) }}
+                            </div>
+                            <div class="panel-body">
+                                {% if admin.isGranted('LIST') %}
+                                    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default"
+                                       type="button"><i
+                                                class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
+                                    </a>
+                                {% endif %}
+                                {% if admin.isGranted('CREATE') %}
+                                    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success"
+                                       type="button"><i
+                                                class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
+                                    </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}

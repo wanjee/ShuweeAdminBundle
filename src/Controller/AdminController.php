@@ -17,15 +17,37 @@ class AdminController extends Controller
      *
      * @Route("/", name="admin_dashboard")
      */
-    function dashboardAction() {
+    function dashboardAction()
+    {
+        $translator = $this->container->get('translator');
 
         /** @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 
-        return $this->render('ShuweeAdminBundle:Admin:dashboard.html.twig',
+        /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
+        foreach ($adminManager->getAdmins() as $alias => $admin) {
+            $section = $admin->getMenuSection();
+            if (!is_string($section)) {
+                throw new \Exception(
+                    sprintf('AdminInterface::getMenuSection() must return a string, %s returned.', gettype($section))
+                );
+            }
+
+            // Create parent menu item if it does not exist yet
+            if (!isset($sections[$section])) {
+                $sections[$section]['label'] = ucfirst(
+                    $translator->trans($section, array(), 'ShuweeAdminBundle')
+                );
+                $sections[$section]['admins'] = array();
+            }
+
+            $sections[$section]['admins'][] = $admin;
+        }
+
+        return $this->render(
+            'ShuweeAdminBundle:Admin:dashboard.html.twig',
             array(
-                /** @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin */
-                'admins' => $adminManager->getAdmins(),
+                'sections' => $sections,
             )
         );
     }
