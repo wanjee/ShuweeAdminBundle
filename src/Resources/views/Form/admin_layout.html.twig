@@ -93,7 +93,7 @@
         {%- endif -%}
         {%- if allow_add and prototype is defined -%}
             <li class="list-group-item">
-                <button type="button" class="btn btn-default" data-index="{{ groups|length }}" data-prototype="{{ form_widget(prototype)|e }}">
+                <button type="button" class="btn btn-default" data-index="{% if groups is defined %}{{ groups|length }}{% else %}0{% endif %}" data-prototype="{{ form_widget(prototype)|e }}">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                 </button>
             </li>
