@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Security;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="shuwee_login")
      * @Method("GET")
      */
     public function loginAction(Request $request)
@@ -44,7 +44,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/login_check", name="shuwee_login_check")
      */
     public function loginCheckAction()
     {
@@ -52,7 +52,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route("/logout", name="shuwee_logout")
      */
     public function logoutAction()
     {

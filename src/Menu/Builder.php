@@ -33,10 +33,10 @@ class Builder extends ContainerAware
         if ($securityAuthorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $username = $securityToken->getToken()->getUser()->getUsername();
 
-            $userMenuItem = $menu->addChild($username, array('route' => 'logout'))
+            $userMenuItem = $menu->addChild($username, array('route' => 'shuwee_logout'))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'glyphicon-user');
-            $userMenuItem->addChild('security.logout.action', array('route' => 'logout'))
+            $userMenuItem->addChild('security.logout.action', array('route' => 'shuwee_logout'))
                 ->setAttribute('icon', 'glyphicon-off')
                 ->setExtra('translation_domain', 'ShuweeAdminBundle');
         }
