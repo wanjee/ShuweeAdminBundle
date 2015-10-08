@@ -47,31 +47,6 @@ class ContentController extends Controller
     }
 
     /**
-     * Display (preview) a single entity
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
-     */
-    public function viewAction(Request $request, Admin $admin)
-    {
-        // load entity
-        $entity = $admin->loadEntity($request->attributes->get('id'));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('That resource cannot be found');
-        }
-
-        $this->secure($admin, ContentVoter::VIEW_CONTENT, $entity);
-
-        return $this->render(
-            'ShuweeAdminBundle:Content:view.html.twig',
-            array(
-                'admin' => $admin,
-                'entity' => $entity,
-            )
-        );
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
