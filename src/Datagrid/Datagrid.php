@@ -97,16 +97,6 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
-     */
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    /**
      * @param string $name
      * @param string $type A valid DatagridType implementation name
      * @param array $options List of options for the given DatagridType
