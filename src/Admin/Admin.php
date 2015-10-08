@@ -75,12 +75,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
             $routingHelper->getRoute($this, 'index', array(), true)
         );
 
-        // View
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'view'),
-            $routingHelper->getRoute($this, 'view', array('id'))
-        );
-
         // Create
         $routeCollection->add(
             $routingHelper->getRouteName($this, 'create'),
@@ -152,6 +146,20 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
             ->orderBy('e.id', 'DESC');
 
         return $queryBuilder;
+    }
+
+    /**
+     * @return bool Does the current admin implement a previewUrlCallback function
+     */
+    public function hasPreviewUrlCallback()
+    {
+        static $hasPreviewUrlCallback;
+
+        if (!isset($hasPreviewUrlCallback)) {
+            $hasPreviewUrlCallback = method_exists($this, 'getPreviewUrl');
+        }
+
+        return $hasPreviewUrlCallback;
     }
 
     /**
