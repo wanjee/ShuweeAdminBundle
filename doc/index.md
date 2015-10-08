@@ -161,6 +161,25 @@ acmedemo.post_admin:
       -  { name: shuwee.admin, alias: post }
 ```
 
+### Add preview link for the entities managed by your admin
+
+Implement getPreviewUrl() in your Admin class.
+
+``` php
+/**
+ * @return string
+ */
+public function getPreviewUrl($entity)
+{
+    return '/#!post/' . $entity->getId();
+}
+```
+
+* You must return a string (it will be passed to href attribute of links)
+* To use the Symfony router inject it in your Admin service
+* To use an absolute URL that will work on any environment inject a domain parameter in your Admin service
+* Keep in mind your URL should with any front controller (i.e. app.php, app_dev.php)
+
 ## Datagrid
 
 See [Datagrid](./datagrid.md)
