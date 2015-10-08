@@ -347,6 +347,12 @@
   background: none;
   color: #5cb85c;
 }
+.datagrid .btn-default {
+  background: none;
+  color: #000;
+  border: 0 none;
+  box-shadow: none;
+}
 .datagrid .btn-primary {
   background: none;
   color: #0fa2ce;

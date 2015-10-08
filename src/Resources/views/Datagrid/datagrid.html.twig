@@ -31,12 +31,10 @@
                 {% endfor %}
                 <td class="actions">
                     <div class="btn-toolbar">
-                        {#
                         <div class="btn-group btn-group-xs">
-                            <a class="btn btn-default" role="button" href="{{ admin_get_path(datagrid.admin, 'view', {'id': entity.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
-                        </div>
-                        #}
-                        <div class="btn-group btn-group-xs">
+                            {% if datagrid.admin.isGranted('VIEW', entity) and datagrid.admin.hasPreviewUrlCallback() %}
+                            <a class="btn btn-default" role="button" href="{{ datagrid.admin.getPreviewUrl(entity) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
+                            {% endif %}
                             {% if datagrid.admin.isGranted('UPDATE', entity) %}
                             <a class="btn btn-primary" role="button" href="{{ admin_get_path(datagrid.admin, 'update', {'id': entity.id}) }}"><i class="glyphicon glyphicon-edit"></i>  {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
                             {% endif %}
