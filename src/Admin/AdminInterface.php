@@ -44,6 +44,13 @@ interface AdminInterface
     public function getMenuSection();
 
     /**
+     * Get options for this Admin
+     *
+     * @return array List of options to configure
+     */
+    public function getOptions();
+
+    /**
      * Get grants for current user, a given action on a dedicated object
      *
      * @param string      $name

@@ -8,6 +8,7 @@ namespace Wanjee\Shuwee\AdminBundle\Admin;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,6 +34,25 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
      * @var array
      */
     protected $cacheIsGranted = array();
+
+    /**
+     * List of options values
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * Configure this admin
+     */
+    public function __construct() {
+        // Manage options
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+
+        $this->options = $resolver->resolve($this->getOptions());
+
+        return $this;
+    }
 
     /**
      * Sets the Container.
@@ -63,7 +83,9 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * Add all admin routes to the routeCollection
      *
+     * @param RouteCollection $routeCollection
      */
     public function configureRoutes(RouteCollection $routeCollection)
     {
@@ -94,6 +116,36 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
         );
     }
 
+    /**
+     * Configure options
+     *
+     * @param OptionsResolver $resolver
+     */
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            // All options should have default values to avoid forcing
+            // all existing Admin implementations
+            // to be updated when ShuweeAdminBundle is.
+            ->setDefaults(
+                array(
+                    'preview_url_callback' => null,
+                )
+            )
+            ->setAllowedTypes(
+                array(
+                    'preview_url_callback' => array('callable', 'null'),
+                )
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions() {
+        // Relies on default value configured in $this->configureOptions()
+        return array();
+    }
 
     /**
      * {@inheritdoc}
@@ -104,6 +156,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * Check
      * {@inheritdoc}
      */
     public function isGranted($name, $object = null)
@@ -149,17 +202,29 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @return bool Does the current admin implement a previewUrlCallback function
+     * Does the current admin implements a previewUrlCallback function
+     *
+     * @return bool True if current admin implements a previewUrlCallback function
      */
     public function hasPreviewUrlCallback()
     {
-        static $hasPreviewUrlCallback;
+        return is_callable($this->options['preview_url_callback']);
+    }
 
-        if (!isset($hasPreviewUrlCallback)) {
-            $hasPreviewUrlCallback = method_exists($this, 'getPreviewUrl');
+    /**
+     * Get preview url using defined callback, if any
+     *
+     * @param mixed $entity
+     *
+     * @return string Preview URL for the given entity
+     */
+    public function getPreviewUrl($entity)
+    {
+        if (!$this->hasPreviewUrlCallback()) {
+            return null;
         }
 
-        return $hasPreviewUrlCallback;
+        return call_user_func($this->options['preview_url_callback'], $entity);
     }
 
     /**
