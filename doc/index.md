@@ -161,21 +161,27 @@ acmedemo.post_admin:
       -  { name: shuwee.admin, alias: post }
 ```
 
-### Add preview link for the entities managed by your admin
+### Admin options
 
-Implement getPreviewUrl() in your Admin class.
+Implement getOptions() method to configure some behaviors of your Admin implementation.
+ 
+#### Preview URL 
 
 ``` php
 /**
- * @return string
+ * @return array Options
  */
-public function getPreviewUrl($entity)
-{
-    return '/#!post/' . $entity->getId();
+public function getOptions() {
+    return array(
+        'preview_url_callback' => function ($entity) {
+            return $entity->getId();
+        },
+    );
 }
 ```
 
-* You must return a string (it will be passed to href attribute of links)
+* Value for preview_url_callback must be a valid [callable](http://php.net/manual/en/language.types.callable.php)
+* This callback must return a string that will be used directly in href attribute.
 * To use the Symfony router inject it in your Admin service
 * To use an absolute URL that will work on any environment inject a domain parameter in your Admin service
 * Keep in mind your URL should with any front controller (i.e. app.php, app_dev.php)
