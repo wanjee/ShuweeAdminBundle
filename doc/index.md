@@ -75,8 +75,6 @@ framework:
     translator:      { fallbacks: ["%locale%"] }
 ```
 
-## Bundle usage
-
 Add ShuweeAdminBundle routing in *app/config/routing.yml*
 
 ``` yaml
@@ -85,108 +83,9 @@ shuwee_admin:
     prefix: /admin
 ```
 
-Define or generate form type for your entity.
+## Bundle usage
 
-``` bash
-bin/console generate:doctrine:form AcmeDemoBundle:Post
-``` 
-
-Define admin services in your bundle.  
-
-``` php
-
-<?php
-namespace Acme\Bundle\DemoBundle\Admin;
-
-use Wanjee\Shuwee\AdminBundle\Admin\Admin;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
-
-/**
- * Class PostAdmin
- * @package Acme\Bundle\DemoBundle\Admin
- */
-class PostAdmin extends Admin
-{
-    /**
-     * Return the main admin form for this content.
-     *
-     * @return \Symfony\Component\Form\Form
-     */
-    public function getForm()
-    {
-        // Return either a fully qualified class name
-        // or the service id of your form if it is defined as a service
-        return 'Acme\Bundle\DemoBundle\Form\PostType';
-    }
-
-    /**
-     * @return Datagrid
-     */
-    public function getDatagrid()
-    {
-        $datagrid = new Datagrid($this);
-
-        $datagrid
-          ->addField('id', 'text')
-          ->addField('title', 'text');
-
-        return $datagrid;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityClass()
-    {
-        return 'Acme\Bundle\DemoBundle\Entity\Post';
-    }
-
-    /**
-     * @return string
-     */
-    public function getLabel()
-    {
-        return '{0} Posts|{1} Post|]1,Inf] Posts';
-    }
-}
-```
-
-Register your admin class as a tagged service
-
-``` yaml
-acmedemo.post_admin:
-    class: Acme\Bundle\DemoBundle\Admin\PostAdmin
-    parent: shuwee_admin.admin_abstract
-    tags:
-      -  { name: shuwee.admin, alias: post }
-```
-
-**Note:** there is no ordering functionnality so the order in which you define your Admin services will be used to define the order of elements in menu and on dashboard.
-
-### Admin options
-
-Implement getOptions() method to configure some behaviors of your Admin implementation.
- 
-#### Preview URL 
-
-``` php
-/**
- * @return array Options
- */
-public function getOptions() {
-    return array(
-        'preview_url_callback' => function ($entity) {
-            return $entity->getId();
-        },
-    );
-}
-```
-
-* Value for preview_url_callback must be a valid [callable](http://php.net/manual/en/language.types.callable.php)
-* This callback must return a string that will be used directly in href attribute.
-* To use the Symfony router inject it in your Admin service
-* To use an absolute URL that will work on any environment inject a domain parameter in your Admin service
-* Keep in mind your URL should with any front controller (i.e. app.php, app_dev.php)
+See [Bundle usage](./usage.md)
 
 ## Datagrid
 
@@ -208,10 +107,27 @@ See [Form type extensions](./form_type_extensions.md)
 
 See [Security](./security.md)
 
-## Change copyright
+## Change branding of administration interface
 
-Override footer.html.twig template.  
+See http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
+
+### Footer
+
+Override footer.html.twig template: 
 Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/footer.html.twig
 to app/Resources/ShuweeAdminBundle/views/Partial/footer.html.twig and modify the copy to suit your needs.
 
-See http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
+### Login page
+
+Override login_header.html.twig template: 
+Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/login_header.html.twig
+to app/Resources/ShuweeAdminBundle/views/Partial/login_header.html.twig and modify the copy to suit your needs.
+ 
+### Header 
+
+Override navbar_brand.html.twig template: 
+Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/navbar_brand.html.twig
+to app/Resources/ShuweeAdminBundle/views/Partial/navbar_brand.html.twig and modify the copy to suit your needs.
+
+
+
