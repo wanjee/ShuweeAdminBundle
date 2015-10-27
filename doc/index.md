@@ -161,6 +161,8 @@ acmedemo.post_admin:
       -  { name: shuwee.admin, alias: post }
 ```
 
+**Note:** there is no ordering functionnality so the order in which you define your Admin services will be used to define the order of elements in menu and on dashboard.
+
 ### Admin options
 
 Implement getOptions() method to configure some behaviors of your Admin implementation.
