@@ -24,6 +24,7 @@ class AdminController extends Controller
         /** @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 
+        $sections = array();
         /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
             $section = $admin->getMenuSection();

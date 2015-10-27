@@ -36,5 +36,9 @@
                 {% endif %}
             {% endfor %}
         </div>
+    {% else %}
+        <div class="well well-lg">
+            It seems you don't have any Admin service defined yet.  Check out the <a href="https://github.com/wanjee/ShuweeAdminBundle/tree/master/doc">documentation</a> to figure out how to create some.
+        </div>
     {% endfor %}
 {% endblock %}
