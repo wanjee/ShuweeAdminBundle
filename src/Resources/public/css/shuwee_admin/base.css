@@ -3,7 +3,6 @@
 /* ================================== */
 /* ================================== */
 /* ================================== */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 .burger {
   cursor: pointer;
   display: inline-block;
@@ -367,6 +366,7 @@
 }
 .datagrid thead th {
   line-height: 15px;
+  font-weight: 600;
 }
 .datagrid thead th a {
   display: block;
