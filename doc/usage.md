@@ -9,7 +9,7 @@ $ bin/console generate:doctrine:entity
 ## Define or generate form type for your entity
 
 ``` bash
-bin/console generate:doctrine:form AppBundle:Post
+$ bin/console generate:doctrine:form AppBundle:Post
 ``` 
 
 ### Form extensions
