@@ -110,6 +110,30 @@ public function getOptions() {
 * To use an absolute URL that will work on any environment inject a domain parameter in your Admin service
 * Keep in mind your URL should with any front controller (i.e. app.php, app_dev.php)
 
+``` php
+private $router;
+
+/**
+ *
+ */
+function __construct(Router $router)
+{
+    // Do not forget to call parent constructor
+    parent::__construct();
+    $this->router = $router;
+}
+
+/**
+ * @return array Options
+ */
+public function getOptions() {
+    return array(
+        'preview_url_callback' => function ($entity) {
+            return $this->router->generate('post_details', array('slug' => $entity->getSlug()));
+        },
+    );
+}
+```
 
 ## Register your Admin class as a tagged service
 
