@@ -17,7 +17,7 @@ class AdminController extends Controller
      *
      * @Route("/", name="admin_dashboard")
      */
-    function dashboardAction()
+    public function dashboardAction()
     {
         $translator = $this->container->get('translator');
 

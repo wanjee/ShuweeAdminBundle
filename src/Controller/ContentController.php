@@ -262,7 +262,7 @@ class ContentController extends Controller
      * @param mixed $object
      * @return mixed
      */
-    protected function secure(Admin $admin, $attributes, $object = null)
+    private function secure(Admin $admin, $attributes, $object = null)
     {
         if (!is_array($attributes)) {
             $attributes = array($attributes);
@@ -276,7 +276,7 @@ class ContentController extends Controller
     /**
      * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
      */
-    public function getAdminRoutingHelper()
+    private function getAdminRoutingHelper()
     {
         return $this->container->get('shuwee_admin.admin_routing_helper');
     }
@@ -285,7 +285,7 @@ class ContentController extends Controller
      * Get translator helper
      * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
      */
-    public function getTranslator()
+    private function getTranslator()
     {
         return $this->container->get('translator');
     }
