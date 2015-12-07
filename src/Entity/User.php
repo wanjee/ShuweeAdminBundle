@@ -197,7 +197,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     public function isEqualTo(UserInterface $user)
     {
-        if (!$user instanceof AdminUser) {
+        if (!$user instanceof User) {
             return false;
         }
 
