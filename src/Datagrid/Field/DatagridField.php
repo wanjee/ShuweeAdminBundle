@@ -116,5 +116,4 @@ class DatagridField implements DatagridFieldInterface
         $value = $accessor->getValue($entity, $this->name);
         return $value;
     }
-
 }
