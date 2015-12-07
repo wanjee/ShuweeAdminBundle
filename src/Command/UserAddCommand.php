@@ -164,8 +164,6 @@ class UserAddCommand extends ContainerAwareCommand
             throw new \Exception('The username can not be empty');
         }
 
-        // FIXME Ensure unique
-
         return $username;
     }
 
