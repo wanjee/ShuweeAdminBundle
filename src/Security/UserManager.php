@@ -5,7 +5,6 @@ namespace Wanjee\Shuwee\AdminBundle\Security;
 use Doctrine\ORM\EntityManager;
 use Wanjee\Shuwee\AdminBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class UserManager

@@ -2,7 +2,6 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
 
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
