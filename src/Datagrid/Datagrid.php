@@ -64,7 +64,7 @@ class Datagrid implements DatagridInterface
      *
      * @param OptionsResolver $resolver
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(
@@ -155,6 +155,8 @@ class Datagrid implements DatagridInterface
     }
 
     /**
+     * Bind the Request to the Datagrid
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function bind(Request $request)
