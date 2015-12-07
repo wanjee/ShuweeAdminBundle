@@ -171,7 +171,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     public function eraseCredentials()
     {
-        // FIXME: Add implementation
+        // Nothing to do here.
     }
 
     /**
