@@ -3,7 +3,8 @@
 namespace Wanjee\Shuwee\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
 
 
@@ -11,8 +12,15 @@ use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
  * Class Builder
  * @package Wanjee\Shuwee\AdminBundle\Menu
  */
-class Builder extends ContainerAware
+class Builder implements ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * User menu builder method
      *
