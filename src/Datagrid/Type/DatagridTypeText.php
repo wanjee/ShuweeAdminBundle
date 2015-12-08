@@ -25,12 +25,8 @@ class DatagridTypeText extends DatagridType
                     'escape' => true,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'truncate' => array('null', 'integer'),
-                    'escape' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('truncate', ['null', 'integer'])
+            ->setAllowedTypes('escape', 'bool');
     }
 
     /**

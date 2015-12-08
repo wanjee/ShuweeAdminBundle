@@ -26,11 +26,7 @@ abstract class DatagridType implements DatagridTypeInterface
                     'callback'
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'callback' => 'callable'
-                )
-            );
+            ->setAllowedTypes('callback', 'callable');
     }
 
     /**

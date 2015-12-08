@@ -25,12 +25,8 @@ class DatagridTypeLink extends DatagridType
                     'mailto' => false,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'label_link' => array('string'),
-                    'mailto' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('label_link', 'string')
+            ->setAllowedTypes('mailto', 'bool');
     }
 
     /**

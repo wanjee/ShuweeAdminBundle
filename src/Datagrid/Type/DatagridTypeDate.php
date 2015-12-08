@@ -24,11 +24,7 @@ class DatagridTypeDate extends DatagridType
                     'date_format' => 'F j, Y',
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'date_format' => array('string'),
-                )
-            );
+            ->setAllowedTypes('date_format', 'string');
     }
 
     /**
