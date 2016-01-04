@@ -94,22 +94,22 @@ services:
     shuwee_admin.file_preview_type_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\FilePreviewTypeExtension
         tags:
-            - { name: form.type_extension, alias: file }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
     shuwee_admin.help_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\HelpExtension
         tags:
-            - { name: form.type_extension, alias: form }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     shuwee_admin.markdown_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\MarkdownTextareaExtension
         tags:
-            - { name: form.type_extension, alias: textarea }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
 
     shuwee_admin.group_extension:
             class: Wanjee\Shuwee\AdminBundle\Form\Extension\GroupExtension
             tags:
-                - { name: form.type_extension, alias: form }
+                - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
 
     # Events listeners
