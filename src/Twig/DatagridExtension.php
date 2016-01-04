@@ -3,6 +3,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Twig;
 
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig_Environment;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface;
 
@@ -31,53 +32,53 @@ class DatagridExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment $environment
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * @return array
      */
     public function getFunctions()
     {
         return array(
-          'datagrid' => new \Twig_Function_Method($this, 'renderDatagrid', array('is_safe' => array('html'))),
-          'datagrid_field' => new \Twig_Function_Method($this, 'renderDatagridField', array('is_safe' => array('html'))),
+          new \Twig_SimpleFunction('datagrid', array($this, 'renderDatagrid'), array('is_safe' => array('html'), 'needs_environment' => true)),
+          new \Twig_SimpleFunction('datagrid_field', array($this, 'renderDatagridField'), array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 
     /**
      * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
      */
-    public function renderDatagrid(DatagridInterface $datagrid)
+    public function renderDatagrid(Twig_Environment $env, DatagridInterface $datagrid)
     {
-        return $this->render('datagrid', array(
-          'datagrid' => $datagrid,
-        ));
+        return $this->render(
+            $env,
+            'datagrid',
+            array(
+                'datagrid' => $datagrid,
+            )
+        );
     }
 
     /**
      * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface
      */
-    public function renderDatagridField(DatagridFieldInterface $field, $entity)
+    public function renderDatagridField(Twig_Environment $env, DatagridFieldInterface $field, $entity)
     {
         /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface */
         $type = $field->getType();
 
-        return $this->render($type->getBlockName(), $type->getBlockVariables($field, $entity));
+        return $this->render(
+            $env,
+            $type->getBlockName(),
+            $type->getBlockVariables($field, $entity)
+        );
     }
 
     /**
      * @param string $block Block name
      * @param array $variables
      */
-    public function render($block, $variables = array())
+    public function render(Twig_Environment $env, $block, $variables = array())
     {
         /** @var \Twig_TemplateInterface $template */
-        $template = $this->environment->loadTemplate('ShuweeAdminBundle:Datagrid:datagrid.html.twig');
+        $template = $env->loadTemplate('ShuweeAdminBundle:Datagrid:datagrid.html.twig');
 
         return $template->renderBlock($block, $variables);
     }
