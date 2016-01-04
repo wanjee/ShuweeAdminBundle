@@ -14,6 +14,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
@@ -169,13 +170,7 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $formClass = $admin->getForm();
-
-        if (class_exists($formClass)) {
-            $formType = new $formClass();
-        } else {
-            $formType = $this->get($formClass);
-        }
+        $formType = $admin->getForm();
 
         $form = $this->createForm(
             $formType,
@@ -187,7 +182,7 @@ class ContentController extends Controller
         );
         $form->add(
             'submit',
-            'submit',
+            SubmitType::class,
             array(
                 'label' => $translator->trans('crud.create.action', array(), 'ShuweeAdminBundle'),
                 'attr' => array('class' => 'btn-success'),
@@ -206,13 +201,7 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $formClass = $admin->getForm();
-
-        if (class_exists($formClass)) {
-            $formType = new $formClass();
-        } else {
-            $formType = $this->get($formClass);
-        }
+        $formType = $admin->getForm();
 
         $form = $this->createForm(
             $formType,
@@ -224,7 +213,7 @@ class ContentController extends Controller
         );
         $form->add(
             'submit',
-            'submit',
+            SubmitType::class,
             array(
                 'label' => $translator->trans('crud.edit.action', array(), 'ShuweeAdminBundle'),
                 'attr' => array('class' => 'btn-primary'),
@@ -248,7 +237,7 @@ class ContentController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 array(
                     'label' => $translator->trans('crud.delete.action', array(), 'ShuweeAdminBundle'),
                     'attr' => array('class' => 'btn-danger'),
