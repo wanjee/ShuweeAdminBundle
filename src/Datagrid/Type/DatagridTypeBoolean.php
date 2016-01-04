@@ -21,12 +21,8 @@ class DatagridTypeBoolean extends DatagridType
                     'label_false' => 'No'
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'label_true' => array('null', 'string'),
-                    'label_false' => array('null', 'string'),
-                )
-            );
+            ->setAllowedTypes('label_true', ['null', 'string'])
+            ->setAllowedTypes('label_false', ['null', 'string']);
     }
 
     /**

@@ -132,11 +132,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
                     'preview_url_callback' => null,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'preview_url_callback' => array('callable', 'null'),
-                )
-            );
+            ->setAllowedTypes('preview_url_callback', ['callable', 'null']);
     }
 
     /**

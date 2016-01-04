@@ -23,11 +23,7 @@ class DatagridTypeCollection extends DatagridType
                     'truncate' => 80,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'truncate' => array('null', 'integer'),
-                )
-            );
+            ->setAllowedTypes('truncate', ['null', 'integer']);
     }
 
     /**

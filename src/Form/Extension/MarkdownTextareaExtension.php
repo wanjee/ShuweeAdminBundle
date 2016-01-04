@@ -42,11 +42,7 @@ class MarkdownTextareaExtension extends AbstractTypeExtension
                     'markdown' => false,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'markdown' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('markdown', 'bool');
     }
 
     /**

@@ -74,18 +74,10 @@ class Datagrid implements DatagridInterface
                     'default_sort_order' => 'asc',
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'limit_per_page' => array('integer'),
-                    'default_sort_column' => array('string'),
-                    'default_sort_order' => array('string'),
-                )
-            )
-            ->setAllowedValues(
-                array(
-                    'default_sort_order' => array('asc', 'desc'),
-                )
-            );
+            ->setAllowedTypes('limit_per_page', 'integer')
+            ->setAllowedTypes('default_sort_column', 'string')
+            ->setAllowedTypes('default_sort_order', 'string')
+            ->setAllowedValues('default_sort_order', ['asc', 'desc']);
     }
 
     /**

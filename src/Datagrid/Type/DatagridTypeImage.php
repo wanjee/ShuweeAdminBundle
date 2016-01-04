@@ -24,11 +24,7 @@ class DatagridTypeImage extends DatagridType
                     'base_path' => 'uploads',
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'base_path' => array('string'),
-                )
-            );
+            ->setAllowedTypes('base_path', 'string');
     }
 
     /**
