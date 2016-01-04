@@ -14,11 +14,6 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface;
 class DatagridExtension extends \Twig_Extension
 {
     /**
-     * @var \Twig_Environment
-     */
-    private $environment;
-
-    /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
     protected $translator;
