@@ -1,9 +1,8 @@
 # ShuweeAdminBundle
 
-[![Latest Version](https://img.shields.io/github/release/wanjee/ShuweeAdminBundle.svg?style=flat-square)](https://github.com/wanjee/ShuweeAdminBundle/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Total Downloads](https://img.shields.io/packagist/dt/wanjee/shuwee-admin-bundle.svg?style=flat-square)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
-
+[![Latest Stable Version](https://poser.pugx.org/wanjee/shuwee-admin-bundle/v/stable)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
+[![Total Downloads](https://poser.pugx.org/wanjee/shuwee-admin-bundle/downloads)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
+[![License](https://poser.pugx.org/wanjee/shuwee-admin-bundle/license)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
 
 ShuweeAdminBundle is part of Shuwee project.  It is the administration part of the project.
 
