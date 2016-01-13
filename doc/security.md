@@ -8,9 +8,8 @@ If you want to use the build in admin user provider you will need to implement y
 security:
     encoders:
         Wanjee\Shuwee\AdminBundle\Entity\User:
-            algorithm: sha1
-            iterations: 1
-            encode_as_base64: false
+            algorithm: bcrypt
+            cost: 15
 
     providers:
         shuwee_provider:
