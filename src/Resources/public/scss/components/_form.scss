@@ -63,11 +63,17 @@ fieldset {
   }
 }
 
+/* Standard textarea */
+textarea {
+  resize: vertical;
+}
+
 /* Markdown flavored textarea */
 .md-editor {
   > textarea {
     background-color: #fff;
     border-bottom: none;
     padding: 10px;
+    resize: vertical;
   }
 }
