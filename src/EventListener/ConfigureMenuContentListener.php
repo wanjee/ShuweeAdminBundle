@@ -7,6 +7,7 @@ use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 use Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
 /**
  * Class ConfigureMenuContentListener
@@ -60,6 +61,11 @@ class ConfigureMenuContentListener
 
             /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
             foreach ($this->adminManager->getAdmins() as $alias => $admin) {
+
+                // Menu item should not appear if user does not have access to the list
+                if (!$admin->isGranted(ContentVoter::LIST_CONTENT)) {
+                    continue;
+                }
 
                 // Get parent menu item label
                 $section = $admin->getMenuSection();
