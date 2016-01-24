@@ -18,7 +18,9 @@
                     </th>
                 {% endif %}
             {% endfor %}
+            {% if datagrid.getOption('show_actions_column') %}
             <th class="actions">{{ "datagrid.actions" | trans({}, 'ShuweeAdminBundle') }}</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -29,6 +31,8 @@
                         {{ datagrid_field(field, entity) }}
                     </td>
                 {% endfor %}
+
+                {% if datagrid.getOption('show_actions_column') %}
                 <td class="actions">
                     <div class="btn-toolbar">
                         <div class="btn-group btn-group-xs">
@@ -44,11 +48,12 @@
                         </div>
                     </div>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             {% set size = datagrid.fields | length %}
             <tr>
-                <td colspan="{{ size+1 }}">
+                <td colspan="{% if datagrid.getOption('show_actions_column') %}{{ size + 1 }}{% else %}{{ size }}{% endif %}">
                     {{ 'datagrid.empty_grid' | trans({}, 'ShuweeAdminBundle') }}
                     {% if datagrid.admin.isGranted('CREATE') %}
                     <a href="{{ admin_get_path(datagrid.admin, 'create') }}">{{ 'datagrid.empty_grid.create' | trans({}, 'ShuweeAdminBundle') }}</a>

@@ -72,11 +72,13 @@ class Datagrid implements DatagridInterface
                     'limit_per_page' => 10,
                     'default_sort_column' => 'id',
                     'default_sort_order' => 'asc',
+                    'show_actions_column' => true,
                 )
             )
             ->setAllowedTypes('limit_per_page', 'integer')
             ->setAllowedTypes('default_sort_column', 'string')
             ->setAllowedTypes('default_sort_order', 'string')
+            ->setAllowedTypes('show_actions_column', 'boolean')
             ->setAllowedValues('default_sort_order', ['asc', 'desc']);
     }
 
@@ -154,6 +156,28 @@ class Datagrid implements DatagridInterface
     public function bind(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasOption($name)
+    {
+        return array_key_exists($name, $this->options);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $default
+     */
+    public function getOption($name, $default = null)
+    {
+        if ($this->hasOption($name)) {
+            return $this->options[$name];
+        }
+
+        return $default;
     }
 
     /**

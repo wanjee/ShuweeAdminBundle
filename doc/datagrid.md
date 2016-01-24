@@ -15,6 +15,7 @@ public function getDatagrid()
             'limit_per_page' => 10,
             'default_sort_column' => 'id',
             'default_sort_order' => 'asc',
+            'show_actions_column' => true,
         )
     );
 
@@ -36,7 +37,8 @@ Wanjee\Shuwee\AdminBundle\Datagrid::_construct() arguments are :
  
 * *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.  
 * *default_sort_column* : Column used for default ordering. Defaults to 'id'.  
-* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'.  
+* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'. 
+* *show_actions_column* : Whether the actions column must be displayed or not.  Defaults to 'true'. 
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
