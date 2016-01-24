@@ -10,11 +10,11 @@
                 {% if field.getOption('sortable') %}
                     {% set sort_field = 'e.' ~ field.name %}
                     <th>
-                        {{ knp_pagination_sortable(datagrid.pagination, field.options['label'] | trans({}, 'ShuweeAdminBundle'), sort_field) }}
+                        {{ knp_pagination_sortable(datagrid.pagination, field.getOption('label') | trans({}, 'ShuweeAdminBundle'), sort_field) }}
                     </th>
                 {% else %}
                     <th>
-                        {{ field.options['label'] | trans({}, 'ShuweeAdminBundle') }}
+                        {{ field.getOption('label') | trans({}, 'ShuweeAdminBundle') }}
                     </th>
                 {% endif %}
             {% endfor %}
