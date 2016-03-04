@@ -26,8 +26,8 @@ class ConfigureMenuListener
     {
         $menu = $event->getMenu();
 
-        $contentMenuItem->addChild('Menu item #1', array('route' => 'admin_route_1'));
-        $contentMenuItem->addChild('Menu item #2', array('route' => 'admin_route_2'));
+        $menu->addChild('Menu item #1', array('route' => 'admin_route_1'));
+        $menu->addChild('Menu item #2', array('route' => 'admin_route_2'));
     }
 }
 ```
