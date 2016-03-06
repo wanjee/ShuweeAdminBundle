@@ -103,7 +103,7 @@
 
 {% block datagrid_text %}
     {% if value is not null %}
-        {% if truncate is defined %}{% set value = value | truncate(truncate) %}{% endif %}
+        {% if truncate is not null %}{% set value = value | truncate(truncate) %}{% endif %}
         {% if escape %}{{ value }}{% else %}{{ value | raw }}{% endif %}
     {% else %}
         <span class="text-muted">{{ default_value | default('-') }}</span>
