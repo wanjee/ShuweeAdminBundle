@@ -2,20 +2,10 @@
 
 ## Installation
 
-Add ShuweeAdminBundle in your *composer.json*
-
-``` .json
-{
-    "require": {
-        "wanjee/shuwee-admin-bundle": "dev-master"
-    }
-}
-```
-
 Ask composer to install the bundle and its dependencies
 
 ``` bash
-composer update wanjee/shuwee-admin-bundle
+composer require wanjee/shuwee-admin-bundle
 ```
 
 Register required bundles in *AppKernel.php* :
