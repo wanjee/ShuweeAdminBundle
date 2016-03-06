@@ -32,7 +32,6 @@ class UserAddCommand extends ContainerAwareCommand
             ->setHelp($this->getCommandHelp())
             ->addArgument('username', InputArgument::REQUIRED, 'Username of the new user')
             ->addArgument('password', InputArgument::REQUIRED, 'Plain password of the new user')
-            ->addArgument('email', InputArgument::REQUIRED, 'Email of the new user')
             ->addOption('roles', 'r', InputOption::VALUE_OPTIONAL, 'Roles to assign to the new user');
     }
 
@@ -92,24 +91,6 @@ class UserAddCommand extends ContainerAwareCommand
             $output->writeln('<info>Password</info>: '.str_repeat('*', strlen($password)));
         }
 
-        // Email
-        $email = null;
-        try {
-            $email = $input->getArgument('email') ? $this->emailValidator($input->getArgument('email')) : null;
-        } catch (\Exception $error) {
-            $output->writeln($console->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-
-        if (null === $email) {
-            $question = new Question('<info>Email</info>: ');
-            $question->setValidator(array($this, 'emailValidator'));
-            $question->setMaxAttempts(self::MAX_ATTEMPTS);
-            $email = $console->ask($input, $output, $question);
-            $input->setArgument('email', $email);
-        } else {
-            $output->writeln('<info>Email</info>: '.$email);
-        }
-
         $output->writeln('');
     }
 
@@ -123,11 +104,10 @@ class UserAddCommand extends ContainerAwareCommand
         $userManager = $this->getUserManager();
 
         $username = $input->getArgument('username');
-        $email = $input->getArgument('email');
         $password = $input->getArgument('password');
         $roles = $input->getOption('roles');
 
-        $userManager->createUser($username, $email, $password, explode(',', $roles));
+        $userManager->createUser($username, $password, explode(',', $roles));
 
         $output->writeln(sprintf('Created user: <info>%s</info>', $username));
 
@@ -187,25 +167,6 @@ class UserAddCommand extends ContainerAwareCommand
     }
 
     /**
-     * This internal method should be private, but it's declared as public to
-     * maintain PHP 5.3 compatibility when using it in a callback.
-     *
-     * @internal
-     */
-    public function emailValidator($email)
-    {
-        if (empty($email)) {
-            throw new \Exception('The email address can not be empty');
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('The email address is considered invalid');
-        }
-
-        return $email;
-    }
-
-    /**
      * The command help is usually included in the configure() method, but when
      * it's too long, it's better to define a separate method to maintain the
      * code readability.
@@ -215,23 +176,22 @@ class UserAddCommand extends ContainerAwareCommand
         return <<<HELP
 The <info>%command.name%</info> command creates a new user in database:
 
-  Usage: <info>php %command.full_name%</info> <comment>username password email</comment>
+  Usage: <info>php %command.full_name%</info> <comment>username password</comment>
 
 You can specify user role(s) at creation using <comment>--roles</comment> option:
 
-  Usage: <info>php %command.full_name%</info> <comment>username password email --roles=ROLE_ADMIN,ROLE_SUPER_ADMIN</comment>
+  Usage: <info>php %command.full_name%</info> <comment>username password --roles=ROLE_ADMIN,ROLE_SUPER_ADMIN</comment>
 
 If you omit any of the three required arguments, the command will ask you to
 provide the missing values:
 
-  # command will ask you for the email
-  <info>php %command.full_name%</info> <comment>username password</comment>
-
-  # command will ask you for the email and password
+  # command will ask you for the password
   <info>php %command.full_name%</info> <comment>username</comment>
 
   # command will ask you for all arguments
   <info>php %command.full_name%</info>
+
+If you omit the --roles option the account will be created without any role assigned.
 
 HELP;
     }
