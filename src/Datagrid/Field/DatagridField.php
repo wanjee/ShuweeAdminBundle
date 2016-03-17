@@ -17,7 +17,7 @@ class DatagridField implements DatagridFieldInterface
     protected $name;
 
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
+     * @var \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeInterface
      */
     protected $type;
 
@@ -29,7 +29,7 @@ class DatagridField implements DatagridFieldInterface
 
     /**
      * @param string $name
-     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface $type
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeInterface $type
      * @param array $options
      */
     function __construct($name, $type, $options = array())
@@ -42,6 +42,7 @@ class DatagridField implements DatagridFieldInterface
         $resolver->setDefaults(array(
                 'label' => ucfirst($name),
                 'sortable' => false,
+                'filterable' => false,
             )
         );
 
@@ -59,7 +60,7 @@ class DatagridField implements DatagridFieldInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeInterface
      */
     public function getType()
     {
