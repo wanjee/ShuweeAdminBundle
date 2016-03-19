@@ -25,8 +25,8 @@ interface DatagridInterface
      * Add a field to the datagrid.
      *
      * @param string $name
-     * @param string $type A valid DatagridType implementation name
-     * @param array $options List of options for the given DatagridType
+     * @param string $type A valid DatagridFieldType implementation name
+     * @param array $options List of options for the given DatagridFieldType
      */
     public function addField($name, $type, $options = array());
 

@@ -5,7 +5,7 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DatagridTypeBoolean extends DatagridType
+class DatagridFieldTypeBoolean extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

@@ -4,11 +4,12 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 /**
- * Class DatagridTypeCollection
+ * Class DatagridFieldTypeURL
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeCollection extends DatagridType
+class DatagridFieldTypeLink extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -20,10 +21,12 @@ class DatagridTypeCollection extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'truncate' => 80,
+                    'label_link' => 'Link',
+                    'mailto' => false,
                 )
             )
-            ->setAllowedTypes('truncate', ['null', 'integer']);
+            ->setAllowedTypes('label_link', 'string')
+            ->setAllowedTypes('mailto', 'bool');
     }
 
     /**
@@ -32,7 +35,7 @@ class DatagridTypeCollection extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_collection';
+        return 'datagrid_url';
     }
 
     /**
@@ -41,7 +44,7 @@ class DatagridTypeCollection extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_collection';
+        return 'datagrid_url';
     }
 
     /**
@@ -56,22 +59,10 @@ class DatagridTypeCollection extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        $data = $defaults['value'];
-
-        if ($data instanceof \Traversable) {
-            $dataArray = [];
-            foreach ($data as $element) {
-                $dataArray[] = $element->__toString();
-            }
-
-            $string = implode(', ', $dataArray);
-        } else {
-            $string = 'Unsupported.';
-        }
-
         return array(
-            'value' => $string,
-            'truncate' => $field->getOption('truncate', 80),
+            'value' => $defaults['value'],
+            'label_link' => $field->getOption('label_link', 'Link'),
+            'mailto' => $field->getOption('mailto', false),
         ) + $defaults;
     }
 }

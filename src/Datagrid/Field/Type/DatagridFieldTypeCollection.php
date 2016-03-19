@@ -4,12 +4,11 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 /**
- * Class DatagridTypeURL
+ * Class DatagridFieldTypeCollection
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeLink extends DatagridType
+class DatagridFieldTypeCollection extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -21,12 +20,10 @@ class DatagridTypeLink extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'label_link' => 'Link',
-                    'mailto' => false,
+                    'truncate' => 80,
                 )
             )
-            ->setAllowedTypes('label_link', 'string')
-            ->setAllowedTypes('mailto', 'bool');
+            ->setAllowedTypes('truncate', ['null', 'integer']);
     }
 
     /**
@@ -35,7 +32,7 @@ class DatagridTypeLink extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_url';
+        return 'datagrid_collection';
     }
 
     /**
@@ -44,7 +41,7 @@ class DatagridTypeLink extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_url';
+        return 'datagrid_collection';
     }
 
     /**
@@ -59,10 +56,22 @@ class DatagridTypeLink extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
+        $data = $defaults['value'];
+
+        if ($data instanceof \Traversable) {
+            $dataArray = [];
+            foreach ($data as $element) {
+                $dataArray[] = $element->__toString();
+            }
+
+            $string = implode(', ', $dataArray);
+        } else {
+            $string = 'Unsupported.';
+        }
+
         return array(
-            'value' => $defaults['value'],
-            'label_link' => $field->getOption('label_link', 'Link'),
-            'mailto' => $field->getOption('mailto', false),
+            'value' => $string,
+            'truncate' => $field->getOption('truncate', 80),
         ) + $defaults;
     }
 }

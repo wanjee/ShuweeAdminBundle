@@ -5,7 +5,7 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field;
 interface DatagridFieldInterface
 {
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeInterface
+     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface
      */
     public function getType();
 

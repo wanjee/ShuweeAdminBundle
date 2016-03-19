@@ -5,10 +5,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridType
+ * Class DatagridFieldType
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-abstract class DatagridType implements DatagridTypeInterface
+abstract class DatagridFieldType implements DatagridFieldTypeInterface
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

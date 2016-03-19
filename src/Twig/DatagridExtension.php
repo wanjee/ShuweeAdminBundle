@@ -56,7 +56,7 @@ class DatagridExtension extends \Twig_Extension
      */
     public function renderDatagridField(Twig_Environment $env, DatagridFieldInterface $field, $entity)
     {
-        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeInterface */
+        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface */
         $type = $field->getType();
 
         return $this->render(

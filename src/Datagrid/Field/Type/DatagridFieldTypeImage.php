@@ -6,10 +6,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridTypeDate
+ * Class DatagridFieldTypeImage
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeDate extends DatagridType
+class DatagridFieldTypeImage extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -21,10 +21,10 @@ class DatagridTypeDate extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'date_format' => 'F j, Y',
+                    'base_path' => 'uploads',
                 )
             )
-            ->setAllowedTypes('date_format', 'string');
+            ->setAllowedTypes('base_path', 'string');
     }
 
     /**
@@ -33,7 +33,7 @@ class DatagridTypeDate extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_date';
+        return 'datagrid_image';
     }
 
     /**
@@ -42,7 +42,7 @@ class DatagridTypeDate extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_date';
+        return 'datagrid_image';
     }
 
     /**
@@ -57,18 +57,16 @@ class DatagridTypeDate extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        // Date_format should be any format supported by http://php.net/manual/en/function.date.php
-        $date_format = $field->getOption('date_format', 'c');
+        $base_path = $field->getOption('base_path', 'uploads');
+        $image = $defaults['value'];
 
-        $date = $defaults['value'];
-
-        if (!$date instanceof \DateTime) {
-            throw new \Exception(sprintf('Datagrid \'date\' type expects an instance of Datetime. \'%s\' given for field \'%s\'.', gettype($date), $field->getName()));
+        $value = null;
+        if (!empty($image)) {
+            $value = $base_path . '/' . $image;
         }
 
         return array(
-          'value' => $date->format($date_format),
-          'datetime' => $date->format(\DateTime::RFC3339),
+            'value' => $value,
         ) + $defaults;
     }
 }

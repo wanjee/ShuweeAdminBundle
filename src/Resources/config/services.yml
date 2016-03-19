@@ -48,32 +48,32 @@ services:
 
     # Datagrid types
     shuwee_admin.datagrid_type_boolean:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeBoolean
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeBoolean
         tags:
             - { name: shuwee.datagrid_type , alias: boolean}
 
     shuwee_admin.datagrid_type_collection:
-            class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeCollection
+            class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeCollection
             tags:
                 - { name: shuwee.datagrid_type , alias: collection}
 
     shuwee_admin.datagrid_type_date:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeDate
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeDate
         tags:
             - { name: shuwee.datagrid_type , alias: date}
 
     shuwee_admin.datagrid_type_image:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeImage
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeImage
         tags:
             - { name: shuwee.datagrid_type , alias: image}
 
     shuwee_admin.datagrid_type_text:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeText
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeText
         tags:
             - { name: shuwee.datagrid_type , alias: text}
 
     shuwee_admin.datagrid_type_link:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridTypeLink
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeLink
         tags:
             - { name: shuwee.datagrid_type , alias: link}
 
