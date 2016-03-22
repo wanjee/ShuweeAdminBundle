@@ -27,6 +27,8 @@ public function getDatagrid()
         ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
         ->addField('comments', 'collection', array('label' => 'Comments'))
         ->addField('url', 'link', array('label' => 'URL', 'label_link' => 'Link', 'mailto' => false))
+        
+        ->addAction(DatagridListAction::class, 'csv_export', array('label' => 'Export as CSV', 'icon' => 'save-file', 'btn-style' => 'primary', 'classes' => 'export-link'))
     ;
 
     return $datagrid;
@@ -46,12 +48,18 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 * *Field type* : type of formatter to use for display
 * *Options* : array of options, depends on field type.  'label' is common.
 
+Wanjee\Shuwee\AdminBundle\Datagrid::addAction() arguments are :
+
+* *Action type* : Name of the class of a action type.  Currently only supported value is DatagridListAction::class
+* *Route name* : Name of a route to redirect user to. This route must exist and must not require any argument.
+* *Options* : array of options, depends on action type.  'label', 'icon' and 'btn-style' and 'classes' are common.
+
 ## Datagrid field types
 
 ### Shared options
 
 * *label*: Column title in datagrid. Expects string. Defaults to field name (ucfirst).
-* *sortable: Is the column sortable? Defaults to false.
+* *sortable*: Is the column sortable? Defaults to false.
 * *default_value*: What to display when field value cannot be displayed for the given type.  Defaults to null.
 * *callback*: A callback function that will be used to get the value to display in the column.  It must return the expected type of object.
  
@@ -264,3 +272,33 @@ Displays text value as link or mailto.
 #### Callback return type
 
 If a callback is defined it must return a string.
+
+
+## Datagrid actions
+
+### Shared options
+
+* *label*: Link label. Expects string. Required.
+* *icon*: Name of a bootstrap glyphicon.  Only the last part is needed. E.g.: use 'plus' to display 'glyphicon-plus'. See http://getbootstrap.com/components/#glyphicons.
+* *btn-style*: One of the available bootstrap btn style.  Only the last part is needed. E.g.: use 'primary' for 'btn-primary' style.  See http://getbootstrap.com/css/#buttons-options 
+* *classes*: A string containing the classes of your choice that you want to add on the link.
+
+### List actions
+
+Those actions are displayed at the top of the list next to the regular "Create" button.  They will allow you to add custom
+commands from the list.  A typical use case is for an export link.
+
+This is currently the only existing action type
+
+```php
+->addAction(
+    DatagridListAction::class, 
+    'csv_export', 
+    array(
+        'label' => 'Export as CSV', 
+        'icon' => 'save-file', 
+        'btn-style' => 'primary',
+        'classes' => 'export-link',
+    )
+);
+```

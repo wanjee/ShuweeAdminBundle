@@ -33,6 +33,7 @@ class DatagridExtension extends \Twig_Extension
     {
         return array(
           new \Twig_SimpleFunction('datagrid', array($this, 'renderDatagrid'), array('is_safe' => array('html'), 'needs_environment' => true)),
+          new \Twig_SimpleFunction('datagrid_list_actions', array($this, 'renderDatagridListActions'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_field', array($this, 'renderDatagridField'), array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
@@ -47,6 +48,20 @@ class DatagridExtension extends \Twig_Extension
             'datagrid',
             array(
                 'datagrid' => $datagrid,
+            )
+        );
+    }
+
+    /**
+     * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
+     */
+    public function renderDatagridListActions(Twig_Environment $env, DatagridInterface $datagrid)
+    {
+        return $this->render(
+            $env,
+            'datagrid_list_actions',
+            array(
+                'actions' => $datagrid->getActions(),
             )
         );
     }

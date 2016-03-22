@@ -19,6 +19,11 @@ class Datagrid implements DatagridInterface
     protected $admin;
 
     /**
+     * @var array List of available actions for this datagrid
+     */
+    protected $actions = array();
+
+    /**
      * @var array List of available fields for this datagrid
      */
     protected $fields = array();
@@ -88,6 +93,29 @@ class Datagrid implements DatagridInterface
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * @param string $name
+     * @param string $type A valid DatagridActionType implementation name
+     * @param array $options List of options for the given DatagridActionType
+     */
+    public function addAction($type, $route, $options = array())
+    {
+        // instanciate new field object of given type
+        $action = new $type($route, $options);
+
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Return list of all fields configured for this datagrid
+     */
+    public function getActions()
+    {
+        return $this->actions;
     }
 
     /**

@@ -2,6 +2,21 @@
     {{ block('datagrid_table') }}
 {% endblock %}
 
+{% block datagrid_list_actions %}
+    {% if actions | length > 0 %}
+        <div class="btn-group" role="group">
+        {% for action in actions %}
+            <a href="{{ path(action.route) }}" class="btn btn-sm btn-{{ action.getOption('btn-style') }} {{ action.getOption('classes') }}" type="button">
+                {% if action.getOption('icon') %}
+                    <i class="glyphicon glyphicon-{{ action.getOption('icon') }}"></i>
+                {% endif %}
+                {{ action.getOption('label') }}
+            </a>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
 {% block datagrid_table %}
     <table class="table table-striped table-hover datagrid">
         <thead>
