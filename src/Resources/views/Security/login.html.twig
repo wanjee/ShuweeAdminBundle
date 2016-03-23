@@ -17,7 +17,7 @@
             {{ 'security.login.form.invite' | trans({}, 'ShuweeAdminBundle') }}
         </div>
         <div class="panel-body">
-            <form class="form-signin" action="{{ path('login_check') }}" method="post">
+            <form class="form-signin" action="{{ path('shuwee_login_check') }}" method="post">
                 <input type="text" id="username" name="_username" value="{{ last_username }}"
                        class="input-block-level"
                        placeholder="{{ 'security.login.form.username' | trans({}, 'ShuweeAdminBundle') }}"/>
@@ -30,6 +30,3 @@
         </div>
     </div>
 {% endblock %}
-
-
-

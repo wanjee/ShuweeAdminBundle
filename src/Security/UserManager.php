@@ -5,7 +5,6 @@ namespace Wanjee\Shuwee\AdminBundle\Security;
 use Doctrine\ORM\EntityManager;
 use Wanjee\Shuwee\AdminBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class UserManager
@@ -36,12 +35,11 @@ class UserManager
 
     /**
      * @param string $userName
-     * @param string $email
      * @param string $password
      * @param array $roles
      * @return \Wanjee\Shuwee\AdminBundle\Entity\User
      */
-    public function createUser($userName, $email, $password, array $roles)
+    public function createUser($userName, $password, array $roles)
     {
         $user = new User();
 
@@ -50,7 +48,6 @@ class UserManager
 
         $user
             ->setUsername($userName)
-            ->setEmail($email)
             ->setPassword($encodedPassword)
             ->setRoles($roles);
 

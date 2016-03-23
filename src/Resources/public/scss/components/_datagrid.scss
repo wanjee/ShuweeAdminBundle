@@ -10,6 +10,12 @@
     background: none;
     color: $green;
   }
+  .btn-default {
+    background: none;
+    color: $black;
+    border: 0 none;
+    box-shadow: none;
+  }
   .btn-primary {
     background: none;
     color: $blue_0fa2ce;
@@ -25,6 +31,7 @@
   thead {
     th {
       line-height: 15px;
+      font-weight: 600;
       a {
         display: block;
 

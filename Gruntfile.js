@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.initConfig({
@@ -39,21 +39,16 @@ module.exports = function (grunt) {
             ]
         },
         sass: {
-            dist: {
-                options: {
-                    style: 'expanded',
-                    debugInfo: false,
-                    lineNumbers: false
-                },
-                files: [{
-                    expand: true,
-                    debugInfo: false,
-                    lineNumbers: false,
-                    cwd: 'src/Resources/public/scss/',
-                    src: ['*.scss'],
-                    dest: 'src/Resources/public/css/shuwee_admin/',
-                    ext: '.css'
-                }]
+            options: {
+                style: 'expanded',
+                sourceMap: true
+            },
+            app: {
+                files: {
+                    'src/Resources/public/css/shuwee_admin/base.css': [
+                        'src/Resources/public/scss/base.scss'
+                    ]
+                }
             }
         },
         uglify: {

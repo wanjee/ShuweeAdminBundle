@@ -3,6 +3,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,7 @@ class MarkdownTextareaExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'textarea';
+        return TextareaType::class;
     }
 
     /**
@@ -42,11 +43,7 @@ class MarkdownTextareaExtension extends AbstractTypeExtension
                     'markdown' => false,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'markdown' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('markdown', 'bool');
     }
 
     /**

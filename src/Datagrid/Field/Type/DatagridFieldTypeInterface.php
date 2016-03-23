@@ -1,14 +1,14 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Interface DatagridTypeInterface
- * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ * Interface DatagridFieldTypeInterface
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-interface DatagridTypeInterface
+interface DatagridFieldTypeInterface
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

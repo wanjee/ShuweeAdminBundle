@@ -2,7 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
-use Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface;
 
 /**
  * Class DatagridManager
@@ -18,9 +18,9 @@ class DatagridManager
 
     /**
      * @param string $alias
-     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeInterface $type
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
      */
-    public function registerType($alias, DatagridTypeInterface $type)
+    public function registerType($alias, DatagridFieldTypeInterface $type)
     {
         $this->types[$alias] = $type;
     }

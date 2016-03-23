@@ -1,15 +1,15 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridTypeText
- * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ * Class DatagridFieldTypeImage
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeText extends DatagridType
+class DatagridFieldTypeImage extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -21,16 +21,10 @@ class DatagridTypeText extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'truncate' => 80,
-                    'escape' => true,
+                    'base_path' => 'uploads',
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'truncate' => array('null', 'integer'),
-                    'escape' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('base_path', 'string');
     }
 
     /**
@@ -39,7 +33,7 @@ class DatagridTypeText extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_text';
+        return 'datagrid_image';
     }
 
     /**
@@ -48,7 +42,7 @@ class DatagridTypeText extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_text';
+        return 'datagrid_image';
     }
 
     /**
@@ -63,10 +57,16 @@ class DatagridTypeText extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
+        $base_path = $field->getOption('base_path', 'uploads');
+        $image = $defaults['value'];
+
+        $value = null;
+        if (!empty($image)) {
+            $value = $base_path . '/' . $image;
+        }
+
         return array(
-            'value' => $defaults['value'],
-            'truncate' => $field->getOption('truncate', 80),
-            'escape' => $field->getOption('escape', true),
+            'value' => $value,
         ) + $defaults;
     }
 }

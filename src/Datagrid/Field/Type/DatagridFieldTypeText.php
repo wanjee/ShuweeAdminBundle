@@ -1,15 +1,15 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridTypeURL
- * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ * Class DatagridFieldTypeText
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeLink extends DatagridType
+class DatagridFieldTypeText extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -21,16 +21,12 @@ class DatagridTypeLink extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'label_link' => 'Link',
-                    'mailto' => false,
+                    'truncate' => 80,
+                    'escape' => true,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'label_link' => array('string'),
-                    'mailto' => array('bool'),
-                )
-            );
+            ->setAllowedTypes('truncate', ['null', 'integer'])
+            ->setAllowedTypes('escape', 'bool');
     }
 
     /**
@@ -39,7 +35,7 @@ class DatagridTypeLink extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_url';
+        return 'datagrid_text';
     }
 
     /**
@@ -48,7 +44,7 @@ class DatagridTypeLink extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_url';
+        return 'datagrid_text';
     }
 
     /**
@@ -65,8 +61,8 @@ class DatagridTypeLink extends DatagridType
 
         return array(
             'value' => $defaults['value'],
-            'label_link' => $field->getOption('label_link', 'Link'),
-            'mailto' => $field->getOption('mailto', false),
+            'truncate' => $field->getOption('truncate', 80),
+            'escape' => $field->getOption('escape', true),
         ) + $defaults;
     }
 }

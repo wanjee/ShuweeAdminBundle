@@ -1,15 +1,15 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridTypeDate
- * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ * Class DatagridFieldTypeDate
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeDate extends DatagridType
+class DatagridFieldTypeDate extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -24,11 +24,7 @@ class DatagridTypeDate extends DatagridType
                     'date_format' => 'F j, Y',
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'date_format' => array('string'),
-                )
-            );
+            ->setAllowedTypes('date_format', 'string');
     }
 
     /**

@@ -14,6 +14,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
@@ -42,31 +43,6 @@ class ContentController extends Controller
             array(
                 'admin' => $admin,
                 'datagrid' => $datagrid,
-            )
-        );
-    }
-
-    /**
-     * Display (preview) a single entity
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
-     */
-    public function viewAction(Request $request, Admin $admin)
-    {
-        // load entity
-        $entity = $admin->loadEntity($request->attributes->get('id'));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('That resource cannot be found');
-        }
-
-        $this->secure($admin, ContentVoter::VIEW_CONTENT, $entity);
-
-        return $this->render(
-            'ShuweeAdminBundle:Content:view.html.twig',
-            array(
-                'admin' => $admin,
-                'entity' => $entity,
             )
         );
     }
@@ -194,13 +170,7 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $formClass = $admin->getForm();
-
-        if (class_exists($formClass)) {
-            $formType = new $formClass();
-        } else {
-            $formType = $this->get($formClass);
-        }
+        $formType = $admin->getForm();
 
         $form = $this->createForm(
             $formType,
@@ -212,7 +182,7 @@ class ContentController extends Controller
         );
         $form->add(
             'submit',
-            'submit',
+            SubmitType::class,
             array(
                 'label' => $translator->trans('crud.create.action', array(), 'ShuweeAdminBundle'),
                 'attr' => array('class' => 'btn-success'),
@@ -231,13 +201,7 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $formClass = $admin->getForm();
-
-        if (class_exists($formClass)) {
-            $formType = new $formClass();
-        } else {
-            $formType = $this->get($formClass);
-        }
+        $formType = $admin->getForm();
 
         $form = $this->createForm(
             $formType,
@@ -249,7 +213,7 @@ class ContentController extends Controller
         );
         $form->add(
             'submit',
-            'submit',
+            SubmitType::class,
             array(
                 'label' => $translator->trans('crud.edit.action', array(), 'ShuweeAdminBundle'),
                 'attr' => array('class' => 'btn-primary'),
@@ -273,7 +237,7 @@ class ContentController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 array(
                     'label' => $translator->trans('crud.delete.action', array(), 'ShuweeAdminBundle'),
                     'attr' => array('class' => 'btn-danger'),
@@ -287,7 +251,7 @@ class ContentController extends Controller
      * @param mixed $object
      * @return mixed
      */
-    protected function secure(Admin $admin, $attributes, $object = null)
+    private function secure(Admin $admin, $attributes, $object = null)
     {
         if (!is_array($attributes)) {
             $attributes = array($attributes);
@@ -301,7 +265,7 @@ class ContentController extends Controller
     /**
      * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
      */
-    public function getAdminRoutingHelper()
+    private function getAdminRoutingHelper()
     {
         return $this->container->get('shuwee_admin.admin_routing_helper');
     }
@@ -310,7 +274,7 @@ class ContentController extends Controller
      * Get translator helper
      * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
      */
-    public function getTranslator()
+    private function getTranslator()
     {
         return $this->container->get('translator');
     }

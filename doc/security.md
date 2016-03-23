@@ -8,9 +8,8 @@ If you want to use the build in admin user provider you will need to implement y
 security:
     encoders:
         Wanjee\Shuwee\AdminBundle\Entity\User:
-            algorithm: sha1
-            iterations: 1
-            encode_as_base64: false
+            algorithm: bcrypt
+            cost: 15
 
     providers:
         shuwee_provider:
@@ -59,7 +58,7 @@ You need to implement hasAccess method in your Admin class.  Here is a simple ex
 
 ``` php
 <?php
-namespace Acme\Bundle\DemoBundle\Admin;
+namespace AppBundle\Admin;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
@@ -68,7 +67,7 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
 
 /**
  * Class PostAdmin
- * @package Acme\Bundle\DemoBundle\Admin
+ * @package AppBundle\Admin
  */
 class PostAdmin extends Admin
 {

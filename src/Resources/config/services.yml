@@ -7,37 +7,37 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Admin\Admin
         abstract: true
         calls:
-            - [ setContainer, [@service_container]]
+            - [ setContainer, ['@service_container']]
 
     # Routing
     shuwee_admin.admin_routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
-        arguments: [@router]
+        arguments: ['@router']
 
     shuwee_admin.admin_routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
-        arguments: [@shuwee_admin.admin_manager]
+        arguments: ['@shuwee_admin.admin_manager']
         tags:
             - { name: routing.loader }
 
     # ParamConverter
     shuwee_admin.admin_param_converter:
         class: Wanjee\Shuwee\AdminBundle\Request\ParamConverter\AdminParamConverter
-        arguments: [@shuwee_admin.admin_manager]
+        arguments: ['@shuwee_admin.admin_manager']
         tags:
             - { name: request.param_converter }
 
     # Twig
     shuwee_admin.admin_twig_extension:
         class: Wanjee\Shuwee\AdminBundle\Twig\AdminExtension
-        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator]
+        arguments: ['@shuwee_admin.admin_manager', '@shuwee_admin.admin_routing_helper', '@translator']
         public: false
         tags:
             - { name: twig.extension }
 
     shuwee_admin.datagrid_twig_extension:
         class: Wanjee\Shuwee\AdminBundle\Twig\DatagridExtension
-        arguments: [@translator]
+        arguments: ['@translator']
         public: false
         tags:
             - { name: twig.extension }
@@ -48,32 +48,32 @@ services:
 
     # Datagrid types
     shuwee_admin.datagrid_type_boolean:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeBoolean
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeBoolean
         tags:
             - { name: shuwee.datagrid_type , alias: boolean}
 
     shuwee_admin.datagrid_type_collection:
-            class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeCollection
+            class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeCollection
             tags:
                 - { name: shuwee.datagrid_type , alias: collection}
 
     shuwee_admin.datagrid_type_date:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeDate
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeDate
         tags:
             - { name: shuwee.datagrid_type , alias: date}
 
     shuwee_admin.datagrid_type_image:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeImage
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeImage
         tags:
             - { name: shuwee.datagrid_type , alias: image}
 
     shuwee_admin.datagrid_type_text:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeText
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeText
         tags:
             - { name: shuwee.datagrid_type , alias: text}
 
     shuwee_admin.datagrid_type_link:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Type\DatagridTypeLink
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeLink
         tags:
             - { name: shuwee.datagrid_type , alias: link}
 
@@ -81,11 +81,11 @@ services:
     # Security
     shuwee_admin.security.user_manager:
         class: Wanjee\Shuwee\AdminBundle\Security\UserManager
-        arguments: [@security.encoder_factory, @doctrine.orm.entity_manager]
+        arguments: ['@security.encoder_factory', '@doctrine.orm.entity_manager']
 
     shuwee_admin.security.content_voter:
         class:      Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter
-        arguments: [@shuwee_admin.admin_manager]
+        arguments: ['@shuwee_admin.admin_manager']
         public:     false
         tags:
            - { name: security.voter }
@@ -94,27 +94,27 @@ services:
     shuwee_admin.file_preview_type_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\FilePreviewTypeExtension
         tags:
-            - { name: form.type_extension, alias: file }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
     shuwee_admin.help_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\HelpExtension
         tags:
-            - { name: form.type_extension, alias: form }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     shuwee_admin.markdown_extension:
         class: Wanjee\Shuwee\AdminBundle\Form\Extension\MarkdownTextareaExtension
         tags:
-            - { name: form.type_extension, alias: textarea }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
 
     shuwee_admin.group_extension:
             class: Wanjee\Shuwee\AdminBundle\Form\Extension\GroupExtension
             tags:
-                - { name: form.type_extension, alias: form }
+                - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
 
     # Events listeners
     shuwee_admin.admin_configure_menu_listener:
         class: Wanjee\Shuwee\AdminBundle\EventListener\ConfigureMenuContentListener
-        arguments: [@shuwee_admin.admin_manager, @shuwee_admin.admin_routing_helper, @translator, @security.authorization_checker]
+        arguments: ['@shuwee_admin.admin_manager', '@shuwee_admin.admin_routing_helper', '@translator', '@security.authorization_checker']
         tags:
             - { name: kernel.event_listener, event: shuwee_admin.menu_configure, method: onMenuConfigure }

@@ -1,18 +1,13 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Action;
 
-interface DatagridFieldInterface
+interface DatagridActionInterface
 {
-    /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface
-     */
-    public function getType();
-
     /**
      * @return string
      */
-    public function getName();
+    public function getRoute();
 
     /**
      * @return array
@@ -36,10 +31,4 @@ interface DatagridFieldInterface
      * @param mixed $value
      */
     public function setOption($name, $value);
-
-    /**
-     * @param mixed $row
-     * @return mixed
-     */
-    public function getData($row);
 }

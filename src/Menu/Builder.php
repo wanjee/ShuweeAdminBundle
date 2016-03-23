@@ -3,7 +3,8 @@
 namespace Wanjee\Shuwee\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
 
 
@@ -11,8 +12,15 @@ use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
  * Class Builder
  * @package Wanjee\Shuwee\AdminBundle\Menu
  */
-class Builder extends ContainerAware
+class Builder implements ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * User menu builder method
      *
@@ -33,10 +41,10 @@ class Builder extends ContainerAware
         if ($securityAuthorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $username = $securityToken->getToken()->getUser()->getUsername();
 
-            $userMenuItem = $menu->addChild($username, array('route' => 'logout'))
+            $userMenuItem = $menu->addChild($username, array('route' => 'shuwee_logout'))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'glyphicon-user');
-            $userMenuItem->addChild('security.logout.action', array('route' => 'logout'))
+            $userMenuItem->addChild('security.logout.action', array('route' => 'shuwee_logout'))
                 ->setAttribute('icon', 'glyphicon-off')
                 ->setExtra('translation_domain', 'ShuweeAdminBundle');
         }

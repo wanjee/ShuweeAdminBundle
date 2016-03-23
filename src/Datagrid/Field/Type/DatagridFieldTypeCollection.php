@@ -1,15 +1,14 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 /**
- * Class DatagridTypeImage
- * @package Wanjee\Shuwee\AdminBundle\Datagrid\Type
+ * Class DatagridFieldTypeCollection
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
  */
-class DatagridTypeImage extends DatagridType
+class DatagridFieldTypeCollection extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -21,14 +20,10 @@ class DatagridTypeImage extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'base_path' => 'uploads',
+                    'truncate' => 80,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'base_path' => array('string'),
-                )
-            );
+            ->setAllowedTypes('truncate', ['null', 'integer']);
     }
 
     /**
@@ -37,7 +32,7 @@ class DatagridTypeImage extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_image';
+        return 'datagrid_collection';
     }
 
     /**
@@ -46,7 +41,7 @@ class DatagridTypeImage extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_image';
+        return 'datagrid_collection';
     }
 
     /**
@@ -61,16 +56,22 @@ class DatagridTypeImage extends DatagridType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        $base_path = $field->getOption('base_path', 'uploads');
-        $image = $defaults['value'];
+        $data = $defaults['value'];
 
-        $value = null;
-        if (!empty($image)) {
-            $value = $base_path . '/' . $image;
+        if ($data instanceof \Traversable) {
+            $dataArray = [];
+            foreach ($data as $element) {
+                $dataArray[] = $element->__toString();
+            }
+
+            $string = implode(', ', $dataArray);
+        } else {
+            $string = 'Unsupported.';
         }
 
         return array(
-            'value' => $value,
+            'value' => $string,
+            'truncate' => $field->getOption('truncate', 80),
         ) + $defaults;
     }
 }

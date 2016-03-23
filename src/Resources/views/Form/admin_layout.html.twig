@@ -44,7 +44,6 @@
         <div class="{{ container_class }}">
             {% if preview_url is defined %}
                 <div class="file-preview">
-                    {# TODO if not an image, display a link #}
                     <img src="{{ preview_url | imagine_filter('form_file_preview') }}" data-src="{{ asset(preview_url) }}" alt="{{ preview_basename }}" title="{{ preview_basename }}" class="img-rounded" />
 
                     <div class="btn-group btn-group-xs">
@@ -93,7 +92,7 @@
         {%- endif -%}
         {%- if allow_add and prototype is defined -%}
             <li class="list-group-item">
-                <button type="button" class="btn btn-default" data-index="{{ groups|length }}" data-prototype="{{ form_widget(prototype)|e }}">
+                <button type="button" class="btn btn-default" data-index="{% if groups is defined %}{{ groups|length }}{% else %}0{% endif %}" data-prototype="{{ form_widget(prototype)|e }}">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                 </button>
             </li>

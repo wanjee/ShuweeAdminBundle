@@ -36,16 +36,6 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=64, unique=true)
-     * @Assert\NotBlank
-     * @Assert\Email
-     * @Assert\Length(max=128)
-     */
-    protected $email;
-
-    /**
      * @var array
      *
      * @ORM\Column(type="simple_array")
@@ -102,25 +92,6 @@ class User implements UserInterface, \Serializable, EquatableInterface
     }
 
     /**
-     * @param string $email
-     * @return User $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * @return \Symfony\Component\Security\Core\User\Role[]
      */
     public function getRoles()
@@ -171,7 +142,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     public function eraseCredentials()
     {
-        // FIXME: Add implementation
+        // Nothing to do here.
     }
 
     /**
@@ -197,7 +168,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     public function isEqualTo(UserInterface $user)
     {
-        if (!$user instanceof AdminUser) {
+        if (!$user instanceof User) {
             return false;
         }
 

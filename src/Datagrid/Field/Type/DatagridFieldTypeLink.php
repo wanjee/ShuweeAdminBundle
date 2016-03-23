@@ -1,11 +1,15 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Datagrid\Type;
-
+namespace Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DatagridTypeBoolean extends DatagridType
+
+/**
+ * Class DatagridFieldTypeURL
+ * @package Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type
+ */
+class DatagridFieldTypeLink extends DatagridFieldType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -17,16 +21,12 @@ class DatagridTypeBoolean extends DatagridType
         $resolver
             ->setDefaults(
                 array(
-                    'label_true' => 'Yes',
-                    'label_false' => 'No'
+                    'label_link' => 'Link',
+                    'mailto' => false,
                 )
             )
-            ->setAllowedTypes(
-                array(
-                    'label_true' => array('null', 'string'),
-                    'label_false' => array('null', 'string'),
-                )
-            );
+            ->setAllowedTypes('label_link', 'string')
+            ->setAllowedTypes('mailto', 'bool');
     }
 
     /**
@@ -35,7 +35,7 @@ class DatagridTypeBoolean extends DatagridType
      */
     public function getName()
     {
-        return 'datagrid_boolean';
+        return 'datagrid_url';
     }
 
     /**
@@ -44,7 +44,7 @@ class DatagridTypeBoolean extends DatagridType
      */
     public function getBlockName()
     {
-        return 'datagrid_boolean';
+        return 'datagrid_url';
     }
 
     /**
@@ -60,9 +60,9 @@ class DatagridTypeBoolean extends DatagridType
         $defaults = parent::getBlockVariables($field, $entity);
 
         return array(
-            'value' => (bool) $defaults['value'],
-            'label_true' => $field->getOption('label_true', 'Yes'),
-            'label_false' => $field->getOption('label_false', 'No'),
+            'value' => $defaults['value'],
+            'label_link' => $field->getOption('label_link', 'Link'),
+            'mailto' => $field->getOption('mailto', false),
         ) + $defaults;
     }
 }

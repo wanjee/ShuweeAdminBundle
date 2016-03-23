@@ -45,8 +45,8 @@ class AdminExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-          'admin_get_label' => new \Twig_Function_Method($this, 'getAdminLabel'),
-          'admin_get_path' => new \Twig_Function_Method($this, 'getAdminPath'),
+          new \Twig_SimpleFunction('admin_get_label', array($this, 'getAdminLabel')),
+          new \Twig_SimpleFunction('admin_get_path', array($this, 'getAdminPath')),
         );
     }
 
