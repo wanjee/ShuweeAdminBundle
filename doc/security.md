@@ -38,7 +38,7 @@ security:
     role_hierarchy:
         ROLE_ADMIN:       [ROLE_USER]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-``` 
+```
 
 Configure the encoder as you prefer.  Define *ShuweeAdminBundle:User* as a provider, use that provider in your firewall.
 You can define other firewalls for i.e. frontend or a webservice if needed.
@@ -48,7 +48,7 @@ You can define other firewalls for i.e. frontend or a webservice if needed.
 To generate a new user use the dedicated command
 
 ``` bash
-bin/console shuwee:admin:user:add username password email --roles=ROLE_ADMIN
+bin/console shuwee:admin:user:add username password --roles=ROLE_ADMIN
 ```
 
 
@@ -108,4 +108,4 @@ class PostAdmin extends Admin
         }
     }
 }
-```     
+```
