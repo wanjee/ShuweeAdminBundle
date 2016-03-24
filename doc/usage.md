@@ -89,6 +89,21 @@ See how you can define which user can create, view, update or delete content: [S
 
 Implement getOptions() method to configure some behaviors of your Admin implementation.
  
+#### Description 
+
+``` php
+/**
+ * @return array Options
+ */
+public function getOptions() {
+    return array(
+        'description' => 'A blog post is a journal entry.',
+    );
+}
+```
+
+* Value for preview_url_callback must be a valid [callable](http://php.net/manual/en/language.types.callable.php)
+ 
 #### Preview URL 
 
 ``` php

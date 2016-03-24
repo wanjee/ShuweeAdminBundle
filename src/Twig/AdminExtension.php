@@ -46,19 +46,9 @@ class AdminExtension extends \Twig_Extension
     {
         return array(
           new \Twig_SimpleFunction('admin_get_label', array($this, 'getAdminLabel')),
+          new \Twig_SimpleFunction('admin_get_option', array($this, 'getAdminOption')),
           new \Twig_SimpleFunction('admin_get_path', array($this, 'getAdminPath')),
         );
-    }
-
-    /**
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
-     * @param string $action
-     * @param array $params
-     * @return string
-     */
-    public function getAdminPath(AdminInterface $admin, $action, array $params = array())
-    {
-        return $this->routingHelper->generateUrl($admin, $action, $params);
     }
 
     /**
@@ -73,6 +63,30 @@ class AdminExtension extends \Twig_Extension
         return $this->translator->transChoice($admin->getLabel(), $count, array(), 'ShuweeAdminBundle');
     }
 
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param bool $number
+     * @return string
+     */
+    public function getAdminOption(AdminInterface $admin, $option)
+    {
+        return $admin->getOption($option);
+    }
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param string $action
+     * @param array $params
+     * @return string
+     */
+    public function getAdminPath(AdminInterface $admin, $action, array $params = array())
+    {
+        return $this->routingHelper->generateUrl($admin, $action, $params);
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'shuwee_admin_extension';

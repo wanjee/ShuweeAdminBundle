@@ -18,16 +18,18 @@
                                 {{ admin_get_label(admin, true) }}
                             </div>
                             <div class="panel-body">
+                                {%- set admin_description = admin_get_option(admin, 'description') -%}
+                                {%- if admin_description is not empty -%}
+                                <p class="text-muted">{{ admin_description }}</p>
+                                {%- endif -%}
                                 {% if admin.isGranted('LIST') %}
-                                    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default"
-                                       type="button"><i
-                                                class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
+                                    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button">
+                                        <i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
                                     </a>
                                 {% endif %}
                                 {% if admin.isGranted('CREATE') %}
-                                    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success"
-                                       type="button"><i
-                                                class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
+                                    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button">
+                                        <i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
                                     </a>
                                 {% endif %}
                             </div>

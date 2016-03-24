@@ -130,17 +130,42 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
             ->setDefaults(
                 array(
                     'preview_url_callback' => null,
+                    'description' => null,
                 )
             )
-            ->setAllowedTypes('preview_url_callback', ['callable', 'null']);
+            ->setAllowedTypes('preview_url_callback', ['callable', 'null'])
+            ->setAllowedTypes('description', ['string', 'null']);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getOptions() {
-        // Relies on default value configured in $this->configureOptions()
+        // Must be extended in children classes
+        // Relies otherwise on default value configured in $this->configureOptions()
         return array();
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasOption($name)
+    {
+        return array_key_exists($name, $this->options);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $default
+     */
+    public function getOption($name, $default = null)
+    {
+        if ($this->hasOption($name)) {
+            return $this->options[$name];
+        }
+
+        return $default;
     }
 
     /**
