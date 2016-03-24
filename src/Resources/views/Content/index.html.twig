@@ -3,10 +3,12 @@
 {% block page_title %}{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
 
 {% block action_links %}
+{% spaceless %}
     {% if admin.isGranted('CREATE') %}
     <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
     {{ datagrid_list_actions(datagrid) }}
+{% endspaceless %}
 {%  endblock %}
 
 {% block header_title %}
