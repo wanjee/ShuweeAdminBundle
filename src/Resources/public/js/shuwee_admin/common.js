@@ -50,6 +50,11 @@
 		$('table.datagrid').cardtable({myClass:'stacktable small-only'});
 	};
 
+	// bootstrap tooltip plugin
+	var tooltipPlugin = function(){
+        $('[data-toggle="tooltip"]').tooltip();
+	};
+
 	// sidebar open/collapse
 	var collapse = function(){
 		$('#layer-sidebar').each( function(){
@@ -79,6 +84,7 @@
 	$(document).ready(function() {
 		shuweeMenu();
 		stacktablePlugin();
+        tooltipPlugin();
 		onMobile();
 		adminMobile();
 		collapse();

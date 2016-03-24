@@ -18,16 +18,19 @@
         <thead>
         <tr>
             {% for field in datagrid.fields %}
-                {% if field.getOption('sortable') %}
-                    {% set sort_field = 'e.' ~ field.name %}
-                    <th>
-                        {{ knp_pagination_sortable(datagrid.pagination, field.getOption('label') | trans({}, 'ShuweeAdminBundle'), sort_field) }}
-                    </th>
+                {% set help_text = field.getOption('help') %}
+                {% if help_text is not empty %}
+                    <th data-toggle="tooltip" data-placement="top" data-container="body" title="{{ help_text | trans({}, 'ShuweeAdminBundle') | e('html_attr')}}">
                 {% else %}
                     <th>
-                        {{ field.getOption('label') | trans({}, 'ShuweeAdminBundle') }}
-                    </th>
                 {% endif %}
+                {% if field.getOption('sortable') %}
+                    {% set sort_field = 'e.' ~ field.name %}
+                    {{ knp_pagination_sortable(datagrid.pagination, field.getOption('label') | trans({}, 'ShuweeAdminBundle'), sort_field) }}
+                {% else %}
+                    {{ field.getOption('label') | trans({}, 'ShuweeAdminBundle') }}
+                {% endif %}
+                </th>
             {% endfor %}
             {% if datagrid.getOption('show_actions_column') %}
             <th class="actions">{{ "datagrid.actions" | trans({}, 'ShuweeAdminBundle') }}</th>

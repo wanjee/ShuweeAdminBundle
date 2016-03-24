@@ -82,6 +82,15 @@ h1 {
   }
 }
 
+/* Tooltips */
+.tooltip.top .tooltip-inner {
+  background-color: #fff;
+  color: #333;
+}
+.tooltip.top .tooltip-arrow {
+  border-top-color: #fff;
+}
+
 
 @media (max-width: 480px) {
   .glyphicon-sort {

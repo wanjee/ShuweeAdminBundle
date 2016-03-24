@@ -60,6 +60,7 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addAction() arguments are :
 
 * *label*: Column title in datagrid. Expects string. Defaults to field name (ucfirst).
 * *sortable*: Is the column sortable? Defaults to false.
+* *help*: Help text to be displayed on the column title.
 * *default_value*: What to display when field value cannot be displayed for the given type.  Defaults to null.
 * *callback*: A callback function that will be used to get the value to display in the column.  It must return the expected type of object.
  
