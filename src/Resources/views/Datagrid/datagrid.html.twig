@@ -7,8 +7,8 @@
         <a href="{{ path(action.route) }}" class="btn btn-sm btn-{{ action.getOption('btn-style') }} {{ action.getOption('classes') }}" type="button">
             {%- if action.getOption('icon') -%}
                 <i class="glyphicon glyphicon-{{ action.getOption('icon') }}"></i>
-            {%- endif -%}
-            {{- action.getOption('label') -}}
+            {%- endif %}
+            {{ action.getOption('label') -}}
         </a>
     {%- endfor -%}
 {% endblock %}
