@@ -1,6 +1,6 @@
 {% extends "ShuweeAdminBundle::page_content.html.twig" %}
 
-{% block page_title %}{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
+{% block page_title %}{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} - {{ admin_get_label(admin, true) }}{% endblock %}
 
 {% block action_links %}
 {% spaceless %}

@@ -2,7 +2,7 @@
 
 {% form_theme form 'ShuweeAdminBundle:Form:admin_layout.html.twig' %}
 
-{% block page_title %}{{ 'crud.delete' | trans({}, 'ShuweeAdminBundle') }}{% endblock %}
+{% block page_title %}{{ 'crud.delete' | trans({}, 'ShuweeAdminBundle') }} - {{ admin_get_label(admin) }}{% endblock %}
 
 {% block action_links %}
 {% spaceless %}
