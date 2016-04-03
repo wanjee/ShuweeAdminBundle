@@ -8,36 +8,44 @@
 
 {% block body %}
     {% for section in sections %}
-        <h4>{{ section.label }}</h4>
-        <div class="row">
-            {% for admin in section.admins %}
-                {% if admin.isGranted('LIST') or admin.isGranted('CREATE') %}
-                    <div class="col-xs-12 col-sm-4 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                {{ admin_get_label(admin, true) }}
-                            </div>
-                            <div class="panel-body">
-                                {%- set admin_description = admin_get_option(admin, 'description') -%}
-                                {%- if admin_description is not empty -%}
-                                <p class="text-muted">{{ admin_description }}</p>
-                                {%- endif -%}
-                                {% if admin.isGranted('LIST') %}
-                                    <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button">
-                                        <i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
-                                    </a>
-                                {% endif %}
-                                {% if admin.isGranted('CREATE') %}
-                                    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button">
-                                        <i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
-                                    </a>
-                                {% endif %}
+        {% for admin in section.admins %}
+            {% if admin.isGranted('LIST') or admin.isGranted('CREATE') %}
+                {% if loop.first %}
+                    {# Add section in first loop item to ensure we have at least one item to display into it #}
+                    <h4>{{ section.label }}</h4>
+                    <div class="row">
+                {% endif %}
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {{ admin_get_label(admin, true) }}
+                                </div>
+                                <div class="panel-body">
+                                    {%- set admin_description = admin_get_option(admin, 'description') -%}
+                                    {%- if admin_description is not empty -%}
+                                        <p class="text-muted">{{ admin_description }}</p>
+                                    {%- endif -%}
+                                    {% if admin.isGranted('LIST') %}
+                                        <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default"
+                                           type="button">
+                                            <i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
+                                        </a>
+                                    {% endif %}
+                                    {% if admin.isGranted('CREATE') %}
+                                        <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success"
+                                           type="button">
+                                            <i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
+                {% if loop.last %}
+                    {# Close section in last loop item to ensure we had at least one item to display into it #}
                     </div>
                 {% endif %}
-            {% endfor %}
-        </div>
+            {% endif %}
+        {% endfor %}
     {% else %}
         <div class="well well-lg">
             It seems you don't have any Admin service defined yet.  Check out the <a href="https://github.com/wanjee/ShuweeAdminBundle/tree/master/doc">documentation</a> to figure out how to create some.
