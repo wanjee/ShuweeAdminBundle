@@ -170,8 +170,6 @@ class ContentController extends Controller
      */
     public function toggleAction(Request $request, Admin $admin)
     {
-        $translator = $this->getTranslator();
-
         $entity = $admin->loadEntity($request->attributes->get('id'));
 
         if (!$entity) {
