@@ -14,8 +14,11 @@
 namespace Wanjee\Shuwee\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
@@ -159,6 +162,43 @@ class ContentController extends Controller
                 'form' => $form->createView(),
             )
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     */
+    public function toggleAction(Request $request, Admin $admin)
+    {
+        $translator = $this->getTranslator();
+
+        $entity = $admin->loadEntity($request->attributes->get('id'));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('The resource cannot be found');
+        }
+
+        $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
+
+        $field = $request->attributes->get('field');
+
+        // Get current entity property value
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $current = $accessor->getValue($entity, $field);
+        // Update it to its contrary
+        $accessor->setValue($entity, $field, !$current);
+
+        try {
+            // Apply
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return new JsonResponse(!$current, 200);
+        } catch (Exception $e) {
+            // return json response
+            return new JsonResponse($current, 500);
+        }
     }
 
     /**

@@ -114,6 +114,12 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
             $routingHelper->getRouteName($this, 'delete'),
             $routingHelper->getRoute($this, 'delete', array('id'))
         );
+
+        // Toggle field
+        $routeCollection->add(
+            $routingHelper->getRouteName($this, 'toggle'),
+            $routingHelper->getRoute($this, 'toggle', array('id', 'field'))
+        );
     }
 
     /**
@@ -204,7 +210,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
         // allow access by default
         return VoterInterface::ACCESS_GRANTED;
     }
-
 
     /**
      * Get basic QueryBuilder to populate Datagrid

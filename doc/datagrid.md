@@ -133,6 +133,7 @@ Cast field value to a boolean and display it as a "yes" or "no" label.
 
 * *label_true*: Label to show when field value resolves to TRUE. Expects null or string. Defaults to 'Yes'.
 * *label_false*: Label to show when field value resolves to FALSE. Expects null or string. Defaults to 'No'.
+* *toggle*: Display a link to switch from one value to another directly in the datagrid.  Expects boolean.  Defaults to false.
 
 #### Callback return type
 

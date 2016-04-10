@@ -47,6 +47,7 @@ abstract class DatagridFieldType implements DatagridFieldTypeInterface
         }
 
         return array(
+            'field_name' => $field->getName(),
             'value' => $value,
             'default_value' => $field->getOption('default_value', 'null'),
         );

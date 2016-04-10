@@ -42,7 +42,7 @@
             <tr>
                 {% for field in datagrid.fields %}
                     <td>
-                        {{ datagrid_field(field, entity) }}
+                        {{ datagrid_field(datagrid, field, entity) }}
                     </td>
                 {% endfor %}
 
@@ -86,7 +86,19 @@
     label_true|trans({}, 'ShuweeAdminBundle') :
     label_false|trans({}, 'ShuweeAdminBundle') %}
 
+    {% if toggle %}
+    <a
+        href="{{ admin_get_path(datagrid.admin, 'toggle', {'id': entity.id, 'field': field_name}) }}"
+        title="{{ 'datagrid.boolean.toggle' | trans({}, 'ShuweeAdminBundle') }}"
+        class="label {{ label_class }} toggleable"
+        data-true='{"class": "label-success", "text": "{{ label_true|trans({}, 'ShuweeAdminBundle') }}"}'
+        data-false='{"class": "label-danger", "text": "{{ label_false|trans({}, 'ShuweeAdminBundle') }}"}'
+        >
+        {{ text }}
+    </a>
+    {% else %}
     <span class="label {{ label_class }}">{{ text }}</span>
+    {% endif %}
 {% endblock %}
 
 {% block datagrid_collection %}

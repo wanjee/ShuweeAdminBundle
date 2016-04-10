@@ -69,7 +69,7 @@ class DatagridExtension extends \Twig_Extension
     /**
      * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface
      */
-    public function renderDatagridField(Twig_Environment $env, DatagridFieldInterface $field, $entity)
+    public function renderDatagridField(Twig_Environment $env, DatagridInterface $datagrid, DatagridFieldInterface $field, $entity)
     {
         /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface */
         $type = $field->getType();
@@ -77,7 +77,7 @@ class DatagridExtension extends \Twig_Extension
         return $this->render(
             $env,
             $type->getBlockName(),
-            $type->getBlockVariables($field, $entity)
+            $type->getBlockVariables($field, $entity) + array('datagrid' => $datagrid, 'entity' => $entity)
         );
     }
 
