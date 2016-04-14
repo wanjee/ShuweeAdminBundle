@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Twig;
 
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig_Environment;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
@@ -19,11 +20,17 @@ class DatagridExtension extends \Twig_Extension
     protected $translator;
 
     /**
+     * @var \Symfony\Component\Security\Csrf\CsrfTokenManager
+     */
+    protected $csrfTokenManager;
+
+    /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator = null)
+    public function __construct(TranslatorInterface $translator = null, CsrfTokenManager $csrfTokenManager)
     {
         $this->translator = $translator;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -35,6 +42,7 @@ class DatagridExtension extends \Twig_Extension
           new \Twig_SimpleFunction('datagrid', array($this, 'renderDatagrid'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_list_actions', array($this, 'renderDatagridListActions'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_field', array($this, 'renderDatagridField'), array('is_safe' => array('html'), 'needs_environment' => true)),
+          new \Twig_SimpleFunction('datagrid_get_csrf_token', array($this, 'getCsrfToken')),
         );
     }
 
@@ -79,6 +87,22 @@ class DatagridExtension extends \Twig_Extension
             $type->getBlockName(),
             $type->getBlockVariables($field, $entity) + array('datagrid' => $datagrid, 'entity' => $entity)
         );
+    }
+
+    /**
+     * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridFieldInterface
+     */
+    public function getCsrfToken()
+    {
+        static $token;
+
+        if (!isset($token)) {
+            // Invalidate any token generated on another page
+            $this->csrfTokenManager->refreshToken('datagrid');
+            $token = $this->csrfTokenManager->getToken('datagrid');
+        }
+
+        return $token;
     }
 
     /**

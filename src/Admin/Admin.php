@@ -118,7 +118,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
         // Toggle field
         $routeCollection->add(
             $routingHelper->getRouteName($this, 'toggle'),
-            $routingHelper->getRoute($this, 'toggle', array('id', 'field'))
+            $routingHelper->getRoute($this, 'toggle', array('id', 'field', 'token'))
         );
     }
 

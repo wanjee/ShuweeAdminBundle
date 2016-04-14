@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
@@ -177,6 +178,14 @@ class ContentController extends Controller
         }
 
         $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
+
+        // Check provided token is valid to prevent csrf attacks
+        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
+        $csrfTokenManager = $this->get('security.csrf.token_manager');
+        $token = new CsrfToken('datagrid', $request->attributes->get('token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw new AccessDeniedException('Invalid token');
+        }
 
         $field = $request->attributes->get('field');
 

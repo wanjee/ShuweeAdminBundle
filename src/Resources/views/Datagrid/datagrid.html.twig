@@ -88,7 +88,7 @@
 
     {% if toggle and datagrid.admin.isGranted('UPDATE', entity) %}
     <a
-        href="{{ admin_get_path(datagrid.admin, 'toggle', {'id': entity.id, 'field': field_name}) }}"
+        href="{{ admin_get_path(datagrid.admin, 'toggle', {'id': entity.id, 'field': field_name, 'token': datagrid_get_csrf_token()}) }}"
         title="{{ 'datagrid.boolean.toggle' | trans({}, 'ShuweeAdminBundle') }}"
         class="label {{ label_class }} toggleable"
         data-true='{"class": "label-success", "text": "{{ label_true|trans({}, 'ShuweeAdminBundle') }}"}'
