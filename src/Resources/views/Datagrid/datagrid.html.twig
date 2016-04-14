@@ -86,7 +86,7 @@
     label_true|trans({}, 'ShuweeAdminBundle') :
     label_false|trans({}, 'ShuweeAdminBundle') %}
 
-    {% if toggle %}
+    {% if toggle and datagrid.admin.isGranted('UPDATE', entity) %}
     <a
         href="{{ admin_get_path(datagrid.admin, 'toggle', {'id': entity.id, 'field': field_name}) }}"
         title="{{ 'datagrid.boolean.toggle' | trans({}, 'ShuweeAdminBundle') }}"
