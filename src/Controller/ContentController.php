@@ -3,9 +3,6 @@
 /**
  * Symfony controller for all CRUD related actions.
  *
- * PHP Version 5
- *
- * @category CategoryName
  * @package  Shuwee\AdminBundle\Controller
  * @author   Wanjee <wanjee.be@gmail.com>
  *
@@ -31,6 +28,8 @@ use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 class ContentController extends Controller
 {
     /**
+     * List all entities of the type supported by given Admin
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
@@ -52,6 +51,8 @@ class ContentController extends Controller
     }
 
     /**
+     * Create an entity of given type
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
@@ -88,6 +89,10 @@ class ContentController extends Controller
     }
 
     /**
+     * Update a given entity
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
@@ -127,6 +132,10 @@ class ContentController extends Controller
     }
 
     /**
+     * Delete a given entity (with confirmation form)
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
@@ -166,6 +175,10 @@ class ContentController extends Controller
     }
 
     /**
+     * Toggles the value of a given field
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
@@ -178,14 +191,7 @@ class ContentController extends Controller
         }
 
         $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
-
-        // Check provided token is valid to prevent csrf attacks
-        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
-        $csrfTokenManager = $this->get('security.csrf.token_manager');
-        $token = new CsrfToken('datagrid', $request->attributes->get('token'));
-        if (!$csrfTokenManager->isTokenValid($token)) {
-            throw new AccessDeniedException('Invalid token');
-        }
+        $this->checkCsrf($request->attributes->get('token'));
 
         $field = $request->attributes->get('field');
 
@@ -210,8 +216,11 @@ class ContentController extends Controller
 
     /**
      * Get form to create a new entity.
+     *
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      * @param $entity
+     *
+     * @return \Symfony\Component\Form\Form
      */
     private function getCreateForm(Admin $admin, $entity)
     {
@@ -241,8 +250,11 @@ class ContentController extends Controller
 
     /**
      * Get form to update an existing entity.
+     *
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      * @param $entity
+     *
+     * @return \Symfony\Component\Form\Form
      */
     private function getUpdateForm(Admin $admin, $entity)
     {
@@ -272,8 +284,11 @@ class ContentController extends Controller
 
     /**
      * Get form to update an existing entity.
+     *
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      * @param $entity
+     *
+     * @return \Symfony\Component\Form\Form
      */
     private function getDeleteForm(Admin $admin, $entity)
     {
@@ -294,9 +309,12 @@ class ContentController extends Controller
     }
 
     /**
+     * Ensure a user is allowed to access an action
+     *
+     * @throws AccessDeniedException if user is not allowed
+     *
      * @param mixed $attributes
      * @param mixed $object
-     * @return mixed
      */
     private function secure(Admin $admin, $attributes, $object = null)
     {
@@ -306,6 +324,26 @@ class ContentController extends Controller
 
         if (!$admin->isGranted($attributes, $object)) {
             throw new AccessDeniedException();
+        }
+    }
+
+    /**
+     * Check provided token is valid to prevent csrf attacks
+     *
+     * @throws AccessDeniedException if the token cannot be verified
+     *
+     * @param Request $request
+     * @param string $parameter
+     */
+    private function checkCsrf(Request $request, $parameter = 'token')
+    {
+        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
+        $csrfTokenManager = $this->get('security.csrf.token_manager');
+
+        $token = new CsrfToken('datagrid', $request->attributes->get($parameter));
+
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw new AccessDeniedException('Invalid token');
         }
     }
 
