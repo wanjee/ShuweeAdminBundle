@@ -71,7 +71,9 @@ class ContentController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $admin->prePersist($entity);
             $em->persist($entity);
+            $admin->postPersist($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.create.success', array(), 'ShuweeAdminBundle'));
@@ -113,7 +115,9 @@ class ContentController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $admin->preUpdate($entity);
             $em->persist($entity);
+            $admin->postUpdate($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.edit.success', array(), 'ShuweeAdminBundle'));
@@ -156,7 +160,9 @@ class ContentController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $admin->preRemove($entity);
             $em->remove($entity);
+            $admin->postRemove($entity);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.delete.success', array(), 'ShuweeAdminBundle'));
