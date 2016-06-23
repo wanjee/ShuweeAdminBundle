@@ -264,6 +264,54 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postPersist($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preRemove($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove($entity)
+    {
+        // Do nothing here, let Admin implementations define it if required
+    }
+
+    /**
      * @return \Doctrine\ORM\EntityManager
      */
     public function getEntityManager()

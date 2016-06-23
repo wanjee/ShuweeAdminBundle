@@ -150,6 +150,19 @@ public function getOptions() {
 }
 ```
 
+### Lifecycle callbacks
+
+6 callbacks will be triggered on CRUD operations.
+
+* prePersist: before an entity is persisted for the first time (create form)
+* postPersist: after an entity is persisted for the first time (create form)
+* preUpdate: before an entity is updated (update form)
+* postUpdate: after an entity is updated (update form)
+* preRemove: before an entity is removed (delete form)
+* postRemove: after an entity is removed (delete form)
+ 
+Implement the corresponding method in your Admin class and it will be executed.  All callbacks are given a single $entity parameter. 
+
 ## Register your Admin class as a tagged service
 
 ``` yaml
