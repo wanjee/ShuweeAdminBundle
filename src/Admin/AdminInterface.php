@@ -53,7 +53,7 @@ interface AdminInterface
     /**
      * Get grants for current user, a given action on a dedicated object
      *
-     * @param string      $name
+     * @param string $name
      * @param object|null $object
      *
      * @return boolean
@@ -72,4 +72,34 @@ interface AdminInterface
      * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
      */
     public function hasAccess(UserInterface $user, $action, $object = null);
+
+    /**
+     * @param mixed $entity
+     */
+    public function preUpdate($entity);
+
+    /**
+     * @param mixed $entity
+     */
+    public function postUpdate($entity);
+
+    /**
+     * @param mixed $entity
+     */
+    public function prePersist($entity);
+
+    /**
+     * @param mixed $entity
+     */
+    public function postPersist($entity);
+
+    /**
+     * @param mixed $entity
+     */
+    public function preRemove($entity);
+
+    /**
+     * @param mixed $entity
+     */
+    public function postRemove($entity);
 }
