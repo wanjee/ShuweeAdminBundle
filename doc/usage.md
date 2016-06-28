@@ -27,6 +27,9 @@ namespace AppBundle\Admin;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
 
+use AppBundle\Form\PostType;
+use AppBundle\Entity\Post;
+
 /**
  * Class PostAdmin
  * @package AppBundle\Admin
@@ -42,7 +45,7 @@ class PostAdmin extends Admin
     {
         // Return either a fully qualified class name
         // or the service id of your form if it is defined as a service
-        return 'AppBundle\Form\PostType';
+        return PostType::class;
     }
 
     /**
@@ -64,7 +67,7 @@ class PostAdmin extends Admin
      */
     public function getEntityClass()
     {
-        return 'AppBundle\Entity\Post';
+        return Post::class;
     }
 
     /**
@@ -173,4 +176,4 @@ app.post_admin:
       -  { name: shuwee.admin, alias: post }
 ```
 
-**Note:** there is no ordering functionnality so the order in which you define your Admin services will be used to define the order of elements in menu and on dashboard.
+**Note:** there is no ordering functionality yet so currently the order in which your services are defined is the display order (in menu and dashboard).

@@ -17,7 +17,7 @@ can create a fake accessor to it.
 ``` php
 ->add(
     'file',
-    'file',
+    FileType::class,
     array(
         'label' => 'Image',
         'required' => false,
@@ -53,21 +53,21 @@ Group form elements into fieldset.
 ``` php
 ->add(
     'summary',
-    'textarea',
+    TextareaType::class,
     array(
         'group' => 'Content',
     )
 )
 ->add(
     'body',
-    'textarea',
+    TextareaType::class,
     array(
         'group' => 'Content',
     )
 )
 ->add(
     'created',
-    'textarea',
+    TextareaType::class,
     array(
         'group' => 'Metadata',
     )
@@ -85,7 +85,7 @@ Displays a help text after a form field element.
 ``` php
 ->add(
     'summary',
-    'textarea',
+    TextareaType::class,
     array(
         'help' => 'Keep is short and easy to understand.  It is a catchy introduction to your main content.',
     )
@@ -103,7 +103,7 @@ Displays a markdown editor on a text area.
 ``` php
 ->add(
     'summary',
-    'textarea',
+    TextareaType::class,
     array(
         'markdown' => true,
     )
