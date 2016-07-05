@@ -338,15 +338,14 @@ class ContentController extends Controller
      *
      * @throws AccessDeniedException if the token cannot be verified
      *
-     * @param Request $request
-     * @param string $parameter
+     * @param String $tokenValue
      */
-    private function checkCsrf(Request $request, $parameter = 'token')
+    private function checkCsrf($tokenValue)
     {
         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
         $csrfTokenManager = $this->get('security.csrf.token_manager');
 
-        $token = new CsrfToken('datagrid', $request->attributes->get($parameter));
+        $token = new CsrfToken('datagrid', $tokenValue);
 
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw new AccessDeniedException('Invalid token');
