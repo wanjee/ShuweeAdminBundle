@@ -134,10 +134,8 @@ private $router;
 /**
  *
  */
-function __construct(Router $router)
+function setRouter(Router $router)
 {
-    // Do not forget to call parent constructor
-    parent::__construct();
     $this->router = $router;
 }
 
@@ -151,6 +149,18 @@ public function getOptions() {
         },
     );
 }
+```
+
+And in your service definition
+
+``` yaml
+    app.post_admin:
+        class: AppBundle\Admin\PostAdmin
+        parent: shuwee_admin.admin_abstract
+        calls:
+             - [setRouter, ['@router.default']]
+        tags:
+            -  { name: shuwee.admin, alias: post }
 ```
 
 ### Lifecycle callbacks
