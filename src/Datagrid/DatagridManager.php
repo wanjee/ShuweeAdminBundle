@@ -29,7 +29,9 @@ class DatagridManager
     public function registerType(DatagridFieldTypeInterface $type, $alias = null)
     {
         $this->types[get_class($type)] = $type;
-        $this->alias[$alias] = get_class($type);
+        if (null !== $alias) {
+            $this->alias[$alias] = get_class($type);
+        }
     }
 
     /**
