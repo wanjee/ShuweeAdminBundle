@@ -23,13 +23,13 @@ class DatagridManager
     private $alias = array();
 
     /**
-     * @param string $alias
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
+     * @param string $alias
      */
-    public function registerType($alias, DatagridFieldTypeInterface $type)
+    public function registerType(DatagridFieldTypeInterface $type, $alias = null)
     {
         $this->types[get_class($type)] = $type;
-        $this->alias[$alias] = $type;
+        $this->alias[$alias] = get_class($type);
     }
 
     /**
@@ -41,6 +41,7 @@ class DatagridManager
     {
         // is $type an alias?
         if (array_key_exists($type, $this->alias)) {
+            @trigger_error('Alias is deprecated and should be replaced by it\'s FQN', E_USER_DEPRECATED);
             $type = $this->alias[$type];
         }
 
