@@ -144,7 +144,7 @@ If a callback is defined it must return a value that can be converted to boolean
 ``` php
 ->addField(
     'comments',
-    'collection',
+    DatagridFieldTypeCollection::class,
     array(
         'label' => 'Comments'
     )
@@ -176,7 +176,7 @@ If a callback is defined it must return an array or an object that implements th
 ``` php
 ->addField(
     'published',
-    'date',
+    DatagridFieldTypeDate::class,
     array(
         'label' => 'Date',
         'date_format' => 'F j, Y'
@@ -199,7 +199,7 @@ If a callback is defined it must return a [Datetime](http://php.net/manual/en/cl
 ``` php
 ->addField(
     'image',
-    'image',
+    DatagridFieldTypeImage::class,
     array(
         'label' => 'Image',
         'base_path' => 'uploads/images'
@@ -223,7 +223,7 @@ If a callback is defined it must return a string: the image name.
 ``` php
 ->addField(
     'id',
-    'text',
+    DatagridFieldTypeText::class,
     array(
         'label' => '#'
     )
@@ -255,7 +255,7 @@ If a callback is defined it must return a string.
 ``` php
 ->addField(
     'id',
-    'link',
+    DatagridFieldTypeLink::class,
     array(
         'label' => '#',
         'label_link' => 'Link',
