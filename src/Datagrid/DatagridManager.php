@@ -17,12 +17,19 @@ class DatagridManager
     private $types = array();
 
     /**
+     * @var array list of alias of field types
+     * @deprecated
+     */
+    private $alias = array();
+
+    /**
      * @param string $alias
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
      */
     public function registerType($alias, DatagridFieldTypeInterface $type)
     {
-        $this->types[$alias] = $type;
+        $this->types[get_class($type)] = $type;
+        $this->alias[$alias] = $type;
     }
 
     /**
@@ -30,12 +37,18 @@ class DatagridManager
      * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
      * @throws \InvalidArgumentException
      */
-    public function getType($alias)
+    public function getType($type)
     {
-        if (!array_key_exists($alias, $this->types)) {
-            throw new \InvalidArgumentException(sprintf('The type %s has not been registered with the datagrid', $alias));
+        // is $type an alias?
+        if (array_key_exists($type, $this->alias)) {
+            $type = $this->alias[$type];
         }
-        return $this->types[$alias];
+
+        if (!array_key_exists($type, $this->types)) {
+            throw new \InvalidArgumentException(sprintf('The type %s has not been registered with the datagrid', $type));
+        }
+
+        return $this->types[$type];
     }
 
     /**

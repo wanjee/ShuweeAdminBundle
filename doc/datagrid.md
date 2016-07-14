@@ -20,14 +20,14 @@ public function getDatagrid()
     );
 
     $datagrid
-        ->addField('id', 'text', array('label' => '#'))
-        ->addField('title', 'text', array('label' => 'Title', 'sortable' => true))
-        ->addField('status', 'boolean', array('label' => 'Published'))
-        ->addField('published', 'date', array('label' => 'Date', 'date_format' => 'F j, Y'))
-        ->addField('image', 'image', array('label' => 'Image', 'base_path' => 'uploads/images'))
-        ->addField('comments', 'collection', array('label' => 'Comments'))
-        ->addField('url', 'link', array('label' => 'URL', 'label_link' => 'Link', 'mailto' => false))
-        
+        ->addField('id', DatagridFieldTypeText::class, array('label' => '#'))
+        ->addField('title', DatagridFieldTypeText::class, array('label' => 'Title', 'sortable' => true))
+        ->addField('status', DatagridFieldTypeBoolean::class, array('label' => 'Published'))
+        ->addField('published', DatagridFieldTypeDate::class, array('label' => 'Date', 'date_format' => 'F j, Y'))
+        ->addField('image', DatagridFieldTypeImage::class, array('label' => 'Image', 'base_path' => 'uploads/images'))
+        ->addField('comments', DatagridFieldTypeCollection::class, array('label' => 'Comments'))
+        ->addField('url', DatagridFieldTypeLink::class, array('label' => 'URL', 'label_link' => 'Link', 'mailto' => false))
+
         ->addAction(DatagridListAction::class, 'csv_export', array('label' => 'Export as CSV', 'icon' => 'save-file', 'btn-style' => 'primary', 'classes' => 'export-link'))
     ;
 
@@ -36,16 +36,16 @@ public function getDatagrid()
 ```
 
 Wanjee\Shuwee\AdminBundle\Datagrid::_construct() arguments are :
- 
-* *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.  
-* *default_sort_column* : Column used for default ordering. Defaults to 'id'.  
-* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'. 
-* *show_actions_column* : Whether the actions column must be displayed or not.  Defaults to 'true'. 
+
+* *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.
+* *default_sort_column* : Column used for default ordering. Defaults to 'id'.
+* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'.
+* *show_actions_column* : Whether the actions column must be displayed or not.  Defaults to 'true'.
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
 * *Field name* : name of the field, in your entity, you want to expose
-* *Field type* : type of formatter to use for display
+* *Field type* : the fully qualified class name of the type of formatter to use for display
 * *Options* : array of options, depends on field type.  'label' is common.
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addAction() arguments are :
@@ -63,7 +63,7 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addAction() arguments are :
 * *help*: Help text to be displayed on the column title.
 * *default_value*: What to display when field value cannot be displayed for the given type.  Defaults to null.
 * *callback*: A callback function that will be used to get the value to display in the column.  It must return the expected type of object.
- 
+
 #### Callback
 
 Callback option expects a [callable](http://php.net/manual/en/language.types.callable.php).  This callable will receive the entity as unique argument.
@@ -74,7 +74,7 @@ Here are some callback examples.
 ```php
 ->addField(
     'callback',
-    'text',
+    DatagridFieldTypeText::class,
     array(
         'label' => 'Comments',
         'callback' => function ($entity) {
@@ -89,7 +89,7 @@ Here are some callback examples.
 ```php
 ->addField(
     'callback',
-    'boolean',
+    DatagridFieldTypeBoolean::class,
     array(
         'label' => 'Has comments',
         'callback' => function ($entity) {
@@ -104,7 +104,7 @@ Here are some callback examples.
 ```php
 ->addField(
     'callback',
-    'link',
+    DatagridFieldTypeLink::class,
     array(
         'label' => 'Search',
         'label_link' => 'Search',
@@ -119,13 +119,13 @@ Here are some callback examples.
 
 ``` php
 ->addField(
-    'status', 
-    'boolean', 
+    'status',
+    DatagridFieldTypeBoolean::class,
     array(
         'label' => 'Published'
     )
 )
-``` 
+```
 
 Cast field value to a boolean and display it as a "yes" or "no" label.
 
@@ -143,13 +143,13 @@ If a callback is defined it must return a value that can be converted to boolean
 
 ``` php
 ->addField(
-    'comments', 
-    'collection', 
+    'comments',
+    'collection',
     array(
         'label' => 'Comments'
     )
 );
-``` 
+```
 
 Field value is escaped and truncated (80 chars) by default. Your collection must be an array or implement the ``Traversable`` interface, and its elements must have a ``__toString()`` method.
 
@@ -161,7 +161,7 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
-``` 
+```
 
 #### Options
 
@@ -175,14 +175,14 @@ If a callback is defined it must return an array or an object that implements th
 
 ``` php
 ->addField(
-    'published', 
-    'date', 
+    'published',
+    'date',
     array(
-        'label' => 'Date', 
+        'label' => 'Date',
         'date_format' => 'F j, Y'
     )
 )
-``` 
+```
 
 Expects field column to be a \Datetime instance ('datetime' column type), will throw an exception otherwise.
 
@@ -198,14 +198,14 @@ If a callback is defined it must return a [Datetime](http://php.net/manual/en/cl
 
 ``` php
 ->addField(
-    'image', 
-    'image', 
+    'image',
+    'image',
     array(
-        'label' => 'Image', 
+        'label' => 'Image',
         'base_path' => 'uploads/images'
     )
 )
-``` 
+```
 
 If specified it is appended to the image value.  No trailing slash.
 This type use LiipImagineBundle to resize the image.
@@ -222,13 +222,13 @@ If a callback is defined it must return a string: the image name.
 
 ``` php
 ->addField(
-    'id', 
-    'text', 
+    'id',
+    'text',
     array(
         'label' => '#'
     )
 );
-``` 
+```
 
 Field value is escaped and truncated (80 chars) by default.
 
@@ -240,7 +240,7 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
-``` 
+```
 #### Options
 
 * *truncate*: Length of max string length to display for the complete list.  Expects null or integer. Defaults to 80.
@@ -254,15 +254,15 @@ If a callback is defined it must return a string.
 
 ``` php
 ->addField(
-    'id', 
-    'link', 
+    'id',
+    'link',
     array(
-        'label' => '#', 
-        'label_link' => 'Link', 
+        'label' => '#',
+        'label_link' => 'Link',
         'mailto' => false
     )
 );
-``` 
+```
 
 Displays text value as link or mailto.
 
@@ -282,7 +282,7 @@ If a callback is defined it must return a string.
 
 * *label*: Link label. Expects string. Required.
 * *icon*: Name of a bootstrap glyphicon.  Only the last part is needed. E.g.: use 'plus' to display 'glyphicon-plus'. See http://getbootstrap.com/components/#glyphicons.
-* *btn-style*: One of the available bootstrap btn style.  Only the last part is needed. E.g.: use 'primary' for 'btn-primary' style.  See http://getbootstrap.com/css/#buttons-options 
+* *btn-style*: One of the available bootstrap btn style.  Only the last part is needed. E.g.: use 'primary' for 'btn-primary' style.  See http://getbootstrap.com/css/#buttons-options
 * *classes*: A string containing the classes of your choice that you want to add on the link.
 
 ### List actions
@@ -294,11 +294,11 @@ This is currently the only existing action type
 
 ```php
 ->addAction(
-    DatagridListAction::class, 
-    'csv_export', 
+    DatagridListAction::class,
+    'csv_export',
     array(
-        'label' => 'Export as CSV', 
-        'icon' => 'save-file', 
+        'label' => 'Export as CSV',
+        'icon' => 'save-file',
         'btn-style' => 'primary',
         'classes' => 'export-link',
     )
