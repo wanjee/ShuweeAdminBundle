@@ -7,7 +7,10 @@
         </div>
         {% include "ShuweeAdminBundle:Partial:navbar_brand.html.twig" %}
     </div>
-    <div class="navbar-collapse navbar-ex1-collapse collapse">
-        {{ knp_menu_render('ShuweeAdminBundle:Builder:userMenu', {'currentClass': 'active', 'template': 'ShuweeAdminBundle:Menu:knp_menu_navbar.html.twig'}) }}
-    </div><!--/.nav-collapse -->
+    {% if app.user %}
+        <p class="navbar-collapse collapse navbar-text navbar-user navbar-right">
+            <span class="hidden-xs">{{ app.user.username }} | </span>
+            <a href="{{ logout_path() }}"><i class="glyphicon glyphicon-log-out"></i> {{ 'security.logout.action' | trans({}, 'ShuweeAdminBundle') }}</a>
+        </p>
+    {% endif %}
 </div>

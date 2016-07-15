@@ -32,7 +32,7 @@
     text-decoration: none;
     position: relative;
     line-height: 1.3;
-    padding: 10px 25px;
+    padding: 10px 10px;
     display: block;
   }
   li {
@@ -87,9 +87,12 @@
         }
       }
     }
-    ul {
+    ul.menu_level_1 {
       display: none;
       background: $grey_f4f4f4;
+      li > a {
+        padding-left: 20px;
+      }
     }
     &.current_ancestor {
       ul {
