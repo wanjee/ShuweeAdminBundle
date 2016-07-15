@@ -16,7 +16,7 @@ services:
 
     shuwee_admin.admin_routing_loader:
         class: Wanjee\Shuwee\AdminBundle\Routing\Loader\AdminLoader
-        arguments: ['@shuwee_admin.admin_manager']
+        arguments: ['@shuwee_admin.admin_manager', '@shuwee_admin.admin_routing_helper']
         tags:
             - { name: routing.loader }
 

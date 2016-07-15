@@ -25,11 +25,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     protected $container;
 
     /**
-     * @var string
-     */
-    protected $alias;
-
-    /**
      * Cache for grants
      * @var array
      */
@@ -67,59 +62,14 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @param string $alias
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-    }
-
-    /**
      * @return string
      */
     public function getAlias()
     {
-        return $this->alias;
-    }
+        $fqnParts = explode('\\', get_class($this));
+        $className = strtolower(end($fqnParts));
 
-    /**
-     * Add all admin routes to the routeCollection
-     *
-     * @param RouteCollection $routeCollection
-     */
-    public function configureRoutes(RouteCollection $routeCollection)
-    {
-        $routingHelper = $this->getAdminRoutingHelper();
-
-        // List
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'index'),
-            $routingHelper->getRoute($this, 'index', array(), true)
-        );
-
-        // Create
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'create'),
-            $routingHelper->getRoute($this, 'create')
-        );
-
-        // Update
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'update'),
-            $routingHelper->getRoute($this, 'update', array('id'))
-        );
-
-        // Delete
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'delete'),
-            $routingHelper->getRoute($this, 'delete', array('id'))
-        );
-
-        // Toggle field
-        $routeCollection->add(
-            $routingHelper->getRouteName($this, 'toggle'),
-            $routingHelper->getRoute($this, 'toggle', array('id', 'field', 'token'))
-        );
+        return str_replace('admin', '', $className);
     }
 
     /**
@@ -212,22 +162,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * Get basic QueryBuilder to populate Datagrid
-     *
-     * @return \Doctrine\DBAL\Query\QueryBuilder;
-     */
-    public function getQueryBuilder()
-    {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder
-            ->select('e')
-            ->from($this->getEntityClass(), 'e')
-            ->orderBy('e.id', 'DESC');
-
-        return $queryBuilder;
-    }
-
-    /**
      * Does the current admin implements a previewUrlCallback function
      *
      * @return bool True if current admin implements a previewUrlCallback function
@@ -251,16 +185,6 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
         }
 
         return call_user_func($this->options['preview_url_callback'], $entity);
-    }
-
-    /**
-     * Load a single entity by its id
-     *
-     * @param int $id
-     */
-    public function loadEntity($id)
-    {
-        return $this->getEntityManager()->getRepository($this->getEntityClass())->find($id);
     }
 
     /**
@@ -312,6 +236,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * @deprecated
      * @return \Doctrine\ORM\EntityManager
      */
     public function getEntityManager()
@@ -328,6 +253,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * @deprecated
      * @return \Doctrine\Bundle\DoctrineBundle\Registry
      */
     public function getDoctrine()
@@ -336,6 +262,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
+     * @deprecated
      * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
      */
     public function getDatagridManager()
@@ -344,14 +271,7 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
-     */
-    public function getAdminRoutingHelper()
-    {
-        return $this->container->get('shuwee_admin.admin_routing_helper');
-    }
-
-    /**
+     * @deprecated
      * @return \Knp\Component\Pager\Paginator
      */
     public function getKnpPaginator()
