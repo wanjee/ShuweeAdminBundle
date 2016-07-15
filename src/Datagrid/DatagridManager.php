@@ -17,12 +17,21 @@ class DatagridManager
     private $types = array();
 
     /**
-     * @param string $alias
-     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
+     * @var array list of alias of field types
+     * @deprecated
      */
-    public function registerType($alias, DatagridFieldTypeInterface $type)
+    private $alias = array();
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
+     * @param string $alias
+     */
+    public function registerType(DatagridFieldTypeInterface $type, $alias = null)
     {
-        $this->types[$alias] = $type;
+        $this->types[get_class($type)] = $type;
+        if (null !== $alias) {
+            $this->alias[$alias] = get_class($type);
+        }
     }
 
     /**
@@ -30,12 +39,19 @@ class DatagridManager
      * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
      * @throws \InvalidArgumentException
      */
-    public function getType($alias)
+    public function getType($type)
     {
-        if (!array_key_exists($alias, $this->types)) {
-            throw new \InvalidArgumentException(sprintf('The type %s has not been registered with the datagrid', $alias));
+        // is $type an alias?
+        if (array_key_exists($type, $this->alias)) {
+            @trigger_error('Alias is deprecated and should be replaced by it\'s FQN', E_USER_DEPRECATED);
+            $type = $this->alias[$type];
         }
-        return $this->types[$alias];
+
+        if (!array_key_exists($type, $this->types)) {
+            throw new \InvalidArgumentException(sprintf('The type %s has not been registered with the datagrid', $type));
+        }
+
+        return $this->types[$type];
     }
 
     /**

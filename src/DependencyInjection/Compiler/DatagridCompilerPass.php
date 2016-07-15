@@ -25,9 +25,9 @@ class DatagridCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $alias = isset($attributes['alias'])
                   ? $attributes["alias"]
-                  : $id;
+                  : null;
 
-                $definition->addMethodCall('registerType', array($alias, new Reference($id)));
+                $definition->addMethodCall('registerType', array(new Reference($id), $alias));
             }
         }
     }
