@@ -10,11 +10,11 @@ $ bin/console generate:doctrine:entity
 
 ``` bash
 $ bin/console generate:doctrine:form AppBundle:Post
-``` 
+```
 
 ### Form extensions
 
-Shuwee comes with a few utilities you can use to improve the look & feel an usability of your entity form.  
+Shuwee comes with a few utilities you can use to improve the look & feel an usability of your entity form.
 
 See [Form type extensions](./form_type_extensions.md)
 
@@ -91,8 +91,8 @@ See how you can define which user can create, view, update or delete content: [S
 ### Admin options
 
 Implement getOptions() method to configure some behaviors of your Admin implementation.
- 
-#### Description 
+
+#### Description
 
 ``` php
 /**
@@ -106,8 +106,8 @@ public function getOptions() {
 ```
 
 * Value for preview_url_callback must be a valid [callable](http://php.net/manual/en/language.types.callable.php)
- 
-#### Preview URL 
+
+#### Preview URL
 
 ``` php
 /**
@@ -160,7 +160,7 @@ And in your service definition
         calls:
              - [setRouter, ['@router.default']]
         tags:
-            -  { name: shuwee.admin, alias: post }
+            -  { name: shuwee.admin }
 ```
 
 ### Lifecycle callbacks
@@ -173,8 +173,8 @@ And in your service definition
 * postUpdate: after an entity is updated (update form)
 * preRemove: before an entity is removed (delete form)
 * postRemove: after an entity is removed (delete form)
- 
-Implement the corresponding method in your Admin class and it will be executed.  All callbacks are given a single $entity parameter. 
+
+Implement the corresponding method in your Admin class and it will be executed.  All callbacks are given a single $entity parameter.
 
 ## Register your Admin class as a tagged service
 
@@ -183,7 +183,23 @@ app.post_admin:
     class: AppBundle\Admin\PostAdmin
     parent: shuwee_admin.admin_abstract
     tags:
-      -  { name: shuwee.admin, alias: post }
+      -  { name: shuwee.admin }
 ```
 
 **Note:** there is no ordering functionality yet so currently the order in which your services are defined is the display order (in menu and dashboard).
+
+## Admin class alias
+
+Every AdminClass has an alias that is used in the url and in route names. By default, we use the lower cased version of your classname without the word `admin`.
+E.g. `AppBundle\Admin\PostAdmin` will have an alias set to `post`.
+
+To overwrite the default implement the `getAlias` method in your admin class:
+``` php
+
+/**
+ * @return string
+ */
+public function getAlias() {
+    return 'my-custom-alias'
+}
+```
