@@ -14,14 +14,14 @@ class AdminManager
     /**
      * @param string $alias
      */
-    public function registerAdmin($alias, AdminInterface $admin)
+    public function registerAdmin(AdminInterface $admin)
     {
+        $alias = $admin->getAlias();
+
         // Ensure alias is unique
         if (array_key_exists($alias, $this->admins)) {
             throw new \InvalidArgumentException(sprintf('An admin has already been registered with the alias "%s".  Alias must be unique', $alias));
         }
-
-        $admin->setAlias($alias);
 
         $this->admins[$alias] = $admin;
     }

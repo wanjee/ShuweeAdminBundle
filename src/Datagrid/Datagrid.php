@@ -167,7 +167,7 @@ class Datagrid implements DatagridInterface
         $paginator  = $this->admin->getKnpPaginator();
 
         $this->pagination = $paginator->paginate(
-            $this->admin->getQueryBuilder(),
+            $this->getQueryBuilder(),
             $this->request->query->getInt('page', 1),
             $this->options['limit_per_page'],
             array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
@@ -213,5 +213,21 @@ class Datagrid implements DatagridInterface
      */
     public function getDatagridManager() {
         return $this->admin->getDatagridManager();
+    }
+
+    /**
+     * Get basic QueryBuilder to populate Datagrid
+     *
+     * @return \Doctrine\DBAL\Query\QueryBuilder;
+     */
+    public function getQueryBuilder()
+    {
+        $queryBuilder = $this->admin->getEntityManager()->createQueryBuilder();
+        $queryBuilder
+            ->select('e')
+            ->from($this->admin->getEntityClass(), 'e')
+            ->orderBy('e.id', 'DESC');
+
+        return $queryBuilder;
     }
 }

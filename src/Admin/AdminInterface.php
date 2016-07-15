@@ -37,6 +37,11 @@ interface AdminInterface
     public function getLabel();
 
     /**
+     * Get Create/Edit form (Form type class or service key if you defined you form as a service)
+     */
+    public function getAlias();
+
+    /**
      * Define the parent of the menu item
      *
      * @return string

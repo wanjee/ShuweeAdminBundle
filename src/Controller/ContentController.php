@@ -102,7 +102,8 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $entity = $admin->loadEntity($request->attributes->get('id'));
+        $id = $request->attributes->get('id');
+        $entity = $this->getDoctrine()->getRepository($admin->getEntityClass())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('That resource cannot be found');
@@ -147,7 +148,8 @@ class ContentController extends Controller
     {
         $translator = $this->getTranslator();
 
-        $entity = $admin->loadEntity($request->attributes->get('id'));
+        $id = $request->attributes->get('id');
+        $entity = $this->getDoctrine()->getRepository($admin->getEntityClass())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('That resource cannot be found');
@@ -190,7 +192,8 @@ class ContentController extends Controller
      */
     public function toggleAction(Request $request, Admin $admin)
     {
-        $entity = $admin->loadEntity($request->attributes->get('id'));
+        $id = $request->attributes->get('id');
+        $entity = $this->getDoctrine()->getRepository($admin->getEntityClass())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('The resource cannot be found');

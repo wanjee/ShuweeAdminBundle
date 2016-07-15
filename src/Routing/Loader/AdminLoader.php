@@ -6,6 +6,7 @@ use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
+use Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper;
 
 /**
  * Class AdminLoader
@@ -18,14 +19,23 @@ class AdminLoader extends Loader
      */
     private $adminManager;
 
+    /**
+     * @var AdminRoutingHelper
+     */
+    private $routingHelper;
+
+    /**
+     * @var bool
+     */
     private $loaded = false;
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager
      */
-    public function __construct(AdminManager $adminManager)
+    public function __construct(AdminManager $adminManager, AdminRoutingHelper $routingHelper)
     {
         $this->adminManager = $adminManager;
+        $this->routingHelper = $routingHelper;
     }
 
     /**
@@ -42,14 +52,42 @@ class AdminLoader extends Loader
             throw new \RuntimeException('Do not add the "shuwee_admin_extra" loader twice');
         }
 
-        $routes = new RouteCollection();
+        $routeCollection = new RouteCollection();
         foreach ($this->adminManager->getAdmins() as $alias => $admin) {
-            $admin->configureRoutes($routes);
+            // List
+            $routeCollection->add(
+                $this->routingHelper->getRouteName($admin, 'index'),
+                $this->routingHelper->getRoute($admin, 'index', array(), true)
+            );
+
+            // Create
+            $routeCollection->add(
+                $this->routingHelper->getRouteName($admin, 'create'),
+                $this->routingHelper->getRoute($admin, 'create')
+            );
+
+            // Update
+            $routeCollection->add(
+                $this->routingHelper->getRouteName($admin, 'update'),
+                $this->routingHelper->getRoute($admin, 'update', array('id'))
+            );
+
+            // Delete
+            $routeCollection->add(
+                $this->routingHelper->getRouteName($admin, 'delete'),
+                $this->routingHelper->getRoute($admin, 'delete', array('id'))
+            );
+
+            // Toggle field
+            $routeCollection->add(
+                $this->routingHelper->getRouteName($admin, 'toggle'),
+                $this->routingHelper->getRoute($admin, 'toggle', array('id', 'field', 'token'))
+            );
         }
 
         $this->loaded = true;
 
-        return $routes;
+        return $routeCollection;
     }
 
     /**

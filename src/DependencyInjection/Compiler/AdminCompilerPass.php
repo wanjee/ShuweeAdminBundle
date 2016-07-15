@@ -22,13 +22,7 @@ class AdminCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('shuwee.admin');
 
         foreach ($taggedServices as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $alias = isset($attributes['alias'])
-                  ? $attributes["alias"]
-                  : $id;
-
-                $definition->addMethodCall('registerAdmin', array($alias, new Reference($id)));
-            }
+            $definition->addMethodCall('registerAdmin', array(new Reference($id)));
         }
     }
 }
