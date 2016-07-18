@@ -62,8 +62,12 @@ class ConfigureMenuContentListener
             /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
             foreach ($this->adminManager->getAdmins() as $alias => $admin) {
 
+                // object is required at least to get the class to check permissions against in ContentVoter
+                $entityClass = $admin->getEntityClass();
+                $object = new $entityClass();
+
                 // Menu item should not appear if user does not have access to the list
-                if (!$admin->isGranted(ContentVoter::LIST_CONTENT)) {
+                if (!$this->authorizationChecker->isGranted(array(ContentVoter::LIST_CONTENT), $object)) {
                     continue;
                 }
 

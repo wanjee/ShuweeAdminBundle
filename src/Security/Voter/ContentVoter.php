@@ -5,6 +5,7 @@ namespace Wanjee\Shuwee\AdminBundle\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 
 /**
@@ -78,7 +79,7 @@ class ContentVoter implements VoterInterface
 
     /**
      * @param $class
-     * @return bool
+     * @return AdminInterface
      */
     public function getSupportedAdmin($class)
     {

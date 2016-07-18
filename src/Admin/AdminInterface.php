@@ -2,7 +2,9 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 /**
  * Interface AdminInterface
@@ -16,9 +18,14 @@ interface AdminInterface
     public function getForm();
 
     /**
-     * Get datagrid configuration
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function getDatagrid();
+    public function configureOptions(OptionsResolver $resolver);
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     */
+    public function buildDatagrid(DatagridInterface $datagrid);
 
     /**
      * Get entity class (ie.: Acme\BlogBundle\Entity\Post)
@@ -26,6 +33,20 @@ interface AdminInterface
      * @return string
      */
     public function getEntityClass();
+
+    /**
+     * Return callback to render preview url
+     *
+     * @return string Preview URL for the given entity
+     */
+    public function getPreviewUrlCallback();
+
+    /**
+     * Does the current admin implements a previewUrlCallback function
+     *
+     * @return bool True if current admin implements a previewUrlCallback function
+     */
+    public function hasPreviewUrlCallback();
 
     /**
      * Get label of the entity (singular and multiple forms).
@@ -49,30 +70,13 @@ interface AdminInterface
     public function getMenuSection();
 
     /**
-     * Get options for this Admin
-     *
-     * @return array List of options to configure
-     */
-    public function getOptions();
-
-    /**
-     * Get grants for current user, a given action on a dedicated object
-     *
-     * @param string $name
-     * @param object|null $object
-     *
-     * @return boolean
-     */
-    public function isGranted($name, $object = null);
-
-    /**
      * Content voter callback.
      * For a given user, a given attribute (action to take) and a given object
      * it returns user authorization.
      * This should not be called directly
      *
      * @param UserInterface $user
-     * @param string $attribute
+     * @param string $action
      * @param mixed $object
      * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
      */

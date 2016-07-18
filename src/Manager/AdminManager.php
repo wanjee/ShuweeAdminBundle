@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Manager;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 
 class AdminManager
@@ -12,7 +13,7 @@ class AdminManager
     private $admins = array();
 
     /**
-     * @param string $alias
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      */
     public function registerAdmin(AdminInterface $admin)
     {

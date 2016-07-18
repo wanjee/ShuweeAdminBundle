@@ -2,6 +2,9 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
@@ -29,9 +32,9 @@ class Datagrid implements DatagridInterface
     protected $fields = array();
 
     /**
-     * @var \Knp\Component\Pager\Pagination\PaginationInterface
+     * @var array List of available fields for this datagrid
      */
-    protected $pagination;
+    protected $filters = array();
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -39,29 +42,33 @@ class Datagrid implements DatagridInterface
     private $request;
 
     /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
      * @var array
      */
     protected $options;
 
     /**
-     *
+     * @var \Knp\Component\Pager\PaginatorInterface
      */
-    public function __construct(AdminInterface $admin, $options = array())
+    private $paginator;
+
+    /**
+     * @var \Knp\Component\Pager\Pagination\PaginationInterface
+     */
+    protected $pagination;
+
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * Datagrid constructor.
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator
+     */
+    public function __construct(PaginatorInterface $paginator, EntityManagerInterface $entityManager)
     {
-        $this->admin = $admin;
-
-        // Manage options
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-
-        $this->options = $resolver->resolve($options);
-
-        return $this;
+        $this->paginator = $paginator;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -122,12 +129,11 @@ class Datagrid implements DatagridInterface
      * @param string $name
      * @param string $type A valid DatagridFieldType implementation name
      * @param array $options List of options for the given DatagridFieldType
+     * @return $this
      */
-    public function addField($name, $type, $options = array())
+    public function addField($name, $typeClass, $options = array())
     {
-        // instanciate new field object of given type
-        $type = $this->getDatagridManager()->getType($type);
-
+        $type = new $typeClass;
         $field = new DatagridField($name, $type, $options);
 
         $this->fields[] = $field;
@@ -144,36 +150,20 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @return
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getPagination()
     {
-        $this->initialize();
-
-        return $this->pagination;
-    }
-
-    /**
-     * Load the collection
-     *
-     */
-    protected function initialize()
-    {
-        if ($this->initialized) {
-            return;
+        if (!$this->pagination) {
+            $this->pagination = $this->paginator->paginate(
+                $this->getQueryBuilder(),
+                $this->request->query->getInt('page', 1),
+                $this->options['limit_per_page'],
+                array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
+            );
         }
 
-        // Handle pagination & order
-        $paginator  = $this->admin->getKnpPaginator();
-
-        $this->pagination = $paginator->paginate(
-            $this->getQueryBuilder(),
-            $this->request->query->getInt('page', 1),
-            $this->options['limit_per_page'],
-            array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
-        );
-
-        $this->initialized = true;
+        return $this->pagination;
     }
 
     /**
@@ -181,8 +171,22 @@ class Datagrid implements DatagridInterface
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function bind(Request $request)
+    public function bind(AdminInterface $admin, Request $request)
     {
+        if ($this->request) {
+            throw new \RuntimeException('A datagrid can only be bound once to a request');
+        }
+
+        // configure our datagrid
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $admin->configureOptions($resolver);
+        $this->options = $resolver->resolve();
+
+        // attach our fields, filters and actions
+        $admin->buildDatagrid($this);
+
+        $this->admin = $admin;
         $this->request = $request;
     }
 
@@ -209,20 +213,13 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
-     */
-    public function getDatagridManager() {
-        return $this->admin->getDatagridManager();
-    }
-
-    /**
      * Get basic QueryBuilder to populate Datagrid
      *
-     * @return \Doctrine\DBAL\Query\QueryBuilder;
+     * @return QueryBuilder;
      */
     public function getQueryBuilder()
     {
-        $queryBuilder = $this->admin->getEntityManager()->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder
             ->select('e')
             ->from($this->admin->getEntityClass(), 'e')
