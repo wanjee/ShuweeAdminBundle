@@ -63,12 +63,18 @@ class DatagridFieldTypeDate extends DatagridFieldType
         $date = $defaults['value'];
 
         if (!$date instanceof \DateTime) {
-            throw new \Exception(sprintf('Datagrid \'date\' type expects an instance of Datetime. \'%s\' given for field \'%s\'.', gettype($date), $field->getName()));
+            $variables = array(
+                'value' => null,
+                'datetime' => null,
+            );
+        }
+        else {
+            $variables = array(
+                'value' => $date->format($date_format),
+                'datetime' => $date->format(\DateTime::RFC3339),
+            );
         }
 
-        return array(
-          'value' => $date->format($date_format),
-          'datetime' => $date->format(\DateTime::RFC3339),
-        ) + $defaults;
+        return $variables + $defaults;
     }
 }

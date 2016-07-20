@@ -115,6 +115,8 @@
         <time datetime="{{ datetime }}">
             {{ value }}
         </time>
+    {% else %}
+        <span class="text-muted">{{ default_value | default('-') }}</span>
     {% endif %}
 {% endblock %}
 
