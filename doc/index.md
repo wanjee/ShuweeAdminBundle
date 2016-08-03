@@ -75,49 +75,11 @@ shuwee_admin:
 
 ## Bundle usage
 
-See [Bundle usage](./usage.md)
-
-## Datagrid
-
-See [Datagrid](./datagrid.md)
-
-## Menu
-
-See [Menu](./menu.md)
-
-## Forms
-
-See [Forms](./forms.md)
-
-## Form type extensions
-
-See [Form type extensions](./form_type_extensions.md)
-
-## Security
-
-See [Security](./security.md)
-
-## Change branding of administration interface
-
-See http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
-
-### Footer
-
-Override footer.html.twig template: 
-Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/footer.html.twig
-to app/Resources/ShuweeAdminBundle/views/Partial/footer.html.twig and modify the copy to suit your needs.
-
-### Login page
-
-Override login_header.html.twig template: 
-Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/login_header.html.twig
-to app/Resources/ShuweeAdminBundle/views/Partial/login_header.html.twig and modify the copy to suit your needs.
- 
-### Header 
-
-Override navbar_brand.html.twig template: 
-Copy the original one from vendor/wanjee/shuwee-admin-bundle/src/Resources/views/Partial/navbar_brand.html.twig
-to app/Resources/ShuweeAdminBundle/views/Partial/navbar_brand.html.twig and modify the copy to suit your needs.
-
+1. [Basic configuration](./configuration.md)
+2. [Datagrid](./datagrid.md)
+3. [Menu](./menu.md)
+4. [Forms](./forms.md)
+5. [Form type extensions](./form_type_extensions.md)
+6. [Security](./security.md)
 
 

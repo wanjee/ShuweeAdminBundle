@@ -1,4 +1,4 @@
-# Bundle usage
+# Configuration
 
 ## Define or generate an entity
 
@@ -12,8 +12,6 @@ $ bin/console generate:doctrine:entity
 $ bin/console generate:doctrine:form AppBundle:Post
 ```
 
-### Form extensions
-
 Shuwee comes with a few utilities you can use to improve the look & feel an usability of your entity form.
 
 See [Form type extensions](./form_type_extensions.md)
@@ -25,7 +23,7 @@ See [Form type extensions](./form_type_extensions.md)
 namespace AppBundle\Admin;
 
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
+use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 use AppBundle\Form\PostType;
 use AppBundle\Entity\Post;
@@ -37,32 +35,6 @@ use AppBundle\Entity\Post;
 class PostAdmin extends Admin
 {
     /**
-     * Return the main admin form for this content.
-     *
-     * @return \Symfony\Component\Form\Form
-     */
-    public function getForm()
-    {
-        // Return either a fully qualified class name
-        // or the service id of your form if it is defined as a service
-        return PostType::class;
-    }
-
-    /**
-     * @return Datagrid
-     */
-    public function getDatagrid()
-    {
-        $datagrid = new Datagrid($this);
-
-        $datagrid
-          ->addField('id', 'text')
-          ->addField('title', 'text');
-
-        return $datagrid;
-    }
-
-    /**
      * @return string
      */
     public function getEntityClass()
@@ -71,11 +43,23 @@ class PostAdmin extends Admin
     }
 
     /**
-     * @return string
+     * Return the main admin form for this content.
+     *
+     * @return \Symfony\Component\Form\Form
      */
-    public function getLabel()
+    public function getForm()
     {
-        return '{0} Posts|{1} Post|]1,Inf] Posts';
+        return PostType::class;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function attachFields(DatagridInterface $datagrid)
+    {
+        $datagrid
+          ->addField('id', 'text')
+          ->addField('title', 'text');
     }
 }
 ```
@@ -92,7 +76,43 @@ See how you can define which user can create, view, update or delete content: [S
 
 Implement getOptions() method to configure some behaviors of your Admin implementation.
 
-#### Description
+Complete example: 
+```php
+/**
+ * @return array Options
+ */
+public function getOptions() {
+    return array(
+        'label' => '{0} Posts|{1} Post|]1,Inf] Posts',
+        'description' => 'A blog post is a journal entry.',
+        'menu_section' => 'Content',
+        'preview_url_callback' => function($entity) {
+            return $entity->getId();
+        }
+    );
+}
+``` 
+
+#### label
+
+Defines how your entity is identified in the administration pages.
+
+```php
+/**
+ * @return array Options
+ */
+public function getOptions() {
+    return array(
+        'label' => '{0} Posts|{1} Post|]1,Inf] Posts',
+    );
+}
+``` 
+
+If you pass a string you can leverage the power of translation pluralisation system
+
+#### description
+
+Describes your entity purpose.
 
 ``` php
 /**
@@ -105,9 +125,25 @@ public function getOptions() {
 }
 ```
 
-* Value for preview_url_callback must be a valid [callable](http://php.net/manual/en/language.types.callable.php)
+#### menu_section
 
-#### Preview URL
+You entities administration pages are grouped by this field in the menu and on dashboard.
+
+```php
+/**
+ * @return array Options
+ */
+public function getOptions() {
+    return array(
+        'menu_section' => 'Content',
+    );
+}
+``` 
+
+
+#### preview_url_callback
+
+Add a "view" link for all listed entities
 
 ``` php
 /**
@@ -127,6 +163,8 @@ public function getOptions() {
 * To use the Symfony router inject it in your Admin service
 * To use an absolute URL that will work on any environment inject a domain parameter in your Admin service
 * Keep in mind your URL should with any front controller (i.e. app.php, app_dev.php)
+
+##### Example on how to inject the router to build the preview url
 
 ``` php
 private $router;
