@@ -24,7 +24,7 @@ abstract class DatagridAbstractAction implements DatagridActionInterface
      * @param string $route
      * @param array $options
      */
-    function __construct($route, $options = array())
+    public function __construct($route, $options = array())
     {
         $this->route = $route;
 
