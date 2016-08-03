@@ -3,8 +3,7 @@
 namespace Wanjee\Shuwee\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
 
 
@@ -12,32 +11,44 @@ use Wanjee\Shuwee\AdminBundle\Event\ConfigureMenuEvent;
  * Class Builder
  * @package Wanjee\Shuwee\AdminBundle\Menu
  */
-class Builder implements ContainerAwareInterface
+class Builder
 {
-    private $container;
+    /**
+     * @var \Knp\Menu\FactoryInterface
+     */
+    private $factory;
 
-    public function setContainer(ContainerInterface $container = null)
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    /**
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
+     * @param \Knp\Menu\FactoryInterface $factory
+     */
+    public function __construct(FactoryInterface $factory, EventDispatcherInterface $dispatcher)
     {
-        $this->container = $container;
+        $this->factory = $factory;
+        $this->dispatcher = $dispatcher;
     }
-    
+
     /**
      * Build main menu.
      *
      * Let any bundle add items to this menu by subscribing to ConfigureMenuEvent::CONFIGURE
      * @see ConfigureMenuContentListener for example
      *
-     * @param FactoryInterface $factory
      * @param array $options
      * @return \Knp\Menu\ItemInterface
      */
-    public function sideMenu(FactoryInterface $factory, array $options)
+    public function sideMenu(array $options)
     {
-        $menu = $factory->createItem('root');
+        $menu = $this->factory->createItem('root');
 
-        $this->container->get('event_dispatcher')->dispatch(
+        $this->dispatcher->dispatch(
             ConfigureMenuEvent::CONFIGURE,
-            new ConfigureMenuEvent($factory, $menu)
+            new ConfigureMenuEvent($this->factory, $menu)
         );
 
         return $menu;

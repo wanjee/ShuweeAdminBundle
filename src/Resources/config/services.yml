@@ -113,6 +113,12 @@ services:
             tags:
                 - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    # Menu builder
+    shuwee_admin.menu_builder:
+        class: Wanjee\Shuwee\AdminBundle\Menu\Builder
+        arguments: ["@knp_menu.factory", "@event_dispatcher"]
+        tags:
+            - { name: knp_menu.menu_builder, method: sideMenu, alias: sideMenu }
 
     # Events listeners
     shuwee_admin.admin_configure_menu_listener:
