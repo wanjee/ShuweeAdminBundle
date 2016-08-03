@@ -42,7 +42,7 @@ class Builder
      * @param array $options
      * @return \Knp\Menu\ItemInterface
      */
-    public function sideMenu(array $options)
+    public function sideMenu()
     {
         $menu = $this->factory->createItem('root');
 
