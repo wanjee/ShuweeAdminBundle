@@ -15,12 +15,10 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
 /**

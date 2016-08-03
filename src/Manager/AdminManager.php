@@ -2,7 +2,6 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Manager;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 
 class AdminManager
