@@ -180,8 +180,7 @@ class Datagrid implements DatagridInterface
         // configure our datagrid
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
-        $admin->configureOptions($resolver);
-        $this->options = $resolver->resolve();
+        $this->options = $resolver->resolve($admin->getDatagridOptions());
 
         // attach our fields, filters and actions
         $admin->buildDatagrid($this);

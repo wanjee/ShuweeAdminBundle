@@ -13,6 +13,13 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 interface AdminInterface
 {
     /**
+     * Get entity class (ie.: Acme\BlogBundle\Entity\Post)
+     *
+     * @return string
+     */
+    public function getEntityClass();
+
+    /**
      * Get Create/Edit form (Form type class or service key if you defined you form as a service)
      */
     public function getForm();
@@ -23,51 +30,33 @@ interface AdminInterface
     public function configureOptions(OptionsResolver $resolver);
 
     /**
+     * Check if a given option has been defined
+     * @param $name
+     * @return mixed
+     */
+    public function hasOption($name);
+
+    /**
+     * Get value for a given option, or the default value if none is set
+     * @param string $name
+     * @param mixed $default
+     */
+    public function getOption($name, $default = null);
+
+    /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
      */
     public function buildDatagrid(DatagridInterface $datagrid);
 
     /**
-     * Get entity class (ie.: Acme\BlogBundle\Entity\Post)
-     *
-     * @return string
+     * @return array Options
      */
-    public function getEntityClass();
+    public function getOptions();
 
     /**
-     * Return callback to render preview url
-     *
-     * @return string Preview URL for the given entity
+     * @return array Options for the datagrid
      */
-    public function getPreviewUrlCallback();
-
-    /**
-     * Does the current admin implements a previewUrlCallback function
-     *
-     * @return bool True if current admin implements a previewUrlCallback function
-     */
-    public function hasPreviewUrlCallback();
-
-    /**
-     * Get label of the entity (singular and multiple forms).
-     * Must follow the transchoice syntax (ie.: {0} Posts|{1} Post|]1,Inf] %count% posts)
-     * or be a single form string
-     *
-     * @return string
-     */
-    public function getLabel();
-
-    /**
-     * Get Create/Edit form (Form type class or service key if you defined you form as a service)
-     */
-    public function getAlias();
-
-    /**
-     * Define the parent of the menu item
-     *
-     * @return string
-     */
-    public function getMenuSection();
+    public function getDatagridOptions();
 
     /**
      * Content voter callback.

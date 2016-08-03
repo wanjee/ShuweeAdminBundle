@@ -72,9 +72,9 @@ class ConfigureMenuContentListener
                 }
 
                 // Get parent menu item label
-                $section = $admin->getMenuSection();
+                $section = $admin->getOption('menu_section');
                 if (!is_string($section)) {
-                    throw new \Exception(sprintf('AdminInterface::getMenuSection() must return a string, %s returned.', gettype($section)));
+                    throw new \Exception(sprintf('"menu_section" option must return a string, %s returned.', gettype($section)));
                 }
 
                 // Create parent menu item if it does not exist yet
@@ -82,7 +82,7 @@ class ConfigureMenuContentListener
                     $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section, array(), 'ShuweeAdminBundle')));
                 }
 
-                $pluralLabel = $this->translator->transchoice($admin->getLabel(), 10, array(), 'ShuweeAdminBundle');
+                $pluralLabel = $this->translator->transchoice($admin->getOption('label'), 10, array(), 'ShuweeAdminBundle');
                 $sections[$section]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
             }
         }

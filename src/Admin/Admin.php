@@ -16,6 +16,11 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
  */
 abstract class Admin implements AdminInterface
 {
+    /**
+     * List of global options
+     * @var array
+     */
+    protected $options = array();
 
     /**
      * Cache for grants
@@ -24,9 +29,31 @@ abstract class Admin implements AdminInterface
     protected $cacheIsGranted = array();
 
     /**
+     * Store setup state to avoid setting it up several times
+     */
+    protected $setup = false;
+
+    /**
+     * This function is used to boot up Admin implementation when first used.
+     * We do not use __construct as we want the end user to be able to use it
+     * without having to thing about calling parent constructor.
+     */
+    final public function setup()
+    {
+        if (!$this->setup) {
+            // configure our datagrid
+            $resolver = new OptionsResolver();
+            $this->configureOptions($resolver);
+            $this->options = $resolver->resolve($this->getOptions());
+
+            $this->setup = true;
+        }
+    }
+
+    /**
      * @return string
      */
-    public function getAlias()
+    final public function getAlias()
     {
         $fqnParts = explode('\\', get_class($this));
         $className = strtolower(end($fqnParts));
@@ -35,13 +62,13 @@ abstract class Admin implements AdminInterface
     }
 
     /**
-     * Get preview url using defined callback, if any
-     *
-     * @return callable|null
+     * @inheritDoc
      */
-    public function getPreviewUrlCallback()
+    final public function buildDatagrid(DatagridInterface $datagrid)
     {
-        return null;
+        $this->attachFields($datagrid);
+        $this->attachActions($datagrid);
+        $this->attachFilters($datagrid);
     }
 
     /**
@@ -49,15 +76,83 @@ abstract class Admin implements AdminInterface
      *
      * @return bool True if current admin implements a previewUrlCallback function
      */
-    public function hasPreviewUrlCallback()
+    final public function hasPreviewUrlCallback()
     {
-        return is_callable($this->getPreviewUrlCallback());
+        if (!$this->hasOption('preview_url_callback')) {
+            return false;
+        }
+
+        return is_callable($this->getOption('preview_url_callback'));
+    }
+
+    /**
+     * Get preview url using defined callback, if any
+     *
+     * @param mixed $entity
+     *
+     * @return string Preview URL for the given entity
+     */
+    final public function getPreviewUrl($entity)
+    {
+        if (!$this->hasPreviewUrlCallback()) {
+            return null;
+        }
+        return call_user_func($this->options['preview_url_callback'], $entity);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver) {}
+    final public function configureOptions(OptionsResolver $resolver) {
+        $resolver
+            ->setDefaults(
+                array(
+                    'label' => ucfirst($this->getAlias()),
+                    'description' => null,
+                    'preview_url_callback' => null,
+                    'menu_section' => 'content',
+                )
+            )
+            ->setAllowedTypes('label', array('string'))
+            ->setAllowedTypes('description', array('string', 'null'))
+            ->setAllowedTypes('preview_url_callback', array('callable', 'null'))
+            ->setAllowedTypes('menu_section', array('string'));
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    final public function hasOption($name)
+    {
+        return array_key_exists($name, $this->options);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $default
+     */
+    final public function getOption($name, $default = null)
+    {
+        if ($this->hasOption($name)) {
+            return $this->options[$name];
+        }
+        return $default;
+    }
+
+    /**
+     * @return array Options
+     */
+    public function getOptions() {
+        return array();
+    }
+
+    /**
+     * @return array Options
+     */
+    public function getDatagridOptions() {
+        return array();
+    }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
@@ -75,22 +170,6 @@ abstract class Admin implements AdminInterface
     public function attachActions(DatagridInterface $datagrid) {}
 
     /**
-     * @return string|null
-     */
-    public function getDescription()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMenuSection()
-    {
-        return 'content';
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function hasAccess(UserInterface $user, $action, $object = null)
@@ -102,48 +181,30 @@ abstract class Admin implements AdminInterface
     /**
      * {@inheritdoc}
      */
-    public function preUpdate($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function preUpdate($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function postUpdate($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function postUpdate($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function prePersist($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function prePersist($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function postPersist($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function postPersist($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function preRemove($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function preRemove($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function postRemove($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function postRemove($entity) {}
 }

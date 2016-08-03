@@ -27,10 +27,10 @@ class AdminController extends Controller
         $sections = array();
         /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
-            $section = $admin->getMenuSection();
+            $section = $admin->getOption('menu_section');
             if (!is_string($section)) {
                 throw new \Exception(
-                    sprintf('AdminInterface::getMenuSection() must return a string, %s returned.', gettype($section))
+                    sprintf('"menu_section" option must return a string, %s returned.', gettype($section))
                 );
             }
 

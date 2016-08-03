@@ -24,6 +24,8 @@ class AdminManager
             throw new \InvalidArgumentException(sprintf('An admin has already been registered with the alias "%s".  Alias must be unique', $alias));
         }
 
+        $admin->setup();
+
         $this->admins[$alias] = $admin;
     }
 

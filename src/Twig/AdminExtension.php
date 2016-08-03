@@ -99,7 +99,7 @@ class AdminExtension extends \Twig_Extension
     {
         $count = $plural ? 100 : 1;
 
-        return $this->translator->transChoice($admin->getLabel(), $count, array(), 'ShuweeAdminBundle');
+        return $this->translator->transChoice($admin->getOption('label'), $count, array(), 'ShuweeAdminBundle');
     }
 
     /**
