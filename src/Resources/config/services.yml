@@ -51,32 +51,32 @@ services:
     shuwee_admin.datagrid_type_boolean:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeBoolean
         tags:
-            - { name: shuwee.datagrid_type , alias: boolean}
+            - { name: shuwee.datagrid_type }
 
     shuwee_admin.datagrid_type_collection:
             class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeCollection
             tags:
-                - { name: shuwee.datagrid_type , alias: collection}
+                - { name: shuwee.datagrid_type }
 
     shuwee_admin.datagrid_type_date:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeDate
         tags:
-            - { name: shuwee.datagrid_type , alias: date}
+            - { name: shuwee.datagrid_type }
 
     shuwee_admin.datagrid_type_image:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeImage
         tags:
-            - { name: shuwee.datagrid_type , alias: image}
+            - { name: shuwee.datagrid_type }
 
     shuwee_admin.datagrid_type_text:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeText
         tags:
-            - { name: shuwee.datagrid_type , alias: text}
+            - { name: shuwee.datagrid_type }
 
     shuwee_admin.datagrid_type_link:
         class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeLink
         tags:
-            - { name: shuwee.datagrid_type , alias: link}
+            - { name: shuwee.datagrid_type }
 
 
     # Security
