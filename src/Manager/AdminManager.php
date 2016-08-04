@@ -12,7 +12,7 @@ class AdminManager
     private $admins = array();
 
     /**
-     * @param string $alias
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      */
     public function registerAdmin(AdminInterface $admin)
     {
@@ -22,6 +22,8 @@ class AdminManager
         if (array_key_exists($alias, $this->admins)) {
             throw new \InvalidArgumentException(sprintf('An admin has already been registered with the alias "%s".  Alias must be unique', $alias));
         }
+
+        $admin->setup();
 
         $this->admins[$alias] = $admin;
     }

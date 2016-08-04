@@ -1,18 +1,18 @@
 {% extends "ShuweeAdminBundle::page_content.html.twig" %}
 
-{% block page_title %}{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} - {{ admin_get_label(admin, true) }}{% endblock %}
+{% block page_title %}{{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} - {{ admin_get_label(datagrid.admin, true) }}{% endblock %}
 
 {% block action_links %}
 {% spaceless %}
-    {% if admin.isGranted('CREATE') %}
-    <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
+    {% if admin_is_granted(datagrid.admin, 'CREATE') %}
+    <a href="{{ admin_get_path(datagrid.admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
     {{ datagrid_list_actions(datagrid) }}
 {% endspaceless %}
 {%  endblock %}
 
 {% block header_title %}
-    {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(admin, true) }}</small>
+    {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }} <small>{{ admin_get_label(datagrid.admin, true) }}</small>
 {% endblock %}
 
 {% block body %}

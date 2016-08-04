@@ -5,23 +5,22 @@
  */
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
-
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 /**
  * Class Admin
  * @package Wanjee\Shuwee\AdminBundle\Admin
  */
-abstract class Admin implements AdminInterface, ContainerAwareInterface
+abstract class Admin implements AdminInterface
 {
     /**
-     * @var ContainerInterface
+     * List of global options
+     * @var array
      */
-    protected $container;
+    protected $options = array();
 
     /**
      * Cache for grants
@@ -30,40 +29,31 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     protected $cacheIsGranted = array();
 
     /**
-     * List of options values
-     * @var array
+     * Store setup state to avoid setting it up several times
      */
-    protected $options;
+    protected $setup = false;
 
     /**
-     * Configure this admin
+     * This function is used to boot up Admin implementation when first used.
+     * We do not use __construct as we want the end user to be able to use it
+     * without having to thing about calling parent constructor.
      */
-    public function __construct() {
-        // Manage options
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-
-        $this->options = $resolver->resolve($this->getOptions());
-
-        return $this;
-    }
-
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
+    final public function setup()
     {
-        $this->container = $container;
+        if (!$this->setup) {
+            // configure our datagrid
+            $resolver = new OptionsResolver();
+            $this->configureOptions($resolver);
+            $this->options = $resolver->resolve($this->getOptions());
+
+            $this->setup = true;
+        }
     }
 
     /**
      * @return string
      */
-    public function getAlias()
+    final public function getAlias()
     {
         $fqnParts = explode('\\', get_class($this));
         $className = strtolower(end($fqnParts));
@@ -72,40 +62,68 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * Configure options
-     *
-     * @param OptionsResolver $resolver
+     * @inheritDoc
      */
-    protected function configureOptions(OptionsResolver $resolver)
+    final public function buildDatagrid(DatagridInterface $datagrid)
     {
-        $resolver
-            // All options should have default values to avoid forcing
-            // all existing Admin implementations
-            // to be updated when ShuweeAdminBundle is.
-            ->setDefaults(
-                array(
-                    'preview_url_callback' => null,
-                    'description' => null,
-                )
-            )
-            ->setAllowedTypes('preview_url_callback', ['callable', 'null'])
-            ->setAllowedTypes('description', ['string', 'null']);
+        $this->attachFields($datagrid);
+        $this->attachActions($datagrid);
+        $this->attachFilters($datagrid);
     }
 
     /**
-     * {@inheritdoc}
+     * Does the current admin implements a previewUrlCallback function
+     *
+     * @return bool True if current admin implements a previewUrlCallback function
      */
-    public function getOptions() {
-        // Must be extended in children classes
-        // Relies otherwise on default value configured in $this->configureOptions()
-        return array();
+    final public function hasPreviewUrlCallback()
+    {
+        if (!$this->hasOption('preview_url_callback')) {
+            return false;
+        }
+
+        return is_callable($this->getOption('preview_url_callback'));
+    }
+
+    /**
+     * Get preview url using defined callback, if any
+     *
+     * @param mixed $entity
+     *
+     * @return string Preview URL for the given entity
+     */
+    final public function getPreviewUrl($entity)
+    {
+        if (!$this->hasPreviewUrlCallback()) {
+            return null;
+        }
+        return call_user_func($this->options['preview_url_callback'], $entity);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    final public function configureOptions(OptionsResolver $resolver) {
+        $resolver
+            ->setDefaults(
+                array(
+                    'label' => ucfirst($this->getAlias()),
+                    'description' => null,
+                    'preview_url_callback' => null,
+                    'menu_section' => 'content',
+                )
+            )
+            ->setAllowedTypes('label', array('string'))
+            ->setAllowedTypes('description', array('string', 'null'))
+            ->setAllowedTypes('preview_url_callback', array('callable', 'null'))
+            ->setAllowedTypes('menu_section', array('string'));
     }
 
     /**
      * @param string $name
      * @return bool
      */
-    public function hasOption($name)
+    final public function hasOption($name)
     {
         return array_key_exists($name, $this->options);
     }
@@ -114,42 +132,42 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
      * @param string $name
      * @param mixed $default
      */
-    public function getOption($name, $default = null)
+    final public function getOption($name, $default = null)
     {
         if ($this->hasOption($name)) {
             return $this->options[$name];
         }
-
         return $default;
     }
 
     /**
-     * {@inheritdoc}
+     * @return array Options
      */
-    public function getMenuSection()
-    {
-        return 'content';
+    public function getOptions() {
+        return array();
     }
 
     /**
-     * Check
-     * {@inheritdoc}
+     * @return array Options
      */
-    public function isGranted($name, $object = null)
-    {
-        $key = md5(json_encode($name) . ($object ? '/' . spl_object_hash($object) : ''));
-
-        if (!array_key_exists($key, $this->cacheIsGranted)) {
-            if (is_null($object)) {
-                // object is required at least to get the class to check permissions against in ContentVoter
-                $entityClass = $this->getEntityClass();
-                $object = new $entityClass();
-            }
-            $this->cacheIsGranted[$key] = $this->getAuthorizationChecker()->isGranted($name, $object);
-        }
-
-        return $this->cacheIsGranted[$key];
+    public function getDatagridOptions() {
+        return array();
     }
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     */
+    public function attachFields(DatagridInterface $datagrid) {}
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     */
+    public function attachFilters(DatagridInterface $datagrid) {}
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     */
+    public function attachActions(DatagridInterface $datagrid) {}
 
     /**
      * {@inheritdoc}
@@ -161,120 +179,32 @@ abstract class Admin implements AdminInterface, ContainerAwareInterface
     }
 
     /**
-     * Does the current admin implements a previewUrlCallback function
-     *
-     * @return bool True if current admin implements a previewUrlCallback function
+     * {@inheritdoc}
      */
-    public function hasPreviewUrlCallback()
-    {
-        return is_callable($this->options['preview_url_callback']);
-    }
-
-    /**
-     * Get preview url using defined callback, if any
-     *
-     * @param mixed $entity
-     *
-     * @return string Preview URL for the given entity
-     */
-    public function getPreviewUrl($entity)
-    {
-        if (!$this->hasPreviewUrlCallback()) {
-            return null;
-        }
-
-        return call_user_func($this->options['preview_url_callback'], $entity);
-    }
+    public function preUpdate($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function preUpdate($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function postUpdate($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function postUpdate($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function prePersist($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function prePersist($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function postPersist($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function postPersist($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
+    public function preRemove($entity) {}
 
     /**
      * {@inheritdoc}
      */
-    public function preRemove($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postRemove($entity)
-    {
-        // Do nothing here, let Admin implementations define it if required
-    }
-
-    /**
-     * @deprecated
-     * @return \Doctrine\ORM\EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->getDoctrine()->getManager();
-    }
-
-    /**
-     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationChecker
-     */
-    public function getAuthorizationChecker()
-    {
-        return $this->container->get('security.authorization_checker');
-    }
-
-    /**
-     * @deprecated
-     * @return \Doctrine\Bundle\DoctrineBundle\Registry
-     */
-    public function getDoctrine()
-    {
-        return $this->container->get('doctrine');
-    }
-
-    /**
-     * @deprecated
-     * @return \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
-     */
-    public function getDatagridManager()
-    {
-        return $this->container->get('shuwee_admin.datagrid_manager');
-    }
-
-    /**
-     * @deprecated
-     * @return \Knp\Component\Pager\Paginator
-     */
-    public function getKnpPaginator()
-    {
-        return $this->container->get('knp_paginator');
-    }
+    public function postRemove($entity) {}
 }

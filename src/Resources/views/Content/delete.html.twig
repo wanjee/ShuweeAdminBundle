@@ -6,13 +6,13 @@
 
 {% block action_links %}
 {% spaceless %}
-    {% if admin.isGranted('LIST') %}
+    {% if admin_is_granted(admin, 'LIST') %}
         <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-chevron-left"></i> {{'nav.backtolist' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
-    {% if admin.isGranted('VIEW', entity) and admin.hasPreviewUrlCallback() %}
+    {% if admin_is_granted(admin, 'VIEW', entity) and admin.hasPreviewUrlCallback() %}
         <a href="{{ admin.getPreviewUrl(entity) }}" class="btn btn-sm btn-default" type="button"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
-    {% if admin.isGranted('UPDATE') %}
+    {% if admin_is_granted(admin, 'UPDATE') %}
         <a href="{{ admin_get_path(admin, 'update', {'id': entity.id}) }}" class="btn btn-sm btn-primary" type="button"><i class="glyphicon glyphicon-edit"></i> {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
     {% endif %}
 {% endspaceless %}

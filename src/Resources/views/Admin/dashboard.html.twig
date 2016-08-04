@@ -9,7 +9,7 @@
 {% block body %}
     {% for section in sections %}
         {% for admin in section.admins %}
-            {% if admin.isGranted('LIST') or admin.isGranted('CREATE') %}
+            {% if admin_is_granted(admin, 'LIST') or admin_is_granted(admin, 'CREATE') %}
                 {% if loop.first %}
                     {# Add section in first loop item to ensure we have at least one item to display into it #}
                     <h4>{{ section.label }}</h4>
@@ -21,17 +21,16 @@
                                     {{ admin_get_label(admin, true) }}
                                 </div>
                                 <div class="panel-body">
-                                    {%- set admin_description = admin_get_option(admin, 'description') -%}
-                                    {%- if admin_description is not empty -%}
-                                        <p class="text-muted">{{ admin_description }}</p>
+                                    {%- if admin.getOption('description') is not empty -%}
+                                        <p class="text-muted">{{ admin.getOption('description') }}</p>
                                     {%- endif -%}
-                                    {% if admin.isGranted('LIST') %}
+                                    {% if admin_is_granted(admin, 'LIST') %}
                                         <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default"
                                            type="button">
                                             <i class="glyphicon glyphicon-list"></i> {{ 'crud.list' | trans({}, 'ShuweeAdminBundle') }}
                                         </a>
                                     {% endif %}
-                                    {% if admin.isGranted('CREATE') %}
+                                    {% if admin_is_granted(admin, 'CREATE') %}
                                         <a href="{{ admin_get_path(admin, 'create') }}" class="btn btn-sm btn-success"
                                            type="button">
                                             <i class="glyphicon glyphicon-plus"></i> {{ 'crud.create' | trans({}, 'ShuweeAdminBundle') }}

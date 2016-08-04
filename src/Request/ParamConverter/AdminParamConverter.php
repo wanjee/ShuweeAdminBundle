@@ -37,6 +37,7 @@ class AdminParamConverter implements ParamConverterInterface {
         if(!$request->attributes->has('alias')) {
             throw new NotFoundHttpException('Cannot find admin without alias');
         }
+
         try {
             $admin = $this->adminManager->getAdmin($alias);
             $request->attributes->set($param, $admin);

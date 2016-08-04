@@ -1,24 +1,52 @@
 # Datagrid
 
-## Main configuration
+## Configuration
+ 
+### Datagrid options
 
-In you admin controller define the datagrid as follow
+Implement getDatagridOptions() method to configure some behaviors of your datagrid.
+
+```php
+/**
+ * @inheritdoc
+ */
+public function getDatagridOptions()
+{
+    return [
+        'limit_per_page' => 25,
+        'default_sort_column' => 'id',
+        'default_sort_order' => 'asc',
+        'show_actions_column' => true,
+    ];
+}
+```
+    
+#### limit_per_page
+
+Number of items to be displayed per datagrid page 
+
+#### default_sort_column
+
+Column on which the list must be ordered by default
+
+#### default_sort_order
+
+Default direction of the sort
+
+#### show_actions_column
+
+Allows the action column to be hidden if you disable view, edit and delete permissions on all items.   
+    
+## Fields
+
+In your admin controller define the datagrid fields as follow:
 
 ``` php
 /**
- * @return Datagrid
+ * @inheritdoc
  */
-public function getDatagrid()
+public function attachFields(DatagridInterface $datagrid)
 {
-    /** @var Wanjee\Shuwee\AdminBundle\Datagrid $datagrid */
-    $datagrid = new Datagrid($this, array(
-            'limit_per_page' => 10,
-            'default_sort_column' => 'id',
-            'default_sort_order' => 'asc',
-            'show_actions_column' => true,
-        )
-    );
-
     $datagrid
         ->addField('id', DatagridFieldTypeText::class, array('label' => '#'))
         ->addField('title', DatagridFieldTypeText::class, array('label' => 'Title', 'sortable' => true))
@@ -27,20 +55,9 @@ public function getDatagrid()
         ->addField('image', DatagridFieldTypeImage::class, array('label' => 'Image', 'base_path' => 'uploads/images'))
         ->addField('comments', DatagridFieldTypeCollection::class, array('label' => 'Comments'))
         ->addField('url', DatagridFieldTypeLink::class, array('label' => 'URL', 'label_link' => 'Link', 'mailto' => false))
-
-        ->addAction(DatagridListAction::class, 'csv_export', array('label' => 'Export as CSV', 'icon' => 'save-file', 'btn-style' => 'primary', 'classes' => 'export-link'))
     ;
-
-    return $datagrid;
 }
 ```
-
-Wanjee\Shuwee\AdminBundle\Datagrid::_construct() arguments are :
-
-* *limit_per_page* : Number of items to display on a single datagrid page. Defaults to 10.
-* *default_sort_column* : Column used for default ordering. Defaults to 'id'.
-* *default_sort_order* : Direction of the default ordering. Defaults to 'asc'.
-* *show_actions_column* : Whether the actions column must be displayed or not.  Defaults to 'true'.
 
 Wanjee\Shuwee\AdminBundle\Datagrid::addField() arguments are :
 
@@ -241,6 +258,7 @@ services:
         tags:
             - { name: twig.extension }
 ```
+
 #### Options
 
 * *truncate*: Length of max string length to display for the complete list.  Expects null or integer. Defaults to 80.
@@ -277,6 +295,21 @@ If a callback is defined it must return a string.
 
 
 ## Datagrid actions
+
+An action is an additional functionality on top of the datagrid.
+In your admin controller define the datagrid actions as follow:
+
+``` php
+/**
+ * @inheritdoc
+ */
+public function attachActions(DatagridInterface $datagrid)
+{
+    $datagrid
+        ->addAction(DatagridListAction::class, 'csv_export', array('label' => 'Export as CSV', 'icon' => 'save-file', 'btn-style' => 'primary', 'classes' => 'export-link'))
+    ;
+}
+```
 
 ### Shared options
 

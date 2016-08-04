@@ -27,24 +27,27 @@ use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
  */
 class ContentController extends Controller
 {
+
     /**
      * List all entities of the type supported by given Admin
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request, Admin $admin)
     {
         $this->secure($admin, ContentVoter::LIST_CONTENT);
 
-        /** @var \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid $datagrid */
-        $datagrid = $admin->getDatagrid();
-        $datagrid->bind($request);
+        // create our datagrid
+        $datagrid = $this->get('shuwee_admin.datagrid');
+
+        // bind our request to the datagrid
+        $datagrid->bind($admin, $request);
 
         return $this->render(
             'ShuweeAdminBundle:Content:index.html.twig',
             array(
-                'admin' => $admin,
                 'datagrid' => $datagrid,
             )
         );
@@ -55,6 +58,7 @@ class ContentController extends Controller
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request, Admin $admin)
     {
@@ -97,6 +101,7 @@ class ContentController extends Controller
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function updateAction(Request $request, Admin $admin)
     {
@@ -143,6 +148,7 @@ class ContentController extends Controller
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, Admin $admin)
     {
@@ -189,6 +195,7 @@ class ContentController extends Controller
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function toggleAction(Request $request, Admin $admin)
     {
@@ -331,7 +338,13 @@ class ContentController extends Controller
             $attributes = array($attributes);
         }
 
-        if (!$admin->isGranted($attributes, $object)) {
+        if (is_null($object)) {
+            // object is required at least to get the class to check permissions against in ContentVoter
+            $entityClass = $admin->getEntityClass();
+            $object = new $entityClass();
+        }
+
+        if (!$this->get('security.authorization_checker')->isGranted($attributes, $object)) {
             throw new AccessDeniedException();
         }
     }
@@ -364,11 +377,10 @@ class ContentController extends Controller
     }
 
     /**
-     * Get translator helper
-     * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
+     * @return object|\Symfony\Component\Translation\DataCollectorTranslator|\Symfony\Component\Translation\IdentityTranslator
      */
     private function getTranslator()
     {
-        return $this->container->get('translator');
+        return $this->get('translator');
     }
 }
