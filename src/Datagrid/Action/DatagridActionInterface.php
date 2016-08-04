@@ -25,10 +25,4 @@ interface DatagridActionInterface
      * @param mixed $default
      */
     public function getOption($name, $default = null);
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setOption($name, $value);
 }

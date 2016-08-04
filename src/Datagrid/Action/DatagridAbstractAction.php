@@ -95,13 +95,4 @@ abstract class DatagridAbstractAction implements DatagridActionInterface
 
         return $default;
     }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setOption($name, $value)
-    {
-        $this->options[$name] = $value;
-    }
 }
