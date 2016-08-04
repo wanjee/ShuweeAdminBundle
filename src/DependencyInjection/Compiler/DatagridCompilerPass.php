@@ -22,13 +22,7 @@ class DatagridCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('shuwee.datagrid_type');
 
         foreach ($taggedServices as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $alias = isset($attributes['alias'])
-                  ? $attributes["alias"]
-                  : null;
-
-                $definition->addMethodCall('registerType', array(new Reference($id), $alias));
-            }
+            $definition->addMethodCall('registerType', array(new Reference($id)));
         }
     }
 }
