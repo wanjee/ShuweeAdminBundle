@@ -44,40 +44,6 @@ services:
     shuwee_admin.datagrid:
             class: Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
             arguments: ['@knp_paginator', '@doctrine.orm.default_entity_manager']
-    shuwee_admin.datagrid_manager:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\DatagridManager
-
-    # Datagrid types
-    shuwee_admin.datagrid_type_boolean:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeBoolean
-        tags:
-            - { name: shuwee.datagrid_type }
-
-    shuwee_admin.datagrid_type_collection:
-            class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeCollection
-            tags:
-                - { name: shuwee.datagrid_type }
-
-    shuwee_admin.datagrid_type_date:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeDate
-        tags:
-            - { name: shuwee.datagrid_type }
-
-    shuwee_admin.datagrid_type_image:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeImage
-        tags:
-            - { name: shuwee.datagrid_type }
-
-    shuwee_admin.datagrid_type_text:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeText
-        tags:
-            - { name: shuwee.datagrid_type }
-
-    shuwee_admin.datagrid_type_link:
-        class: Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeLink
-        tags:
-            - { name: shuwee.datagrid_type }
-
 
     # Security
     shuwee_admin.security.user_manager:
@@ -108,9 +74,9 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
 
     shuwee_admin.group_extension:
-            class: Wanjee\Shuwee\AdminBundle\Form\Extension\GroupExtension
-            tags:
-                - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+        class: Wanjee\Shuwee\AdminBundle\Form\Extension\GroupExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     # Menu builder
     shuwee_admin.menu_builder:
