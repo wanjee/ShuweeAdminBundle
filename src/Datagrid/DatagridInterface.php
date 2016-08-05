@@ -33,11 +33,21 @@ interface DatagridInterface
     public function addField($name, $type, $options = array());
 
     /**
-     * Add a field to the datagrid.
+     * Add a filter to the datagrid.
      *
      * @param string $name
-     * @param string $type A valid DatagridFieldType implementation name
-     * @param array $options List of options for the given DatagridFieldType
+     * @param string $type A valid DatagridFilterType implementation name
+     * @param array $options List of options for the given DatagridFilterType
+     * @return DatagridInterface
+     */
+    public function addFilter($name, $type, $options = array());
+
+    /**
+     * Add an action to the datagrid.
+     *
+     * @param string $name
+     * @param string $type A valid DatagridActionInterface implementation
+     * @param array $options List of options for the given DatagridActionInterface implementation
      * @return DatagridInterface
      */
     public function addAction($name, $type, $options = array());

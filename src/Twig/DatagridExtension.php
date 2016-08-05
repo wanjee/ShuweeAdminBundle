@@ -41,6 +41,7 @@ class DatagridExtension extends \Twig_Extension
         return array(
           new \Twig_SimpleFunction('datagrid', array($this, 'renderDatagrid'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_list_actions', array($this, 'renderDatagridListActions'), array('is_safe' => array('html'), 'needs_environment' => true)),
+          new \Twig_SimpleFunction('datagrid_filters', array($this, 'renderDatagridFilters'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_field', array($this, 'renderDatagridField'), array('is_safe' => array('html'), 'needs_environment' => true)),
           new \Twig_SimpleFunction('datagrid_get_csrf_token', array($this, 'getCsrfToken')),
         );
@@ -70,6 +71,26 @@ class DatagridExtension extends \Twig_Extension
             'datagrid_list_actions',
             array(
                 'actions' => $datagrid->getActions(),
+            )
+        );
+    }
+
+    /**
+     * @param $datagrid \Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
+     */
+    public function renderDatagridFilters(Twig_Environment $env, DatagridInterface $datagrid)
+    {
+        $form = $datagrid->getFiltersForm();
+
+        if (!$form) {
+            return null;
+        }
+
+        return $this->render(
+            $env,
+            'datagrid_filters',
+            array(
+                'form' => $form->createView(),
             )
         );
     }

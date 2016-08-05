@@ -43,7 +43,7 @@ services:
     # Datagrid
     shuwee_admin.datagrid:
             class: Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
-            arguments: ['@knp_paginator', '@doctrine.orm.default_entity_manager']
+            arguments: ['@knp_paginator', '@doctrine.orm.default_entity_manager', '@form.factory']
 
     # Security
     shuwee_admin.security.user_manager:

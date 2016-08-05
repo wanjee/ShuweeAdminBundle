@@ -17,6 +17,9 @@
 
 {% block body %}
     <div class="panel panel-default">
+        {{ datagrid_filters(datagrid) }}
+    </div>
+    <div class="panel panel-default">
         {{ datagrid(datagrid) }}
     </div>
 {% endblock %}
