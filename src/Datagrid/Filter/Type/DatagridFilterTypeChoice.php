@@ -7,18 +7,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class DatagridFilterTypeText
+ * Class DatagridFilterTypeChoice
  * @package Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type
  */
-class DatagridFilterTypeText extends DatagridFilterType
+class DatagridFilterTypeChoice extends DatagridFilterType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        // add optional other stuff
-
+        $resolver
+            ->setDefined(array(
+                'choices',
+            ))
+            ->setDefault('placeholder', 'All')
+            ->setAllowedTypes('choices', ['array'])
+            ->setAllowedTypes('placeholder', ['string']);
     }
 
     /**
@@ -34,7 +39,7 @@ class DatagridFilterTypeText extends DatagridFilterType
      */
     public function formatValue($rawValue)
     {
-        return '%'.$rawValue.'%';
+        return $rawValue;
     }
 
     /**
