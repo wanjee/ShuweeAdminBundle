@@ -16,11 +16,11 @@
     </div>
 {% endblock form_row %}
 
-{% block button_row -%}
+{% block button_row %}
     <div class="form-group form-group-sm">
-        {{- form_widget(form) -}}
+        {{ form_widget(form) }}
     </div>
-{%- endblock button_row %}
+{% endblock button_row %}
 
 {%- block button_attributes -%}
     id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
