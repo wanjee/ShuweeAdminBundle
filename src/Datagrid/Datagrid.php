@@ -169,6 +169,14 @@ class Datagrid implements DatagridInterface
         return $this->filters;
     }
 
+    /**
+     *
+     * @return bool
+     */
+    public function hasFilters()
+    {
+        return !empty($this->filters);
+    }
 
     /**
      * @param string $name

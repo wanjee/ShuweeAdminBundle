@@ -340,6 +340,9 @@
   .small-only table.datagrid.table-striped:nth-of-type(2n+1) {
     background-color: #F9F9F9; }
 
+.datagrid-filters {
+  padding: 8px; }
+
 .panel-body form .form-group:last-of-type {
   margin-bottom: 0; }
 
