@@ -336,7 +336,8 @@ class Datagrid implements DatagridInterface
         $i=0;
         foreach ($this->filters as $filter) {
             $filterExprName = $filter->getExpression();
-            if ($filterExprName && $filter->getValue()) {
+            // Value can be false but valid, it is only invalid when null.
+            if ($filterExprName && !is_null($filter->getValue())) {
                 $filterExpr = $queryBuilder->expr()->{$filterExprName}('e.'.$filter->getName(), ':param_'.$i);
                 $queryBuilder->setParameter('param_'.$i, $filter->getValue());
                 $expr->add($filterExpr);
