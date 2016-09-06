@@ -32,7 +32,7 @@ class DatagridField implements DatagridFieldInterface
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
      * @param array $options
      */
-    function __construct($name, $type, $options = array())
+    public function __construct($name, $type, $options = array())
     {
         $this->name = $name;
         $this->type = $type;
