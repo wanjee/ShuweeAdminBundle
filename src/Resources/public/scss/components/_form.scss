@@ -77,3 +77,18 @@ textarea {
     resize: vertical;
   }
 }
+
+/* Collections */
+.collection {
+    .btn-danger {
+        margin-top: 8px;
+    }
+    /* Hide the very first label of each collection item as this is only an arbitrary number of the item so far */
+    .list-group-item {
+        > .form-group {
+            > .control-label {
+                display: none;
+            }
+        }
+    }
+}

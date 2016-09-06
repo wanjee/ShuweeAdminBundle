@@ -72,7 +72,7 @@
 {%- endblock form_widget_compound -%}
 
 {%- block collection_widget -%}
-    <ul class="list-group">
+    <ul class="list-group collection">
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
         {%- endif -%}
@@ -82,8 +82,9 @@
                     <li class="list-group-item">
                         {{ form_row(form[item]) }}
                         {%- if allow_delete -%}
-                            <button type="button" class="btn btn-default btn-danger" data-delete>
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                            <button type="button" class="btn btn-default btn-danger btn-xs" data-delete>
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                {{ 'collection.remove' | trans({}, 'ShuweeAdminBundle') }}
                             </button>
                         {%- endif -%}
                     </li>
@@ -92,8 +93,9 @@
         {%- endif -%}
         {%- if allow_add and prototype is defined -%}
             <li class="list-group-item">
-                <button type="button" class="btn btn-default" data-index="{% if groups is defined %}{{ groups|length }}{% else %}0{% endif %}" data-prototype="{{ form_widget(prototype)|e }}">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                <button type="button" class="btn btn-success btn-xs" data-index="{% if groups is defined %}{{ groups|length }}{% else %}0{% endif %}" data-prototype="{{ form_widget(prototype)|e }}">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    {{ 'collection.add' | trans({}, 'ShuweeAdminBundle') }}
                 </button>
             </li>
         {%- endif -%}
