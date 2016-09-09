@@ -31,7 +31,7 @@
             });
         });
 
-        $('button[data-delete]').on('click', function(e) {
+        $('.collection').on('click', 'button[data-delete]', function(e) {
             e.preventDefault();
             $(this).parent().remove();
         });

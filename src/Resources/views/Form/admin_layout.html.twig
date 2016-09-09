@@ -76,24 +76,30 @@
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
         {%- endif -%}
+        {% set remove_button %}
+            <button type="button" class="btn btn-default btn-danger btn-xs" data-delete>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {{ 'collection.remove' | trans({}, 'ShuweeAdminBundle') }}
+            </button>
+        {% endset %}
         {%- if groups is defined -%}
             {% for group_name, group in groups %}
                 {% for item in group.items %}
                     <li class="list-group-item">
                         {{ form_row(form[item]) }}
                         {%- if allow_delete -%}
-                            <button type="button" class="btn btn-default btn-danger btn-xs" data-delete>
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                {{ 'collection.remove' | trans({}, 'ShuweeAdminBundle') }}
-                            </button>
+                            {{ remove_button }}
                         {%- endif -%}
                     </li>
                 {% endfor %}
             {% endfor %}
         {%- endif -%}
         {%- if allow_add and prototype is defined -%}
+            {# Add remove button to widget prototype #}
+            {% set prototype = form_widget(prototype) ~ remove_button %}
+
             <li class="list-group-item">
-                <button type="button" class="btn btn-success btn-xs" data-index="{% if groups is defined %}{{ groups|length }}{% else %}0{% endif %}" data-prototype="{{ form_widget(prototype)|e }}">
+                <button type="button" class="btn btn-success btn-xs" data-index="{% if groups is defined %}{{ groups | length }}{% else %}0{% endif %}" data-prototype="{{ prototype | e }}">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     {{ 'collection.add' | trans({}, 'ShuweeAdminBundle') }}
                 </button>
