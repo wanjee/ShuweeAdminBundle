@@ -285,7 +285,7 @@ class Datagrid implements DatagridInterface
         }
 
         // Map values, if any, to filters
-        if (is_array($this->filterValues) && !empty($this->filterValues)) {
+        if (is_array($this->filterValues)) {
             foreach ($this->filters as $filter) {
                 $filter->setValue($this->filterValues[$filter->getName()]);
             }
