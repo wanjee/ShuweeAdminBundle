@@ -124,7 +124,7 @@ class Datagrid implements DatagridInterface
 
     /**
      * @param string $name
-     * @param string $type A valid DatagridFieldType implementation name
+     * @param string $typeClass A valid DatagridFieldType implementation name
      * @param array $options List of options for the given DatagridFieldType
      * @return $this
      */
@@ -148,7 +148,7 @@ class Datagrid implements DatagridInterface
 
     /**
      * @param string $name
-     * @param string $type A valid DatagridFilterType implementation name
+     * @param string $typeClass A valid DatagridFilterType implementation name
      * @param array $options List of options for the given DatagridFilterType
      * @return $this
      */
@@ -259,7 +259,7 @@ class Datagrid implements DatagridInterface
             return;
         }
 
-        $this->retrieveFilterValues();
+        $this->loadFilterValues();
         // Init form with current data if any
         $this->filtersForm->setData($this->filterValues);
 
@@ -315,7 +315,7 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     *
+     * Generates the filters form, if any filter is defined.
      */
     private function buildFiltersForm()
     {
@@ -418,7 +418,7 @@ class Datagrid implements DatagridInterface
      * Retrieve values previously stored for filters
      * Values are stored per admin
      */
-    private function retrieveFilterValues()
+    private function loadFilterValues()
     {
         $session = new Session();
 
