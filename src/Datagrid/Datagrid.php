@@ -2,22 +2,17 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\DatagridFilter;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\DatagridFilterInterface;
 
 /**
  * Class Datagrid
@@ -56,7 +51,7 @@ class Datagrid implements DatagridInterface
     private $options;
 
     /**
-     * @var null | FormInterface
+     * @var null | \Symfony\Component\Form\FormInterface
      */
     private $filtersForm;
 
@@ -366,7 +361,7 @@ class Datagrid implements DatagridInterface
     /**
      * Get the form used to filter the list of entities displayed in the datagrid
      *
-     * @return null | FormInterface
+     * @return null | \Symfony\Component\Form\FormInterface
      */
     public function getFiltersForm()
     {
@@ -376,7 +371,7 @@ class Datagrid implements DatagridInterface
     /**
      * Get QueryBuilder to populate Datagrid
      *
-     * @return QueryBuilder;
+     * @return \Doctrine\ORM\QueryBuilder;
      */
     public function getQueryBuilder()
     {

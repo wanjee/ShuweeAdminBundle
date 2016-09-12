@@ -3,7 +3,6 @@
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**

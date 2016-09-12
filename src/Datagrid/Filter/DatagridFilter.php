@@ -2,7 +2,6 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid\Filter;
 
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
