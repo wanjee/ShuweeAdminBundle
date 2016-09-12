@@ -312,8 +312,7 @@ class ContentController extends Controller
         $translator = $this->getTranslator();
 
         return $this->createFormBuilder()
-            ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', ['id' => $entity->getId()]
-            ))
+            ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', ['id' => $entity->getId()]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
