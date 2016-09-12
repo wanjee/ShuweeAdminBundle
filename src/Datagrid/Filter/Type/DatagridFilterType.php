@@ -20,7 +20,7 @@ abstract class DatagridFilterType implements DatagridFilterTypeInterface
         $this->resolver
             ->setDefined(
                 [
-                'label',
+                    'label',
                 ]
             )
             ->setDefaults(
