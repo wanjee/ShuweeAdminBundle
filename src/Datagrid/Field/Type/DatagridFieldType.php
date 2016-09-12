@@ -17,14 +17,14 @@ abstract class DatagridFieldType implements DatagridFieldTypeInterface
     {
         $resolver
             ->setDefaults(
-                array(
+                [
                     'default_value' => null,
-                )
+                ]
             )
             ->setDefined(
-                array(
+                [
                     'callback'
-                )
+                ]
             )
             ->setAllowedTypes('callback', 'callable');
     }
@@ -46,10 +46,10 @@ abstract class DatagridFieldType implements DatagridFieldTypeInterface
             $value = $field->getData($entity);
         }
 
-        return array(
+        return [
             'field_name' => $field->getName(),
             'value' => $value,
             'default_value' => $field->getOption('default_value', 'null'),
-        );
+        ];
     }
 }

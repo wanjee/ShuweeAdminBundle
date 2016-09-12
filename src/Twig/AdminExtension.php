@@ -36,7 +36,7 @@ class AdminExtension extends \Twig_Extension
     /**
      * @var array
      */
-    protected $cacheIsGranted = array();
+    protected $cacheIsGranted = [];
 
     /**
      * AdminExtension constructor.
@@ -58,11 +58,11 @@ class AdminExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-          new \Twig_SimpleFunction('admin_get_label', array($this, 'getAdminLabel')),
-          new \Twig_SimpleFunction('admin_get_path', array($this, 'getAdminPath')),
-          new \Twig_SimpleFunction('admin_is_granted', array($this, 'isGranted')),
-        );
+        return [
+          new \Twig_SimpleFunction('admin_get_label', [$this, 'getAdminLabel']),
+          new \Twig_SimpleFunction('admin_get_path', [$this, 'getAdminPath']),
+          new \Twig_SimpleFunction('admin_is_granted', [$this, 'isGranted']),
+        ];
     }
 
     /**
@@ -75,7 +75,7 @@ class AdminExtension extends \Twig_Extension
     {
         // make sure attributes is an array
         if (!is_array($attributes)) {
-            $attributes = array($attributes);
+            $attributes = [$attributes];
         }
 
         $key = md5(json_encode($attributes) . ($object ? '/' . spl_object_hash($object) : ''));
@@ -99,7 +99,7 @@ class AdminExtension extends \Twig_Extension
     {
         $count = $plural ? 100 : 1;
 
-        return $this->translator->transChoice($admin->getOption('label'), $count, array(), 'ShuweeAdminBundle');
+        return $this->translator->transChoice($admin->getOption('label'), $count, [], 'ShuweeAdminBundle');
     }
 
     /**
@@ -108,7 +108,7 @@ class AdminExtension extends \Twig_Extension
      * @param array $params
      * @return string
      */
-    public function getAdminPath(AdminInterface $admin, $action, array $params = array())
+    public function getAdminPath(AdminInterface $admin, $action, array $params = [])
     {
         return $this->routingHelper->generateUrl($admin, $action, $params);
     }

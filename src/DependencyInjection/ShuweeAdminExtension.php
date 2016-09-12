@@ -23,28 +23,28 @@ class ShuweeAdminExtension extends Extension implements PrependExtensionInterfac
     public function prepend(ContainerBuilder $container)
     {
         // configure filter_sets for liip_imagine bundle
-        $config = array(
-            'filter_sets' => array(
-                'datagrid_thumb' => array(
+        $config = [
+            'filter_sets' => [
+                'datagrid_thumb' => [
                    'quality' => 85,
-                    'filters' => array(
-                        'thumbnail' => array(
-                            'size' => array(200, 75),
+                    'filters' => [
+                        'thumbnail' => [
+                            'size' => [200, 75],
                             'mode' => 'outbound',
-                        ),
-                    ),
-                ),
-                'form_file_preview' => array(
+                        ],
+                    ],
+                ],
+                'form_file_preview' => [
                    'quality' => 85,
-                    'filters' => array(
-                        'thumbnail' => array(
-                            'size' => array(200, 200),
+                    'filters' => [
+                        'thumbnail' => [
+                            'size' => [200, 200],
                             'mode' => 'inset',
-                        ),
-                    ),
-                ),
-            ),
-        );
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         $container->prependExtensionConfig('liip_imagine', $config);
     }

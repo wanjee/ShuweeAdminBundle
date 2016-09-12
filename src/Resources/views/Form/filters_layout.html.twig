@@ -1,0 +1,39 @@
+{%  extends 'bootstrap_3_layout.html.twig' %}
+
+{% block form %}
+    <div class="form-inline">
+    {{ form_start(form) }}
+    {{- form_widget(form) -}}
+    {{ form_end(form) }}
+    </div>
+{% endblock form %}
+
+{% block form_row %}
+    <div class="form-group form-group-sm">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock form_row %}
+
+{% block button_row %}
+    <div class="form-group form-group-sm">
+        {{ form_widget(form) }}
+    </div>
+{% endblock button_row %}
+
+{%- block button_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrname in ['class'] -%}
+            {{- attrname }}="btn-sm {{ attrvalue }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock button_attributes -%}

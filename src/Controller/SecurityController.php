@@ -34,11 +34,11 @@ class SecurityController extends Controller
 
         return $this->render(
             'ShuweeAdminBundle:Security:login.html.twig',
-            array(
+            [
                 // last username entered by the user
                 'last_username' => $session->get(Security::LAST_USERNAME),
                 'error'         => $error,
-            )
+            ]
         );
     }
 

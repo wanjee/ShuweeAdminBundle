@@ -9,7 +9,7 @@ class AdminManager
     /**
      * @var array list of admin services
      */
-    private $admins = array();
+    private $admins = [];
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin

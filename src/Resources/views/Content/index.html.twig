@@ -16,6 +16,11 @@
 {% endblock %}
 
 {% block body %}
+    {% if (datagrid.hasFilters) %}
+    <div class="panel panel-default datagrid-filters">
+        {{ datagrid_filters(datagrid) }}
+    </div>
+    {% endif %}
     <div class="panel panel-default">
         {{ datagrid(datagrid) }}
     </div>

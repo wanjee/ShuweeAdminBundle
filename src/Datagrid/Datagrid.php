@@ -3,12 +3,16 @@
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\DatagridFilter;
 
 /**
  * Class Datagrid
@@ -19,22 +23,22 @@ class Datagrid implements DatagridInterface
     /**
      * @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
      */
-    protected $admin;
+    private $admin;
 
     /**
      * @var array List of available actions for this datagrid
      */
-    protected $actions = array();
+    private $actions = [];
 
     /**
      * @var array List of available fields for this datagrid
      */
-    protected $fields = array();
+    private $fields = [];
 
     /**
      * @var array List of available fields for this datagrid
      */
-    protected $filters = array();
+    private $filters = [];
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -44,7 +48,17 @@ class Datagrid implements DatagridInterface
     /**
      * @var array
      */
-    protected $options;
+    private $options;
+
+    /**
+     * @var null | \Symfony\Component\Form\FormInterface
+     */
+    private $filtersForm;
+
+    /**
+     * @var array
+     */
+    private $filterValues = [];
 
     /**
      * @var \Knp\Component\Pager\PaginatorInterface
@@ -54,7 +68,7 @@ class Datagrid implements DatagridInterface
     /**
      * @var \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    protected $pagination;
+    private $pagination;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -62,13 +76,19 @@ class Datagrid implements DatagridInterface
     private $entityManager;
 
     /**
+     * @var \Symfony\Component\Form\FormFactory
+     */
+    private $factory;
+
+    /**
      * Datagrid constructor.
      * @param \Knp\Component\Pager\PaginatorInterface $paginator
      */
-    public function __construct(PaginatorInterface $paginator, EntityManagerInterface $entityManager)
+    public function __construct(PaginatorInterface $paginator, EntityManagerInterface $entityManager, FormFactory $factory)
     {
         $this->paginator = $paginator;
         $this->entityManager = $entityManager;
+        $this->factory = $factory;
     }
 
     /**
@@ -80,12 +100,12 @@ class Datagrid implements DatagridInterface
     {
         $resolver
             ->setDefaults(
-                array(
+                [
                     'limit_per_page' => 10,
                     'default_sort_column' => 'id',
                     'default_sort_order' => 'asc',
                     'show_actions_column' => true,
-                )
+                ]
             )
             ->setAllowedTypes('limit_per_page', 'integer')
             ->setAllowedTypes('default_sort_column', 'string')
@@ -104,34 +124,11 @@ class Datagrid implements DatagridInterface
 
     /**
      * @param string $name
-     * @param string $type A valid DatagridActionType implementation name
-     * @param array $options List of options for the given DatagridActionType
-     */
-    public function addAction($type, $route, $options = array())
-    {
-        // instanciate new field object of given type
-        $action = new $type($route, $options);
-
-        $this->actions[] = $action;
-
-        return $this;
-    }
-
-    /**
-     * Return list of all fields configured for this datagrid
-     */
-    public function getActions()
-    {
-        return $this->actions;
-    }
-
-    /**
-     * @param string $name
-     * @param string $type A valid DatagridFieldType implementation name
+     * @param string $typeClass A valid DatagridFieldType implementation name
      * @param array $options List of options for the given DatagridFieldType
      * @return $this
      */
-    public function addField($name, $typeClass, $options = array())
+    public function addField($name, $typeClass, $options = [])
     {
         $type = new $typeClass;
         $field = new DatagridField($name, $type, $options);
@@ -150,6 +147,62 @@ class Datagrid implements DatagridInterface
     }
 
     /**
+     * @param string $name
+     * @param string $typeClass A valid DatagridFilterType implementation name
+     * @param array $options List of options for the given DatagridFilterType
+     * @return $this
+     */
+    public function addFilter($name, $typeClass, $options = [])
+    {
+        $type = new $typeClass;
+        $filter = new DatagridFilter($name, $type, $options);
+
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * Return list of all filters configured for this datagrid
+     */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function hasFilters()
+    {
+        return !empty($this->filters);
+    }
+
+    /**
+     * @param string $name
+     * @param string $type A valid DatagridActionType implementation name
+     * @param array $options List of options for the given DatagridActionType
+     */
+    public function addAction($type, $route, $options = [])
+    {
+        // instanciate new field object of given type
+        $action = new $type($route, $options);
+
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Return list of all fields configured for this datagrid
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getPagination()
@@ -159,7 +212,7 @@ class Datagrid implements DatagridInterface
                 $this->getQueryBuilder(),
                 $this->request->query->getInt('page', 1),
                 $this->options['limit_per_page'],
-                array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
+                ['defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order']]
             );
         }
 
@@ -182,11 +235,62 @@ class Datagrid implements DatagridInterface
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($admin->getDatagridOptions());
 
-        // attach our fields, filters and actions
-        $admin->buildDatagrid($this);
-
         $this->admin = $admin;
         $this->request = $request;
+
+        // attach our fields, filters and actions
+        $this->admin->buildDatagrid($this);
+
+        $this->applyFilters();
+    }
+
+    /**
+     * Prepare filters form, bind filter values to filters
+     */
+    private function applyFilters()
+    {
+        // Manage filters
+        // Filter values come either from the form (GET)
+        // Or from session
+        $form = $this->getFiltersForm();
+
+        if (!$form) {
+            // No filters are configured for this admin
+            return;
+        }
+
+        $this->loadFilterValues();
+        // Init form with current data if any
+        $form->setData($this->filterValues);
+
+        $form->handleRequest($this->request);
+
+        if ($form->isSubmitted()) {
+
+            if ($form->get('reset')->isClicked()) {
+                // Submitted for reset
+                // Reset stored content
+                $this->clearFilterValues();
+                // Reset displayed values by rebuilding the form
+                // yes, it's a pity we cannot simply change content of it
+                $this->getFiltersForm(true);
+            }
+            else {
+                // Submitted for filtering
+                // Overwrite any stored values with the submitted ones
+                // Update storage for subsequent requests
+                $this->storeFilterValues($form->getData());
+            }
+        }
+
+        // Map values, if any, to filters
+        if (is_array($this->filterValues)) {
+            foreach ($this->filters as $filter) {
+                if (array_key_exists($filter->getName(), $this->filterValues)) {
+                    $filter->setValue($this->filterValues[$filter->getName()]);
+                }
+            }
+        }
     }
 
     /**
@@ -212,9 +316,60 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * Get basic QueryBuilder to populate Datagrid
+     * Get the form used to filter the list of entities displayed in the datagrid
      *
-     * @return QueryBuilder;
+     * @param bool $reset Force rebuild ?
+     * @return null | \Symfony\Component\Form\FormInterface
+     */
+    public function getFiltersForm($reset = false)
+    {
+        if (!$this->filtersForm || $reset) {
+            if (empty($this->filters)) {
+                return null;
+            }
+
+            $form = $this->factory->createBuilder(
+                FormType::class,
+                null,
+                [
+                    'csrf_protection' => false,
+                ]
+            );
+
+            /** @var DatagridFilter $filter */
+            foreach ($this->filters as $filter) {
+                $filter->buildForm($form);
+            }
+
+            $form->add(
+                'submit',
+                SubmitType::class,
+                [
+                    'label' => 'Filter',
+                    'attr' => [
+                        'class' =>'btn-success',
+                    ]
+                ]
+            );
+
+            $form->add(
+                'reset',
+                SubmitType::class,
+                [
+                    'label' => 'Reset'
+                ]
+            );
+
+            $this->filtersForm = $form->getForm();
+        }
+
+        return $this->filtersForm;
+    }
+
+    /**
+     * Get QueryBuilder to populate Datagrid
+     *
+     * @return \Doctrine\ORM\QueryBuilder;
      */
     public function getQueryBuilder()
     {
@@ -224,6 +379,68 @@ class Datagrid implements DatagridInterface
             ->from($this->admin->getEntityClass(), 'e')
             ->orderBy('e.id', 'DESC');
 
+        $expr = $queryBuilder->expr()->andX();
+
+        /** @var DatagridFilter $filter */
+        $i = 0;
+        foreach ($this->filters as $filter) {
+            $filterExprName = $filter->getExpression();
+            // Value can be false but valid, it is only invalid when null.
+            if ($filterExprName && !is_null($filter->getValue())) {
+                $filterExpr = $queryBuilder->expr()->{$filterExprName}('e.'.$filter->getName(), ':param_'.$i);
+                $queryBuilder->setParameter('param_'.$i, $filter->getValue());
+                $expr->add($filterExpr);
+                $i++;
+            }
+        }
+
+        if ($expr->count() > 0) {
+            $queryBuilder->where($expr);
+        }
+
         return $queryBuilder;
+    }
+
+    /**
+     * Store values for filters so user can change page and keep his filters
+     * Values are stored per admin
+     */
+    private function storeFilterValues(array $data)
+    {
+        $this->filterValues = $data;
+
+        $session = new Session();
+        $session->set($this->getStorageNamespace(), $this->filterValues);
+    }
+
+    /**
+     * Retrieve values previously stored for filters
+     * Values are stored per admin
+     */
+    private function loadFilterValues()
+    {
+        $session = new Session();
+
+        $this->filterValues = $session->get($this->getStorageNamespace());
+    }
+
+    /**
+     * Clear values previously stored for filters
+     * Values are stored per admin
+     */
+    private function clearFilterValues()
+    {
+        $session = new Session();
+        $session->remove($this->getStorageNamespace());
+
+        $this->filterValues = [];
+    }
+
+    /**
+     * @return string
+     */
+    private function getStorageNamespace()
+    {
+        return 'datagrid:' . $this->admin->getAlias();
     }
 }

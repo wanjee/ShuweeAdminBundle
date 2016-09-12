@@ -20,10 +20,10 @@ class DatagridFieldTypeText extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'truncate' => 80,
                     'escape' => true,
-                )
+                ]
             )
             ->setAllowedTypes('truncate', ['null', 'integer'])
             ->setAllowedTypes('escape', 'bool');
@@ -59,10 +59,10 @@ class DatagridFieldTypeText extends DatagridFieldType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        return array(
+        return [
             'value' => $defaults['value'],
             'truncate' => $field->getOption('truncate', 80),
             'escape' => $field->getOption('escape', true),
-        ) + $defaults;
+        ] + $defaults;
     }
 }

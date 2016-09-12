@@ -43,11 +43,11 @@ class UserAddCommand extends ContainerAwareCommand
         $console = $this->getHelper('question');
 
         $output->writeln(
-            array(
+            [
                 '',
                 'This command will create a <info>user</info> for <comment>Shuwee admin</comment>',
                 '',
-            )
+            ]
         );
 
         // Username
@@ -62,7 +62,7 @@ class UserAddCommand extends ContainerAwareCommand
 
         if (null === $username) {
             $question = new Question('<info>Username</info>: ');
-            $question->setValidator(array($this, 'usernameValidator'));
+            $question->setValidator([$this, 'usernameValidator']);
             $question->setMaxAttempts(self::MAX_ATTEMPTS);
             $username = $console->ask($input, $output, $question);
             $input->setArgument('username', $username);
@@ -82,7 +82,7 @@ class UserAddCommand extends ContainerAwareCommand
 
         if (null === $password) {
             $question = new Question('<info>Password</info> (your type will be hidden): ');
-            $question->setValidator(array($this, 'passwordValidator'));
+            $question->setValidator([$this, 'passwordValidator']);
             $question->setHidden(true);
             $question->setMaxAttempts(self::MAX_ATTEMPTS);
             $password = $console->ask($input, $output, $question);

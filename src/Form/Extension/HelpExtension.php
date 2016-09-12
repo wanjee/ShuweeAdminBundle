@@ -34,9 +34,9 @@ class HelpExtension extends AbstractTypeExtension
     {
         $resolver
             ->setDefined(
-                array(
+                [
                     'help'
-                )
+                ]
             );
     }
 

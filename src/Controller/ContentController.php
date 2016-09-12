@@ -47,9 +47,9 @@ class ContentController extends Controller
 
         return $this->render(
             'ShuweeAdminBundle:Content:index.html.twig',
-            array(
+            [
                 'datagrid' => $datagrid,
-            )
+            ]
         );
     }
 
@@ -80,17 +80,17 @@ class ContentController extends Controller
             $admin->postPersist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.create.success', array(), 'ShuweeAdminBundle'));
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.create.success', [], 'ShuweeAdminBundle'));
 
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render(
             'ShuweeAdminBundle:Content:create.html.twig',
-            array(
+            [
                 'admin' => $admin,
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -126,18 +126,18 @@ class ContentController extends Controller
             $admin->postUpdate($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.edit.success', array(), 'ShuweeAdminBundle'));
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.edit.success', [], 'ShuweeAdminBundle'));
 
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render(
             'ShuweeAdminBundle:Content:update.html.twig',
-            array(
+            [
                 'admin' => $admin,
                 'entity' => $entity,
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -173,18 +173,18 @@ class ContentController extends Controller
             $admin->postRemove($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.delete.success', array(), 'ShuweeAdminBundle'));
+            $this->get('session')->getFlashBag()->add('success', $translator->trans('crud.delete.success', [], 'ShuweeAdminBundle'));
 
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
         return $this->render(
             'ShuweeAdminBundle:Content:delete.html.twig',
-            array(
+            [
                 'admin' => $admin,
                 'entity' => $entity,
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -247,18 +247,18 @@ class ContentController extends Controller
         $form = $this->createForm(
             $formType,
             $entity,
-            array(
+            [
                 'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'create'),
                 'method' => 'POST',
-            )
+            ]
         );
         $form->add(
             'submit',
             SubmitType::class,
-            array(
-                'label' => $translator->trans('crud.create.action', array(), 'ShuweeAdminBundle'),
-                'attr' => array('class' => 'btn-success'),
-            )
+            [
+                'label' => $translator->trans('crud.create.action', [], 'ShuweeAdminBundle'),
+                'attr' => ['class' => 'btn-success'],
+            ]
         );
 
         return $form;
@@ -281,18 +281,19 @@ class ContentController extends Controller
         $form = $this->createForm(
             $formType,
             $entity,
-            array(
-                'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', array('id' => $entity->getId())),
+            [
+                'action' => $this->getAdminRoutingHelper()->generateUrl($admin, 'update', ['id' => $entity->getId()]
+                ),
                 'method' => 'PUT',
-            )
+            ]
         );
         $form->add(
             'submit',
             SubmitType::class,
-            array(
-                'label' => $translator->trans('crud.edit.action', array(), 'ShuweeAdminBundle'),
-                'attr' => array('class' => 'btn-primary'),
-            )
+            [
+                'label' => $translator->trans('crud.edit.action', [], 'ShuweeAdminBundle'),
+                'attr' => ['class' => 'btn-primary'],
+            ]
         );
 
         return $form;
@@ -311,15 +312,15 @@ class ContentController extends Controller
         $translator = $this->getTranslator();
 
         return $this->createFormBuilder()
-            ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', array('id' => $entity->getId())))
+            ->setAction($this->getAdminRoutingHelper()->generateUrl($admin, 'delete', ['id' => $entity->getId()]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 SubmitType::class,
-                array(
-                    'label' => $translator->trans('crud.delete.action', array(), 'ShuweeAdminBundle'),
-                    'attr' => array('class' => 'btn-danger'),
-                )
+                [
+                    'label' => $translator->trans('crud.delete.action', [], 'ShuweeAdminBundle'),
+                    'attr' => ['class' => 'btn-danger'],
+                ]
             )
             ->getForm();
     }
@@ -335,7 +336,7 @@ class ContentController extends Controller
     private function secure(Admin $admin, $attributes, $object = null)
     {
         if (!is_array($attributes)) {
-            $attributes = array($attributes);
+            $attributes = [$attributes];
         }
 
         if (is_null($object)) {

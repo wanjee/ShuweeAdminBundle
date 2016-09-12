@@ -1,5 +1,11 @@
+
 {% block datagrid %}
     {{ block('datagrid_table') }}
+{% endblock %}
+
+{% block datagrid_filters %}
+    {% form_theme form 'ShuweeAdminBundle:Form:filters_layout.html.twig' %}
+    {{ form(form) }}
 {% endblock %}
 
 {% block datagrid_list_actions %}

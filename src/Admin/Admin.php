@@ -20,13 +20,13 @@ abstract class Admin implements AdminInterface
      * List of global options
      * @var array
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
      * Cache for grants
      * @var array
      */
-    protected $cacheIsGranted = array();
+    protected $cacheIsGranted = [];
 
     /**
      * Store setup state to avoid setting it up several times
@@ -106,17 +106,17 @@ abstract class Admin implements AdminInterface
     final public function configureOptions(OptionsResolver $resolver) {
         $resolver
             ->setDefaults(
-                array(
+                [
                     'label' => ucfirst($this->getAlias()),
                     'description' => null,
                     'preview_url_callback' => null,
                     'menu_section' => 'content',
-                )
+                ]
             )
-            ->setAllowedTypes('label', array('string'))
-            ->setAllowedTypes('description', array('string', 'null'))
-            ->setAllowedTypes('preview_url_callback', array('callable', 'null'))
-            ->setAllowedTypes('menu_section', array('string'));
+            ->setAllowedTypes('label', ['string'])
+            ->setAllowedTypes('description', ['string', 'null'])
+            ->setAllowedTypes('preview_url_callback', ['callable', 'null'])
+            ->setAllowedTypes('menu_section', ['string']);
     }
 
     /**
@@ -144,14 +144,14 @@ abstract class Admin implements AdminInterface
      * @return array Options
      */
     public function getOptions() {
-        return array();
+        return [];
     }
 
     /**
      * @return array Options
      */
     public function getDatagridOptions() {
-        return array();
+        return [];
     }
 
     /**

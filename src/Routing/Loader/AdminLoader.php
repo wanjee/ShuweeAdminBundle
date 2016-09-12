@@ -57,7 +57,7 @@ class AdminLoader extends Loader
             // List
             $routeCollection->add(
                 $this->routingHelper->getRouteName($admin, 'index'),
-                $this->routingHelper->getRoute($admin, 'index', array(), true)
+                $this->routingHelper->getRoute($admin, 'index', [], true)
             );
 
             // Create
@@ -69,19 +69,20 @@ class AdminLoader extends Loader
             // Update
             $routeCollection->add(
                 $this->routingHelper->getRouteName($admin, 'update'),
-                $this->routingHelper->getRoute($admin, 'update', array('id'))
+                $this->routingHelper->getRoute($admin, 'update', ['id'])
             );
 
             // Delete
             $routeCollection->add(
                 $this->routingHelper->getRouteName($admin, 'delete'),
-                $this->routingHelper->getRoute($admin, 'delete', array('id'))
+                $this->routingHelper->getRoute($admin, 'delete', ['id'])
             );
 
             // Toggle field
             $routeCollection->add(
                 $this->routingHelper->getRouteName($admin, 'toggle'),
-                $this->routingHelper->getRoute($admin, 'toggle', array('id', 'field', 'token'))
+                $this->routingHelper->getRoute($admin, 'toggle', ['id', 'field', 'token']
+                )
             );
         }
 

@@ -35,9 +35,9 @@ class FilePreviewTypeExtension extends AbstractTypeExtension
     {
         $resolver
             ->setDefined(
-                array(
+                [
                     'preview_base_path'
-                )
+                ]
             );
     }
 

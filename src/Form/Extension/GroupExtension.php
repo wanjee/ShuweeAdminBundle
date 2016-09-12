@@ -32,9 +32,9 @@ class GroupExtension extends AbstractTypeExtension
     {
         $resolver
             ->setDefined(
-                array(
+                [
                     'group'
-                )
+                ]
             );
     }
 
@@ -67,10 +67,10 @@ class GroupExtension extends AbstractTypeExtension
         $root = $view->parent;
 
         if (!isset($root->vars['groups'][$group])) {
-            $root->vars['groups'][$group] = array(
+            $root->vars['groups'][$group] = [
                 'type' => $type,
-                'items' => array(),
-            );
+                'items' => [],
+            ];
         }
         $root->vars['groups'][$group]['items'][] = $formName;
     }

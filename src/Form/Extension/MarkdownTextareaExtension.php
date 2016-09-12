@@ -34,14 +34,14 @@ class MarkdownTextareaExtension extends AbstractTypeExtension
     {
         $resolver
             ->setDefined(
-                array(
+                [
                     'markdown',
-                )
+                ]
             )
             ->setDefaults(
-                array(
+                [
                     'markdown' => false,
-                )
+                ]
             )
             ->setAllowedTypes('markdown', 'bool');
     }
