@@ -71,7 +71,7 @@ Wanjee\Shuwee\AdminBundle\Datagrid::addAction() arguments are :
 * *Route name* : Name of a route to redirect user to. This route must exist and must not require any argument.
 * *Options* : array of options, depends on action type.  'label', 'icon' and 'btn-style' and 'classes' are common.
 
-## Datagrid field types
+## Field types
 
 ### Shared options
 
@@ -293,8 +293,67 @@ Displays text value as link or mailto.
 
 If a callback is defined it must return a string.
 
+## Filters
 
-## Datagrid actions
+A filter are used in a form displayed top of the list.  They allow you to restrict what is displayed in the list.
+
+``` php
+/**
+ *
+ */
+public function attachFilters(DatagridInterface $datagrid)
+{
+    $datagrid
+        ->addFilter('title', DatagridFilterTypeText::class, ['label' => 'Title',])
+        ->addFilter('status', DatagridFilterTypeChoice::class, ['label' => 'Published', 'choices' => ['Yes' => 1,'No' => 0,],]);
+}
+```
+
+### Shared options
+
+* *label*: Link label. Expects string.
+
+### Known restrictions
+
+Currently you cannot filter on related entities.
+
+## Filter types
+
+### Text
+
+``` php
+->addFilter(
+    'title', 
+    DatagridFilterTypeText::class,
+    [
+        'label' => 'Title',
+   ]
+)
+``` 
+
+### Choice
+
+Allows you to define a list of available values to chose from.
+ 
+``` php
+->addFilter(
+    'status', 
+    DatagridFilterTypeChoice::class, 
+    [
+        'label' => 'Published', 
+        'choices' => [
+            'Yes' => 1,
+            'No' => 0,
+         ],
+    ]
+) 
+``` 
+ 
+### Options
+
+* *choices*: List of options to display.  Expects array.  See http://symfony.com/doc/current/reference/forms/types/choice.html#choices
+
+## Actions
 
 An action is an additional functionality on top of the datagrid.
 In your admin controller define the datagrid actions as follow:
