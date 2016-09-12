@@ -66,11 +66,11 @@ class DatagridFilter implements DatagridFilterInterface
      */
     public function getValue()
     {
-        if (!is_null($this->value)) {
-            return $this->getType()->formatValue($this->value);
+        if (is_null($this->value)) {
+            return null;
         }
 
-        return null;
+        return $this->getType()->formatValue($this->value);
     }
 
     /**
