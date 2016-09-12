@@ -33,17 +33,17 @@ class Datagrid implements DatagridInterface
     /**
      * @var array List of available actions for this datagrid
      */
-    private $actions = array();
+    private $actions = [];
 
     /**
      * @var array List of available fields for this datagrid
      */
-    private $fields = array();
+    private $fields = [];
 
     /**
      * @var array List of available fields for this datagrid
      */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -105,12 +105,12 @@ class Datagrid implements DatagridInterface
     {
         $resolver
             ->setDefaults(
-                array(
+                [
                     'limit_per_page' => 10,
                     'default_sort_column' => 'id',
                     'default_sort_order' => 'asc',
                     'show_actions_column' => true,
-                )
+                ]
             )
             ->setAllowedTypes('limit_per_page', 'integer')
             ->setAllowedTypes('default_sort_column', 'string')
@@ -133,7 +133,7 @@ class Datagrid implements DatagridInterface
      * @param array $options List of options for the given DatagridFieldType
      * @return $this
      */
-    public function addField($name, $typeClass, $options = array())
+    public function addField($name, $typeClass, $options = [])
     {
         $type = new $typeClass;
         $field = new DatagridField($name, $type, $options);
@@ -157,7 +157,7 @@ class Datagrid implements DatagridInterface
      * @param array $options List of options for the given DatagridFilterType
      * @return $this
      */
-    public function addFilter($name, $typeClass, $options = array())
+    public function addFilter($name, $typeClass, $options = [])
     {
         $type = new $typeClass;
         $filter = new DatagridFilter($name, $type, $options);
@@ -189,7 +189,7 @@ class Datagrid implements DatagridInterface
      * @param string $type A valid DatagridActionType implementation name
      * @param array $options List of options for the given DatagridActionType
      */
-    public function addAction($type, $route, $options = array())
+    public function addAction($type, $route, $options = [])
     {
         // instanciate new field object of given type
         $action = new $type($route, $options);
@@ -217,7 +217,7 @@ class Datagrid implements DatagridInterface
                 $this->getQueryBuilder(),
                 $this->request->query->getInt('page', 1),
                 $this->options['limit_per_page'],
-                array('defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order'])
+                ['defaultSortFieldName' => 'e.'.$this->options['default_sort_column'], 'defaultSortDirection' => $this->options['default_sort_order']]
             );
         }
 
@@ -331,9 +331,9 @@ class Datagrid implements DatagridInterface
         $form = $this->factory->createBuilder(
             FormType::class,
             null,
-            array(
+            [
                 'csrf_protection' => false,
-            )
+            ]
         );
 
         /** @var DatagridFilter $filter */

@@ -37,13 +37,13 @@ class DatagridFilter implements DatagridFilterInterface
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type\DatagridFilterTypeInterface $type
      * @param array $options
      */
-    public function __construct($name, $type, $options = array())
+    public function __construct($name, $type, $options = [])
     {
         $this->name = $name;
         $this->type = $type;
-        $this->options = $options + array(
+        $this->options = $options + [
                 'label' => $this->name,
-            );
+            ];
     }
 
     /**

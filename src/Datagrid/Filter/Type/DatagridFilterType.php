@@ -18,14 +18,16 @@ abstract class DatagridFilterType implements DatagridFilterTypeInterface
     {
         $this->resolver = new OptionsResolver();
         $this->resolver
-            ->setDefined(array(
+            ->setDefined(
+                [
                 'label',
-            ))
+                ]
+            )
             ->setDefaults(
-                array(
+                [
                     'empty_data' => null,
                     'required' => false,
-                )
+                ]
             )
             ->setAllowedTypes('label', ['string'])
             ->setAllowedTypes('required', ['boolean'])

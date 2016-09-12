@@ -20,9 +20,9 @@ class DatagridFieldTypeImage extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'base_path' => 'uploads',
-                )
+                ]
             )
             ->setAllowedTypes('base_path', 'string');
     }
@@ -65,8 +65,8 @@ class DatagridFieldTypeImage extends DatagridFieldType
             $value = $base_path . '/' . $image;
         }
 
-        return array(
+        return [
             'value' => $value,
-        ) + $defaults;
+        ] + $defaults;
     }
 }

@@ -24,7 +24,7 @@ class AdminController extends Controller
         /** @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager $adminManager */
         $adminManager = $this->get('shuwee_admin.admin_manager');
 
-        $sections = array();
+        $sections = [];
         /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
         foreach ($adminManager->getAdmins() as $alias => $admin) {
             $section = $admin->getOption('menu_section');
@@ -37,9 +37,9 @@ class AdminController extends Controller
             // Create parent menu item if it does not exist yet
             if (!isset($sections[$section])) {
                 $sections[$section]['label'] = ucfirst(
-                    $translator->trans($section, array(), 'ShuweeAdminBundle')
+                    $translator->trans($section, [], 'ShuweeAdminBundle')
                 );
-                $sections[$section]['admins'] = array();
+                $sections[$section]['admins'] = [];
             }
 
             $sections[$section]['admins'][] = $admin;
@@ -47,9 +47,9 @@ class AdminController extends Controller
 
         return $this->render(
             'ShuweeAdminBundle:Admin:dashboard.html.twig',
-            array(
+            [
                 'sections' => $sections,
-            )
+            ]
         );
     }
 }

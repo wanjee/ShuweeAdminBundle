@@ -56,13 +56,13 @@ class ContentVoter implements VoterInterface
     {
         return in_array(
             $attribute,
-            array(
+            [
                 self::LIST_CONTENT,
                 self::VIEW_CONTENT,
                 self::CREATE_CONTENT,
                 self::UPDATE_CONTENT,
                 self::DELETE_CONTENT,
-            )
+            ]
         );
     }
 

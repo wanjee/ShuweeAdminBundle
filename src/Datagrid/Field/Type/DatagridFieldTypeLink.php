@@ -20,10 +20,10 @@ class DatagridFieldTypeLink extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'label_link' => 'Link',
                     'mailto' => false,
-                )
+                ]
             )
             ->setAllowedTypes('label_link', 'string')
             ->setAllowedTypes('mailto', 'bool');
@@ -59,10 +59,10 @@ class DatagridFieldTypeLink extends DatagridFieldType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        return array(
+        return [
             'value' => $defaults['value'],
             'label_link' => $field->getOption('label_link', 'Link'),
             'mailto' => $field->getOption('mailto', false),
-        ) + $defaults;
+        ] + $defaults;
     }
 }

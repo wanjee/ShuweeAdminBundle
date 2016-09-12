@@ -19,9 +19,9 @@ class DatagridFieldTypeCollection extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'truncate' => 80,
-                )
+                ]
             )
             ->setAllowedTypes('truncate', ['null', 'integer']);
     }
@@ -69,9 +69,9 @@ class DatagridFieldTypeCollection extends DatagridFieldType
             $string = 'Unsupported.';
         }
 
-        return array(
+        return [
             'value' => $string,
             'truncate' => $field->getOption('truncate', 80),
-        ) + $defaults;
+        ] + $defaults;
     }
 }

@@ -57,7 +57,7 @@ class ConfigureMenuContentListener
             $menu = $event->getMenu();
 
             // list of configured sections
-            $sections = array();
+            $sections = [];
 
             /** @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin */
             foreach ($this->adminManager->getAdmins() as $alias => $admin) {
@@ -67,7 +67,7 @@ class ConfigureMenuContentListener
                 $object = new $entityClass();
 
                 // Menu item should not appear if user does not have access to the list
-                if (!$this->authorizationChecker->isGranted(array(ContentVoter::LIST_CONTENT), $object)) {
+                if (!$this->authorizationChecker->isGranted([ContentVoter::LIST_CONTENT], $object)) {
                     continue;
                 }
 
@@ -79,11 +79,12 @@ class ConfigureMenuContentListener
 
                 // Create parent menu item if it does not exist yet
                 if (!isset($sections[$section])) {
-                    $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section, array(), 'ShuweeAdminBundle')));
+                    $sections[$section] = $menu->addChild(ucfirst($this->translator->trans($section, [], 'ShuweeAdminBundle')));
                 }
 
-                $pluralLabel = $this->translator->transchoice($admin->getOption('label'), 10, array(), 'ShuweeAdminBundle');
-                $sections[$section]->addChild($pluralLabel, array('route' => $this->adminRoutingHelper->getRouteName($admin, 'index')));
+                $pluralLabel = $this->translator->transchoice($admin->getOption('label'), 10, [], 'ShuweeAdminBundle');
+                $sections[$section]->addChild($pluralLabel, ['route' => $this->adminRoutingHelper->getRouteName($admin, 'index')]
+                );
             }
         }
     }

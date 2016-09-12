@@ -24,7 +24,7 @@ abstract class DatagridAbstractAction implements DatagridActionInterface
      * @param string $route
      * @param array $options
      */
-    public function __construct($route, $options = array())
+    public function __construct($route, $options = [])
     {
         $this->route = $route;
 
@@ -51,11 +51,11 @@ abstract class DatagridAbstractAction implements DatagridActionInterface
     {
         $resolver
             ->setDefaults(
-                array(
+                [
                     'icon' => null, // See http://getbootstrap.com/components/
                     'btn-style' => 'default', // See http://getbootstrap.com/css/#helper-classes-colors
                     'classes' => '', // Any additional class you want on the button
-                )
+                ]
             )
             ->setRequired('label')
             ->setAllowedTypes('label', ['null', 'string'])

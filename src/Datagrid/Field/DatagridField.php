@@ -32,7 +32,7 @@ class DatagridField implements DatagridFieldInterface
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeInterface $type
      * @param array $options
      */
-    public function __construct($name, $type, $options = array())
+    public function __construct($name, $type, $options = [])
     {
         $this->name = $name;
         $this->type = $type;
@@ -40,11 +40,12 @@ class DatagridField implements DatagridFieldInterface
         // manage options
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(array(
+            ->setDefaults(
+                [
                     'label' => ucfirst($name),
                     'sortable' => false,
                     'help' => null,
-                )
+                ]
             )
             ->setAllowedTypes('label', ['string'])
             ->setAllowedTypes('sortable', ['boolean'])

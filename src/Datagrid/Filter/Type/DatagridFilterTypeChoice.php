@@ -18,9 +18,11 @@ class DatagridFilterTypeChoice extends DatagridFilterType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefined(array(
+            ->setDefined(
+                [
                 'choices',
-            ))
+                ]
+            )
             ->setDefault('placeholder', 'All')
             ->setAllowedTypes('choices', ['array'])
             ->setAllowedTypes('placeholder', ['string']);

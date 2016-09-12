@@ -46,9 +46,9 @@ class AdminRoutingHelper
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function getRoute(AdminInterface $admin, $action, $params = array(), $isIndex = false)
+    public function getRoute(AdminInterface $admin, $action, $params = [], $isIndex = false)
     {
-        $defaults = array();
+        $defaults = [];
         $path = '/' . $admin->getAlias();
 
         // append action if required
@@ -70,11 +70,11 @@ class AdminRoutingHelper
         $controller = 'ShuweeAdminBundle:Content:' . $action;
 
         $defaults = array_merge(
-          array(
+          [
             '_controller' => $controller,
             'alias' => $admin->getAlias(),
 
-          ),
+          ],
           $defaults
         );
 
@@ -88,7 +88,7 @@ class AdminRoutingHelper
      *
      * @return string
      */
-    public function generateUrl(AdminInterface $admin, $action, $params = array())
+    public function generateUrl(AdminInterface $admin, $action, $params = [])
     {
         $routeName = $this->getRouteName($admin, $action);
 

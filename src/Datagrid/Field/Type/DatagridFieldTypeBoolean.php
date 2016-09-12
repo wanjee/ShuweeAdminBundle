@@ -16,11 +16,11 @@ class DatagridFieldTypeBoolean extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'label_true' => 'Yes',
                     'label_false' => 'No',
                     'toggle' => false,
-                )
+                ]
             )
             ->setAllowedTypes('label_true', ['null', 'string'])
             ->setAllowedTypes('label_false', ['null', 'string'])
@@ -57,11 +57,11 @@ class DatagridFieldTypeBoolean extends DatagridFieldType
     {
         $defaults = parent::getBlockVariables($field, $entity);
 
-        return array(
+        return [
             'value' => (bool) $defaults['value'],
             'label_true' => $field->getOption('label_true', 'Yes'),
             'label_false' => $field->getOption('label_false', 'No'),
             'toggle' => $field->getOption('toggle', false),
-        ) + $defaults;
+        ] + $defaults;
     }
 }

@@ -38,13 +38,13 @@ class DatagridExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-          new \Twig_SimpleFunction('datagrid', array($this, 'renderDatagrid'), array('is_safe' => array('html'), 'needs_environment' => true)),
-          new \Twig_SimpleFunction('datagrid_list_actions', array($this, 'renderDatagridListActions'), array('is_safe' => array('html'), 'needs_environment' => true)),
-          new \Twig_SimpleFunction('datagrid_filters', array($this, 'renderDatagridFilters'), array('is_safe' => array('html'), 'needs_environment' => true)),
-          new \Twig_SimpleFunction('datagrid_field', array($this, 'renderDatagridField'), array('is_safe' => array('html'), 'needs_environment' => true)),
-          new \Twig_SimpleFunction('datagrid_get_csrf_token', array($this, 'getCsrfToken')),
-        );
+        return [
+          new \Twig_SimpleFunction('datagrid', [$this, 'renderDatagrid'], ['is_safe' => ['html'], 'needs_environment' => true]),
+          new \Twig_SimpleFunction('datagrid_list_actions', [$this, 'renderDatagridListActions'], ['is_safe' => ['html'], 'needs_environment' => true]),
+          new \Twig_SimpleFunction('datagrid_filters', [$this, 'renderDatagridFilters'], ['is_safe' => ['html'], 'needs_environment' => true]),
+          new \Twig_SimpleFunction('datagrid_field', [$this, 'renderDatagridField'], ['is_safe' => ['html'], 'needs_environment' => true]),
+          new \Twig_SimpleFunction('datagrid_get_csrf_token', [$this, 'getCsrfToken']),
+        ];
     }
 
     /**
@@ -55,9 +55,9 @@ class DatagridExtension extends \Twig_Extension
         return $this->render(
             $env,
             'datagrid',
-            array(
+            [
                 'datagrid' => $datagrid,
-            )
+            ]
         );
     }
 
@@ -69,9 +69,9 @@ class DatagridExtension extends \Twig_Extension
         return $this->render(
             $env,
             'datagrid_list_actions',
-            array(
+            [
                 'actions' => $datagrid->getActions(),
-            )
+            ]
         );
     }
 
@@ -89,9 +89,9 @@ class DatagridExtension extends \Twig_Extension
         return $this->render(
             $env,
             'datagrid_filters',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -106,7 +106,7 @@ class DatagridExtension extends \Twig_Extension
         return $this->render(
             $env,
             $type->getBlockName(),
-            $type->getBlockVariables($field, $entity) + array('datagrid' => $datagrid, 'entity' => $entity)
+            $type->getBlockVariables($field, $entity) + ['datagrid' => $datagrid, 'entity' => $entity]
         );
     }
 
@@ -130,7 +130,7 @@ class DatagridExtension extends \Twig_Extension
      * @param string $block Block name
      * @param array $variables
      */
-    public function render(Twig_Environment $env, $block, $variables = array())
+    public function render(Twig_Environment $env, $block, $variables = [])
     {
         /** @var \Twig_TemplateInterface $template */
         $template = $env->loadTemplate('ShuweeAdminBundle:Datagrid:datagrid.html.twig');

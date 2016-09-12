@@ -30,7 +30,7 @@ interface DatagridInterface
      * @param array $options List of options for the given DatagridFieldType
      * @return DatagridInterface
      */
-    public function addField($name, $type, $options = array());
+    public function addField($name, $type, $options = []);
 
     /**
      * Add a filter to the datagrid.
@@ -40,7 +40,7 @@ interface DatagridInterface
      * @param array $options List of options for the given DatagridFilterType
      * @return DatagridInterface
      */
-    public function addFilter($name, $type, $options = array());
+    public function addFilter($name, $type, $options = []);
 
     /**
      * Add an action to the datagrid.
@@ -50,7 +50,7 @@ interface DatagridInterface
      * @param array $options List of options for the given DatagridActionInterface implementation
      * @return DatagridInterface
      */
-    public function addAction($name, $type, $options = array());
+    public function addAction($name, $type, $options = []);
 
     /**
      * Return list of all fields configured for this datagrid

@@ -20,9 +20,9 @@ class DatagridFieldTypeDate extends DatagridFieldType
 
         $resolver
             ->setDefaults(
-                array(
+                [
                     'date_format' => 'F j, Y',
-                )
+                ]
             )
             ->setAllowedTypes('date_format', 'string');
     }
@@ -63,16 +63,16 @@ class DatagridFieldTypeDate extends DatagridFieldType
         $date = $defaults['value'];
 
         if (!$date instanceof \DateTime) {
-            $variables = array(
+            $variables = [
                 'value' => null,
                 'datetime' => null,
-            );
+            ];
         }
         else {
-            $variables = array(
+            $variables = [
                 'value' => $date->format($date_format),
                 'datetime' => $date->format(\DateTime::RFC3339),
-            );
+            ];
         }
 
         return $variables + $defaults;
