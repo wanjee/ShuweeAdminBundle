@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
@@ -55,6 +56,16 @@ class Datagrid implements DatagridInterface
     private $options;
 
     /**
+     * @var null | FormInterface
+     */
+    private $filtersForm;
+
+    /**
+     * @var array
+     */
+    private $filterValues = [];
+
+    /**
      * @var \Knp\Component\Pager\PaginatorInterface
      */
     private $paginator;
@@ -73,11 +84,6 @@ class Datagrid implements DatagridInterface
      * @var \Symfony\Component\Form\FormFactory
      */
     private $factory;
-
-    /**
-     * @var null | FormInterface
-     */
-    private $filtersForm;
 
     /**
      * Datagrid constructor.
@@ -240,15 +246,41 @@ class Datagrid implements DatagridInterface
         // attach our fields, filters and actions
         $this->admin->buildDatagrid($this);
 
+        $this->applyFilters();
+    }
+
+    /**
+     * Prepare filters form, bind filter values to filters
+     */
+    private function applyFilters()
+    {
         // Manage filters
+        // Filter values come either from the form (GET)
+        // Or from session
         $this->buildFiltersForm();
 
-        if ($this->filtersForm) {
-            $this->filtersForm->handleRequest($this->request);
+        if (!$this->filtersForm) {
+            // No filters are configured for this admin
+            return;
+        }
 
-            /** @var DatagridFilter $filter */
+        $this->retrieveFilterValues();
+        // Init form with current data if any
+        $this->filtersForm->setData($this->filterValues);
+
+        $this->filtersForm->handleRequest($this->request);
+
+        if ($this->filtersForm->isSubmitted()) {
+            // Overwrite any stored values with the submitted ones
+            $this->filterValues = $this->filtersForm->getData();
+            // Update storage for subsequent requests
+            $this->storeFilterValues();
+        }
+
+        // Map values, if any, to filters
+        if (is_array($this->filterValues) && !empty($this->filterValues)) {
             foreach ($this->filters as $filter) {
-                $filter->setValue($this->filtersForm->get($filter->getName())->getData());
+                $filter->setValue($this->filterValues[$filter->getName()]);
             }
         }
     }
@@ -333,7 +365,7 @@ class Datagrid implements DatagridInterface
         $expr = $queryBuilder->expr()->andX();
 
         /** @var DatagridFilter $filter */
-        $i=0;
+        $i = 0;
         foreach ($this->filters as $filter) {
             $filterExprName = $filter->getExpression();
             // Value can be false but valid, it is only invalid when null.
@@ -350,5 +382,46 @@ class Datagrid implements DatagridInterface
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * Store values for filters so user can change page and keep his filters
+     * Values are stored per admin
+     */
+    private function storeFilterValues()
+    {
+        $session = new Session();
+
+        $session->set($this->getStorageNamespace(), $this->filterValues);
+    }
+
+    /**
+     * Retrieve values previously stored for filters
+     * Values are stored per admin
+     */
+    private function retrieveFilterValues()
+    {
+        $session = new Session();
+
+        $this->filterValues = $session->get($this->getStorageNamespace());
+    }
+
+    /**
+     * Clear values previously stored for filters
+     * Values are stored per admin
+     */
+    private function clearFilterValues()
+    {
+        $session = new Session();
+
+        return $session->remove($this->getStorageNamespace());
+    }
+
+    /**
+     * @return string
+     */
+    private function getStorageNamespace()
+    {
+        return 'datagrid:' . $this->admin->getAlias();
     }
 }
