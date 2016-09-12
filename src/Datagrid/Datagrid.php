@@ -278,16 +278,17 @@ class Datagrid implements DatagridInterface
             else {
                 // Submitted for filtering
                 // Overwrite any stored values with the submitted ones
-                $this->filterValues = $this->filtersForm->getData();
                 // Update storage for subsequent requests
-                $this->storeFilterValues();
+                $this->storeFilterValues($this->filtersForm->getData());
             }
         }
 
         // Map values, if any, to filters
         if (is_array($this->filterValues)) {
             foreach ($this->filters as $filter) {
-                $filter->setValue($this->filterValues[$filter->getName()]);
+                if (array_key_exists($filter->getName(), $this->filterValues)) {
+                    $filter->setValue($this->filterValues[$filter->getName()]);
+                }
             }
         }
     }
@@ -407,10 +408,11 @@ class Datagrid implements DatagridInterface
      * Store values for filters so user can change page and keep his filters
      * Values are stored per admin
      */
-    private function storeFilterValues()
+    private function storeFilterValues(array $data)
     {
-        $session = new Session();
+        $this->filterValues = $data;
 
+        $session = new Session();
         $session->set($this->getStorageNamespace(), $this->filterValues);
     }
 
