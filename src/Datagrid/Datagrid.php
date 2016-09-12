@@ -320,7 +320,6 @@ class Datagrid implements DatagridInterface
             FormType::class,
             null,
             array(
-                'method' => 'GET',
                 'csrf_protection' => false,
             )
         );
