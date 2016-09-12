@@ -252,34 +252,34 @@ class Datagrid implements DatagridInterface
         // Manage filters
         // Filter values come either from the form (GET)
         // Or from session
-        $this->buildFiltersForm();
+        $form = $this->getFiltersForm();
 
-        if (!$this->filtersForm) {
+        if (!$form) {
             // No filters are configured for this admin
             return;
         }
 
         $this->loadFilterValues();
         // Init form with current data if any
-        $this->filtersForm->setData($this->filterValues);
+        $form->setData($this->filterValues);
 
-        $this->filtersForm->handleRequest($this->request);
+        $form->handleRequest($this->request);
 
-        if ($this->filtersForm->isSubmitted()) {
+        if ($form->isSubmitted()) {
 
-            if ($this->filtersForm->get('reset')->isClicked()) {
+            if ($form->get('reset')->isClicked()) {
                 // Submitted for reset
                 // Reset stored content
                 $this->clearFilterValues();
                 // Reset displayed values by rebuilding the form
                 // yes, it's a pity we cannot simply change content of it
-                $this->buildFiltersForm();
+                $this->getFiltersForm(true);
             }
             else {
                 // Submitted for filtering
                 // Overwrite any stored values with the submitted ones
                 // Update storage for subsequent requests
-                $this->storeFilterValues($this->filtersForm->getData());
+                $this->storeFilterValues($form->getData());
             }
         }
 
@@ -316,56 +316,53 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * Generates the filters form, if any filter is defined.
-     */
-    private function buildFiltersForm()
-    {
-        if (empty($this->filters)) {
-            return;
-        }
-
-        $form = $this->factory->createBuilder(
-            FormType::class,
-            null,
-            [
-                'csrf_protection' => false,
-            ]
-        );
-
-        /** @var DatagridFilter $filter */
-        foreach ($this->filters as $filter) {
-            $filter->buildForm($form);
-        }
-
-        $form->add(
-            'submit',
-            SubmitType::class,
-            [
-                'label' => 'Filter',
-                'attr' => [
-                    'class' =>'btn-success',
-                ]
-            ]
-        );
-
-        $form->add(
-            'reset',
-            SubmitType::class,
-            [
-                'label' => 'Reset'
-            ]
-        );
-
-        $this->filtersForm = $form->getForm();
-    }
-
-    /**
      * Get the form used to filter the list of entities displayed in the datagrid
      *
+     * @param bool $reset Force rebuild ?
      * @return null | \Symfony\Component\Form\FormInterface
      */
-    public function getFiltersForm()
+    public function getFiltersForm($reset = false)
     {
+        if (!$this->filtersForm || $reset) {
+            if (empty($this->filters)) {
+                return null;
+            }
+
+            $form = $this->factory->createBuilder(
+                FormType::class,
+                null,
+                [
+                    'csrf_protection' => false,
+                ]
+            );
+
+            /** @var DatagridFilter $filter */
+            foreach ($this->filters as $filter) {
+                $filter->buildForm($form);
+            }
+
+            $form->add(
+                'submit',
+                SubmitType::class,
+                [
+                    'label' => 'Filter',
+                    'attr' => [
+                        'class' =>'btn-success',
+                    ]
+                ]
+            );
+
+            $form->add(
+                'reset',
+                SubmitType::class,
+                [
+                    'label' => 'Reset'
+                ]
+            );
+
+            $this->filtersForm = $form->getForm();
+        }
+
         return $this->filtersForm;
     }
 
