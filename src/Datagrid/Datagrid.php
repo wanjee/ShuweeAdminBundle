@@ -271,10 +271,22 @@ class Datagrid implements DatagridInterface
         $this->filtersForm->handleRequest($this->request);
 
         if ($this->filtersForm->isSubmitted()) {
-            // Overwrite any stored values with the submitted ones
-            $this->filterValues = $this->filtersForm->getData();
-            // Update storage for subsequent requests
-            $this->storeFilterValues();
+
+            if ($this->filtersForm->get('reset')->isClicked()) {
+                // Submitted for reset
+                // Reset stored content
+                $this->clearFilterValues();
+                // Reset displayed values by rebuilding the form
+                // yes, it's a pity we cannot simply change content of it
+                $this->buildFiltersForm();
+            }
+            else {
+                // Submitted for filtering
+                // Overwrite any stored values with the submitted ones
+                $this->filterValues = $this->filtersForm->getData();
+                // Update storage for subsequent requests
+                $this->storeFilterValues();
+            }
         }
 
         // Map values, if any, to filters
@@ -332,7 +344,20 @@ class Datagrid implements DatagridInterface
         $form->add(
             'submit',
             SubmitType::class,
-            ['label' => 'Filter']
+            [
+                'label' => 'Filter',
+                'attr' => [
+                    'class' =>'btn-success',
+                ]
+            ]
+        );
+
+        $form->add(
+            'reset',
+            SubmitType::class,
+            [
+                'label' => 'Reset'
+            ]
         );
 
         $this->filtersForm = $form->getForm();
@@ -412,8 +437,9 @@ class Datagrid implements DatagridInterface
     private function clearFilterValues()
     {
         $session = new Session();
+        $session->remove($this->getStorageNamespace());
 
-        return $session->remove($this->getStorageNamespace());
+        $this->filterValues = [];
     }
 
     /**
