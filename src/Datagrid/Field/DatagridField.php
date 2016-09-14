@@ -103,6 +103,15 @@ class DatagridField implements DatagridFieldInterface
     }
 
     /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setOption($name, $value)
+    {
+        $this->options[$name] = $value;
+    }
+
+    /**
      * @param mixed $row
      * @return mixed
      */

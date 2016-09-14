@@ -396,6 +396,14 @@ textarea {
   padding: 10px;
   resize: vertical; }
 
+/* Collections */
+.collection {
+  /* Hide the very first label of each collection item as this is only an arbitrary number of the item so far */ }
+  .collection .btn-danger {
+    margin-top: 8px; }
+  .collection .list-group-item > .form-group > .control-label {
+    display: none; }
+
 body.page-login {
   background-color: #edecec;
   box-shadow: 0px 0px 175px rgba(0, 0, 0, 0.3) inset; }
