@@ -78,11 +78,12 @@ class AdminExtension extends \Twig_Extension
             $attributes = [$attributes];
         }
 
-        $key = md5(json_encode($attributes) . ($object ? '/' . spl_object_hash($object) : ''));
+        $entityClass = $admin->getEntityClass();
+
+        $key = md5(json_encode($attributes).'/'.($object ? spl_object_hash($object) : $entityClass));
         if (!array_key_exists($key, $this->cacheIsGranted)) {
             if (is_null($object)) {
                 // object is required at least to get the class to check permissions against in ContentVoter
-                $entityClass = $admin->getEntityClass();
                 $object = new $entityClass();
             }
             $this->cacheIsGranted[$key] = $this->authorizationChecker->isGranted($attributes, $object);
