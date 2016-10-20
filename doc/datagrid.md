@@ -379,20 +379,48 @@ public function attachActions(DatagridInterface $datagrid)
 
 ### List actions
 
-Those actions are displayed at the top of the list next to the regular "Create" button.  They will allow you to add custom
-commands from the list.  A typical use case is for an export link.
+Those actions are displayed at the top of the list next to the regular "Create" button.
 
-This is currently the only existing action type
+There are currently two type of actions: ListAction and EntityAction
+
+#### DatagridListAction
+   
+   A List action is shown on top of the datagrid. Next to the regular "Crate" button.
+   They will allow you to add custom commands from the list.  A typical use case is for an export link.
+   
+   
+   ```php
+   ->addAction(
+       DatagridListAction::class,
+       'csv_export',
+       array(
+           'label' => 'Export as CSV',
+           'icon' => 'save-file',
+           'btn-style' => 'primary',
+           'classes' => 'export-link',
+       )
+   );
+   ```
+#### DatagridEntityAction
+
+A List action is shown on top of the datagrid. Next to the regular "Crate" button.
+They will allow you to add custom commands from the list.  A typical use case is for an export link.
+
 
 ```php
 ->addAction(
-    DatagridListAction::class,
-    'csv_export',
+    DatagridEntityAction::class,
+    'route_name_that_needs_id',
     array(
-        'label' => 'Export as CSV',
+        'label' => 'Do something with the entity',
         'icon' => 'save-file',
         'btn-style' => 'primary',
         'classes' => 'export-link',
+        'route_params' => function($entity) {
+            return array(
+                'id' => $entity->getId()
+            )
+        }
     )
 );
 ```

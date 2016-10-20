@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridEntityAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridListAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\DatagridFilter;
 
@@ -197,9 +199,21 @@ class Datagrid implements DatagridInterface
     /**
      * Return list of all fields configured for this datagrid
      */
-    public function getActions()
+    public function getListActions()
     {
-        return $this->actions;
+        return array_filter($this->actions, function($action) {
+            return $action instanceof DatagridListAction;
+        });
+    }
+
+    /**
+     * Return list of all fields configured for this datagrid
+     */
+    public function getEntityActions()
+    {
+        return array_filter($this->actions, function($action) {
+            return $action instanceof DatagridEntityAction;
+        });
     }
 
     /**
