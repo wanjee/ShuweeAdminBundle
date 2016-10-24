@@ -10,24 +10,35 @@
     background: none;
     color: $green;
   }
-  .btn-default {
+  .btn {
     background: none;
-    color: $black;
     border: 0 none;
     box-shadow: none;
+  }
+  .btn-default {
+    color: $black;
   }
   .btn-primary {
     background: none;
-    color: $blue_0fa2ce;
-    border: 0 none;
-    box-shadow: none;
+    color: $blue_006dcc;
+  }
+  .btn-info {
+    background: none;
+    color: $blue_49afcd;
+  }
+  .btn-success {
+    background: none;
+    color: $green_3e8f3e;
+  }
+  .btn-warning {
+    background: none;
+    color: $yellow;
   }
   .btn-danger {
     background: none;
-    color: $red;
-    border: 0 none;
-    box-shadow: none;
+    color: $red_da4f49;
   }
+
   thead {
     th {
       line-height: 15px;
