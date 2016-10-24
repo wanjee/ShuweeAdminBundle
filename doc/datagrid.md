@@ -385,42 +385,46 @@ There are currently two type of actions: ListAction and EntityAction
 
 #### DatagridListAction
    
-   A List action is shown on top of the datagrid. Next to the regular "Crate" button.
-   They will allow you to add custom commands from the list.  A typical use case is for an export link.
+A List action is shown on top of the datagrid. Next to the regular "Create" button.
+They will allow you to add custom commands from the list.  A typical use case is for an export link.
    
    
-   ```php
-   ->addAction(
-       DatagridListAction::class,
-       'csv_export',
-       array(
-           'label' => 'Export as CSV',
-           'icon' => 'save-file',
-           'btn-style' => 'primary',
-           'classes' => 'export-link',
-       )
-   );
-   ```
+```php
+->addAction(
+   DatagridListAction::class,
+   'csv_export',
+   [
+       'label' => 'Export as CSV',
+       'icon' => 'save-file',
+       'btn-style' => 'primary',
+       'classes' => 'export-link',
+   ]
+);
+```
+
 #### DatagridEntityAction
 
-A List action is shown on top of the datagrid. Next to the regular "Crate" button.
-They will allow you to add custom commands from the list.  A typical use case is for an export link.
+A Entity action is shown for each item shown in the list.  It will be added next to the default "edit" and "delete" actions.
+They will be displayed in the order they are defined.
+They will not be visible if you disable the action column.  There is currently no way to define specific access checks for those actions, they will therefore always be displayed.
 
 
 ```php
 ->addAction(
     DatagridEntityAction::class,
     'route_name_that_needs_id',
-    array(
+    [
         'label' => 'Do something with the entity',
         'icon' => 'save-file',
         'btn-style' => 'primary',
         'classes' => 'export-link',
-        'route_params' => function($entity) {
-            return array(
-                'id' => $entity->getId()
-            )
+        // Must return an array that will be passed to Twig path(). 
+        // Unknown parameters will be passed as query parameters.
+        'path_parameters' => function($entity) {
+            return [
+                'id' => $entity->getId(),
+            ]
         }
-    )
+    ]
 );
 ```
