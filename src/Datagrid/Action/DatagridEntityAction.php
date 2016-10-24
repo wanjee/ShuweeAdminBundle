@@ -19,23 +19,27 @@ class DatagridEntityAction extends DatagridAbstractAction
         $resolver
             ->setDefaults(
                 [
-                    'route_params' => function($entity) {
+                    'path_parameters' => function($entity) {
                         return array(
                             'entity' => $entity
                         );
                     },
                 ]
             )
-            ->setRequired('route_params')
-            ->setAllowedTypes('route_params', ['null', 'callable'])
+            ->setRequired('path_parameters')
+            ->setAllowedTypes('path_parameters', ['null', 'callable'])
         ;
     }
 
     /**
      * @param $entity
-     * @return mixed
+     * @return array
      */
     public function getRouteParameters($entity) {
-        return $this->options['route_params']($entity);
+        if (!is_callable($this->options['path_parameters'])) {
+            return [];
+        }
+
+        return $this->options['path_parameters']($entity);
     }
 }
