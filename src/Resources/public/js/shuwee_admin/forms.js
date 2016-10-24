@@ -22,16 +22,12 @@
     }
 
     jQuery(document).ready(function() {
-        $('button[data-prototype]').each(function() {
-            var $addButton = $(this);
-
-            $addButton.on('click', function(e) {
-                e.preventDefault();
-                addItemForm($addButton);
-            });
+        $(document).on('click', 'button[data-prototype]', function(e) {
+            e.preventDefault();
+            addItemForm($(this));
         });
 
-        $('.collection').on('click', 'button[data-delete]', function(e) {
+        $(document).on('click', 'button[data-delete]', function(e) {
             e.preventDefault();
             $(this).parent().remove();
         });
