@@ -299,23 +299,33 @@
   background: none;
   color: #5cb85c; }
 
-.datagrid .btn-default {
+.datagrid .btn {
   background: none;
-  color: #000;
   border: 0 none;
   box-shadow: none; }
+
+.datagrid .btn-default {
+  color: #000; }
 
 .datagrid .btn-primary {
   background: none;
-  color: #0fa2ce;
-  border: 0 none;
-  box-shadow: none; }
+  color: #006dcc; }
+
+.datagrid .btn-info {
+  background: none;
+  color: #49afcd; }
+
+.datagrid .btn-success {
+  background: none;
+  color: #3e8f3e; }
+
+.datagrid .btn-warning {
+  background: none;
+  color: #faa732; }
 
 .datagrid .btn-danger {
   background: none;
-  color: #d9534f;
-  border: 0 none;
-  box-shadow: none; }
+  color: #da4f49; }
 
 .datagrid thead th {
   line-height: 15px;
@@ -403,6 +413,12 @@ textarea {
     margin-top: 8px; }
   .collection .list-group-item > .form-group > .control-label {
     display: none; }
+  .collection .list-group-item:nth-of-type(2n+1) {
+    background-color: #f9f9f9; }
+  .collection .list-group-item:last-child {
+    background-color: #fff; }
+  .collection .list-group-item:nth-last-child(2) {
+    border-bottom: 2px solid #ddd; }
 
 body.page-login {
   background-color: #edecec;
