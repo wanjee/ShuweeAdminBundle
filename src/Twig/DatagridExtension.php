@@ -70,7 +70,7 @@ class DatagridExtension extends \Twig_Extension
             $env,
             'datagrid_list_actions',
             [
-                'actions' => $datagrid->getActions(),
+                'actions' => $datagrid->getListActions(),
             ]
         );
     }

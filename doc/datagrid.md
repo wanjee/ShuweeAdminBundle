@@ -379,20 +379,52 @@ public function attachActions(DatagridInterface $datagrid)
 
 ### List actions
 
-Those actions are displayed at the top of the list next to the regular "Create" button.  They will allow you to add custom
-commands from the list.  A typical use case is for an export link.
+Those actions are displayed at the top of the list next to the regular "Create" button.
 
-This is currently the only existing action type
+There are currently two type of actions: ListAction and EntityAction
+
+#### DatagridListAction
+   
+A List action is shown on top of the datagrid. Next to the regular "Create" button.
+They will allow you to add custom commands from the list.  A typical use case is for an export link.
+   
+   
+```php
+->addAction(
+   DatagridListAction::class,
+   'csv_export',
+   [
+       'label' => 'Export as CSV',
+       'icon' => 'save-file',
+       'btn-style' => 'primary',
+       'classes' => 'export-link',
+   ]
+);
+```
+
+#### DatagridEntityAction
+
+A Entity action is shown for each item shown in the list.  It will be added next to the default "edit" and "delete" actions.
+They will be displayed in the order they are defined.
+They will not be visible if you disable the action column.  There is currently no way to define specific access checks for those actions, they will therefore always be displayed.
+
 
 ```php
 ->addAction(
-    DatagridListAction::class,
-    'csv_export',
-    array(
-        'label' => 'Export as CSV',
+    DatagridEntityAction::class,
+    'route_name_that_needs_id',
+    [
+        'label' => 'Do something with the entity',
         'icon' => 'save-file',
         'btn-style' => 'primary',
         'classes' => 'export-link',
-    )
+        // Must return an array that will be passed to Twig path(). 
+        // Unknown parameters will be passed as query parameters.
+        'path_parameters' => function($entity) {
+            return [
+                'id' => $entity->getId(),
+            ]
+        }
+    ]
 );
 ```
