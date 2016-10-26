@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
+use AppBundle\Entity\Chapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -15,6 +16,7 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridEntityAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridListAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\DatagridFilter;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type\DatagridFilterTypeEntity;
 
 /**
  * Class Datagrid
@@ -38,7 +40,7 @@ class Datagrid implements DatagridInterface
     private $fields = [];
 
     /**
-     * @var array List of available fields for this datagrid
+     * @var array|DatagridFilter[] List of available filters for this datagrid
      */
     private $filters = [];
 
@@ -418,12 +420,22 @@ class Datagrid implements DatagridInterface
     /**
      * Store values for filters so user can change page and keep his filters
      * Values are stored per admin
+     * @TODO support entities that don't have getId() as method to retrieve the primary id
      */
     private function storeFilterValues(array $data)
     {
         $this->filterValues = $data;
 
         $session = new Session();
+
+        foreach($this->filters as $datagridFilter) {
+            if ($datagridFilter->getType() instanceof DatagridFilterTypeEntity) {
+                if (!empty($this->filterValues[$datagridFilter->getName()])) {
+                    $this->filterValues[$datagridFilter->getName()] = $this->filterValues[$datagridFilter->getName()]->getId();
+                }
+            }
+        }
+
         $session->set($this->getStorageNamespace(), $this->filterValues);
     }
 
@@ -434,8 +446,18 @@ class Datagrid implements DatagridInterface
     private function loadFilterValues()
     {
         $session = new Session();
-
         $this->filterValues = $session->get($this->getStorageNamespace());
+        foreach($this->filters as $datagridFilter) {
+            if ($datagridFilter->getType() instanceof DatagridFilterTypeEntity) {
+                if (!empty($this->filterValues[$datagridFilter->getName()])) {
+                    $filterOptions = $datagridFilter->getOptions();
+                    $this->filterValues[$datagridFilter->getName()] = $this->entityManager->getReference(
+                        $filterOptions['class'],
+                        $this->filterValues[$datagridFilter->getName()]
+                    );
+                }
+            }
+        }
     }
 
     /**
