@@ -348,10 +348,37 @@ Allows you to define a list of available values to chose from.
     ]
 ) 
 ``` 
- 
+
 ### Options
 
 * *choices*: List of options to display.  Expects array.  See http://symfony.com/doc/current/reference/forms/types/choice.html#choices
+
+### Entity
+ 
+Allows you to filter the list on a entity relation.
+
+``` php
+->addFilter(
+    'status', 
+    DatagridFilterTypeEntity::class, 
+    [
+        'label' => 'User', 
+        'class' => User::class,
+        'choice_label' => 'username',
+        'placeholder' => 'Choose a user',
+    ]
+) 
+``` 
+  
+### Options
+
+* *class*: List of options to display.  Expects string. *Required*. See http://symfony.com/doc/current/reference/forms/types/entity.html#class
+* *choice_label*: Displayed property in the list. See http://symfony.com/doc/current/reference/forms/types/entity.html#choice-label 
+* *placeholder*: This option determines whether or not a special "empty" option will appear at the top of a select widget. Expects string. Defaults to 'All' Shuwee does not allow disabling placeholder. http://symfony.com/doc/current/reference/forms/types/entity.html#placeholder
+
+### Known limitations
+
+Only work on Owner side of a ManyToOne relation.
 
 ## Actions
 
