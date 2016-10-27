@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
+use AppBundle\Entity\Chapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -427,7 +428,6 @@ class Datagrid implements DatagridInterface
 
         $session = new Session();
 
-        // Because Entities saved into the session are not managed in the next request we store the reference id.
         foreach($this->filters as $datagridFilter) {
             if ($datagridFilter->getType() instanceof DatagridFilterTypeEntity) {
                 if (!empty($this->filterValues[$datagridFilter->getName()])) {
@@ -447,7 +447,8 @@ class Datagrid implements DatagridInterface
     {
         $session = new Session();
         $this->filterValues = $session->get($this->getStorageNamespace());
-        // Because Entities saved into the session are not managed, we retrieve the reference id previously setted by the storeFilterValues function to retrieve the current filterValue
+        // Because Entities saved into the session are not managed, we retrieve the reference id previously setted
+        // by the storeFilterValues function to retrieve the current filterValue
         foreach($this->filters as $datagridFilter) {
             if ($datagridFilter->getType() instanceof DatagridFilterTypeEntity) {
                 if (!empty($this->filterValues[$datagridFilter->getName()])) {
