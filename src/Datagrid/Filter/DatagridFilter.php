@@ -99,6 +99,14 @@ class DatagridFilter implements DatagridFilterInterface
     }
 
     /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->type->resolveOptions($this->options);
+    }
+
+    /**
      * @inheritdoc
      */
     public function getExpression()
