@@ -2,7 +2,6 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
-use AppBundle\Entity\Chapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -420,7 +419,6 @@ class Datagrid implements DatagridInterface
     /**
      * Store values for filters so user can change page and keep his filters
      * Values are stored per admin
-     * @TODO support entities that don't have getId() as method to retrieve the primary id
      */
     private function storeFilterValues(array $data)
     {
@@ -447,8 +445,9 @@ class Datagrid implements DatagridInterface
     {
         $session = new Session();
         $this->filterValues = $session->get($this->getStorageNamespace());
-        // Because Entities saved into the session are not managed, we retrieve the reference id previously setted
-        // by the storeFilterValues function to retrieve the current filterValue
+        // Because entities saved into the session are not currently managed,
+        // we retrieve the reference id previously set by the storeFilterValues function
+        // to load the expected entity
         foreach($this->filters as $datagridFilter) {
             if ($datagridFilter->getType() instanceof DatagridFilterTypeEntity) {
                 if (!empty($this->filterValues[$datagridFilter->getName()])) {
