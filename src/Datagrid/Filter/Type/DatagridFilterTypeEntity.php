@@ -26,14 +26,13 @@ class DatagridFilterTypeEntity extends DatagridFilterType
             )
             ->setDefined(
                 [
-                    'choice_label'
+                    'choice_label',
                 ]
             )
             ->setDefault('placeholder', 'All')
             ->setAllowedTypes('placeholder', ['string'])
             ->setAllowedTypes('class', ['string'])
-            ->setAllowedTypes('choice_label', ['string', 'callable'])
-        ;
+            ->setAllowedTypes('choice_label', ['string', 'callable']);
     }
 
     /**
