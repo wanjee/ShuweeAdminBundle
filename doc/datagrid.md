@@ -313,10 +313,6 @@ public function attachFilters(DatagridInterface $datagrid)
 
 * *label*: Link label. Expects string.
 
-### Known restrictions
-
-Currently you cannot filter on related entities.
-
 ## Filter types
 
 ### Text
