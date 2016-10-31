@@ -4,10 +4,9 @@
 [![Total Downloads](https://poser.pugx.org/wanjee/shuwee-admin-bundle/downloads)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
 [![License](https://poser.pugx.org/wanjee/shuwee-admin-bundle/license)](https://packagist.org/packages/wanjee/shuwee-admin-bundle)
 
-ShuweeAdminBundle is part of Shuwee project.  It is the administration part of the project.
+ShuweeAdminBundle is a simple administration for your Symfony entities.  It aims to be very easy to implement and use.    
 
-Shuwee name comes from a Lakota word : čhuwí. It's defined as the upper back of the body.  It is aimed to manage single page applications. 
-
+Shuwee name comes from a Lakota word : čhuwí. It's defined as the upper back of the body.  
 
 ## Install
 
@@ -35,6 +34,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 - [Pierre-Louis Peeters](https://github.com/PLPeeters)
 - [Jeroen Meeus](https://github.com/pinoniq)
+- [Jeffrey Beckers](https://github.com/JeffBeckers)
 
 ## Security
 
