@@ -343,11 +343,13 @@ class Datagrid implements DatagridInterface
                 return null;
             }
 
-            $form = $this->factory->createBuilder(
+            $form = $this->factory->createNamedBuilder(
+                'filter',
                 FormType::class,
                 null,
                 [
                     'csrf_protection' => false,
+                    'method' => 'GET',
                 ]
             );
 
