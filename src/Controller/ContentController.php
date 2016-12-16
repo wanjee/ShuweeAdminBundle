@@ -85,6 +85,8 @@ class ContentController extends Controller
             return $this->redirect($this->getAdminRoutingHelper()->generateUrl($admin, 'index'));
         }
 
+        $this->preCreateFormRender($form);
+
         return $this->render(
             'ShuweeAdminBundle:Content:create.html.twig',
             [

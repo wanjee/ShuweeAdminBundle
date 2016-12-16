@@ -207,4 +207,9 @@ abstract class Admin implements AdminInterface
      * {@inheritdoc}
      */
     public function postRemove($entity) {}
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preCreateFormRender($form) {}
 }
