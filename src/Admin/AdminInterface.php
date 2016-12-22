@@ -100,4 +100,9 @@ interface AdminInterface
      * @param mixed $entity
      */
     public function postRemove($entity);
+
+    /**
+     * @param mixed $form
+     */
+    public function preCreateFormRender($form);
 }
