@@ -214,6 +214,14 @@ And in your service definition
 
 Implement the corresponding method in your Admin class and it will be executed.  All callbacks are given a single $entity parameter.
 
+### Form rendering callbacks
+
+In certain cases, you would like to change certain values of a form being rendered. For instance adding default values from cookie, session and/or Request.
+
+The following callback(s) are triggerd:
+
+* preCreateFormRender: before the CreateEntity form is rendered (right before calling createView)
+
 ## Register your Admin class as a tagged service
 
 ``` yaml
