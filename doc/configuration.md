@@ -218,7 +218,7 @@ Implement the corresponding method in your Admin class and it will be executed. 
 
 In certain cases, you would like to change certain values of a form being rendered. For instance adding default values from cookie, session and/or Request.
 
-The following callback(s) are triggerd:
+The following callback(s) are triggered:
 
 * preCreateFormRender: before the CreateEntity form is rendered (right before calling createView)
 
