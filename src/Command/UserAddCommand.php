@@ -22,7 +22,7 @@ class UserAddCommand extends ContainerAwareCommand
     const MAX_ATTEMPTS = 5;
 
     /**
-     * @see Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand::configure()
+     * @see \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand::configure()
      */
     protected function configure()
     {
@@ -95,7 +95,7 @@ class UserAddCommand extends ContainerAwareCommand
     }
 
     /**
-     * @see Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand::execute()
+     * @see \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -142,6 +142,11 @@ class UserAddCommand extends ContainerAwareCommand
     {
         if (empty($username)) {
             throw new \Exception('The username can not be empty');
+        }
+
+        $userManager = $this->getUserManager();
+        if ($userManager->usernameExists($username)) {
+            throw new \Exception('The username is already used.');
         }
 
         return $username;

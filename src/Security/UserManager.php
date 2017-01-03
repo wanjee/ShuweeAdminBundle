@@ -34,6 +34,23 @@ class UserManager
     }
 
     /**
+     * Check if a username is already in use
+     *
+     * @param string $userName
+     * @return bool
+     */
+    public function usernameExists($userName)
+    {
+        $existing = $this->em->getRepository(User::class)->findOneBy(
+            [
+                'username' => $userName,
+            ]
+        );
+
+        return (bool) $existing;
+    }
+
+    /**
      * @param string $userName
      * @param string $password
      * @param array $roles
