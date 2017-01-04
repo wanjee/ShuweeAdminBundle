@@ -4,9 +4,6 @@
 
 {% block action_links %}
 {% spaceless %}
-    {% if admin_is_granted(datagrid.admin, 'CREATE') %}
-    <a href="{{ admin_get_path(datagrid.admin, 'create') }}" class="btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> {{'crud.create' | trans({}, 'ShuweeAdminBundle') }}</a>
-    {% endif %}
     {{ datagrid_list_actions(datagrid) }}
 {% endspaceless %}
 {%  endblock %}

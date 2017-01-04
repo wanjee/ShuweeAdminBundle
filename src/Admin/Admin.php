@@ -5,9 +5,17 @@
  */
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
+
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridCreateAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridDeleteAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridUpdateAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 /**
@@ -32,6 +40,11 @@ abstract class Admin implements AdminInterface
      * Store setup state to avoid setting it up several times
      */
     protected $setup = false;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
 
     /**
      * This function is used to boot up Admin implementation when first used.
@@ -67,8 +80,59 @@ abstract class Admin implements AdminInterface
     final public function buildDatagrid(DatagridInterface $datagrid)
     {
         $this->attachFields($datagrid);
+        $this->attachDefaultActions($datagrid);
         $this->attachActions($datagrid);
         $this->attachFilters($datagrid);
+    }
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     */
+    private function attachDefaultActions(DatagridInterface $datagrid)
+    {
+        $em = $this->entityManager;
+        $datagrid
+            ->addAction(
+                DatagridCreateAction::class,
+                'shuwee_admin_'.$this->getAlias().'_index',
+                [
+                    'label' => 'Create',
+                    'btn-style' => 'success',
+                    'icon' => 'plus',
+                ]
+            )
+            ->addAction(
+                DatagridUpdateAction::class,
+                'shuwee_admin_'.$this->getAlias().'_update',
+                [
+                    'label' => 'Edit',
+                    'btn-style' => 'primary',
+                    'icon' => 'edit',
+                    'path_parameters' => function ($entity) use ($em) {
+                        $meta = $em->getClassMetadata(get_class($entity));
+                        $accessor = PropertyAccess::createPropertyAccessor();
+                        return [
+                            'id' => $accessor->getValue($entity, $meta->getSingleIdentifierFieldName())
+                        ];
+                    },
+                ]
+            )
+            ->addAction(
+                DatagridDeleteAction::class,
+                'shuwee_admin_'.$this->getAlias().'_delete',
+                [
+                    'label' => 'Delete',
+                    'btn-style' => 'danger',
+                    'icon' => 'trash',
+                    'path_parameters' => function ($entity) use ($em) {
+                        $meta = $em->getClassMetadata(get_class($entity));
+                        $accessor = PropertyAccess::createPropertyAccessor();
+                        return [
+                            'id' => $accessor->getValue($entity, $meta->getSingleIdentifierFieldName())
+                        ];
+                    },
+                ]
+            );
     }
 
     /**
@@ -97,13 +161,15 @@ abstract class Admin implements AdminInterface
         if (!$this->hasPreviewUrlCallback()) {
             return null;
         }
+
         return call_user_func($this->options['preview_url_callback'], $entity);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    final public function configureOptions(OptionsResolver $resolver) {
+    final public function configureOptions(OptionsResolver $resolver)
+    {
         $resolver
             ->setDefaults(
                 [
@@ -130,44 +196,62 @@ abstract class Admin implements AdminInterface
 
     /**
      * @param string $name
-     * @param mixed $default
+     * @param null $default
+     * @return mixed|null
      */
     final public function getOption($name, $default = null)
     {
         if ($this->hasOption($name)) {
             return $this->options[$name];
         }
+
         return $default;
     }
 
     /**
+     * @param \Doctrine\Common\Persistence\ManagerRegistry $doctrine
+     */
+    public function setDoctrine(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager();
+    }
+
+    /**
      * @return array Options
      */
-    public function getOptions() {
+    public function getOptions()
+    {
         return [];
     }
 
     /**
      * @return array Options
      */
-    public function getDatagridOptions() {
+    public function getDatagridOptions()
+    {
         return [];
     }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
      */
-    public function attachFields(DatagridInterface $datagrid) {}
+    public function attachFields(DatagridInterface $datagrid)
+    {
+    }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
      */
-    public function attachFilters(DatagridInterface $datagrid) {}
+    public function attachFilters(DatagridInterface $datagrid)
+    {
+    }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
      */
-    public function attachActions(DatagridInterface $datagrid) {}
+    public function attachActions(DatagridInterface $datagrid)
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -181,35 +265,49 @@ abstract class Admin implements AdminInterface
     /**
      * {@inheritdoc}
      */
-    public function preUpdate($entity) {}
+    public function preUpdate($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function postUpdate($entity) {}
+    public function postUpdate($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function prePersist($entity) {}
+    public function prePersist($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function postPersist($entity) {}
+    public function postPersist($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function preRemove($entity) {}
+    public function preRemove($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function postRemove($entity) {}
+    public function postRemove($entity)
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function preCreateFormRender($form) {}
+    public function preCreateFormRender($form)
+    {
+    }
 }

@@ -380,7 +380,42 @@ Only work on Owner side of a ManyToOne relation.
 ## Actions
 
 An action is an additional functionality on top of the datagrid.
-In your admin controller define the datagrid actions as follow:
+
+### DatagridListAction
+
+A List action is shown on top of the datagrid. Next to the regular "Create" button.
+They will allow you to add custom commands from the list.  A typical use case is for an export link.
+
+Shuwee comes built in with the following DatagridListAction:
+
+* DatagridCreateAction   
+   
+### DatagridEntityAction
+
+A Entity action is shown for each item shown in the list.  It will be added to the actions column of an entity
+They will be displayed in the order they are defined.
+
+Shuwee comes built in with the following DatagridEntityAction:
+
+* DatagridUpdateAction
+* DatagridDeleteAction
+* DatagridViewAction
+
+### Custom Actions
+
+To create custom actions you have to:
+
+* Create a custom Action classes extending either DatagridListAction or DatagridEntityActions:
+
+``` php
+class MyCustomListAction extends DatagridListAction {}
+```
+
+``` php
+class MyCustomEntityAction extends DatagridEntityAction {}
+```
+
+* In your admin controller define the datagrid actions as follow:
 
 ``` php
 /**
@@ -389,66 +424,45 @@ In your admin controller define the datagrid actions as follow:
 public function attachActions(DatagridInterface $datagrid)
 {
     $datagrid
-        ->addAction(DatagridListAction::class, 'csv_export', array('label' => 'Export as CSV', 'icon' => 'save-file', 'btn-style' => 'primary', 'classes' => 'export-link'))
+        ->addAction(
+            MyCustomListAction::class, 
+            my_custom_route',
+            [
+                'label' => 'Export as CSV',
+                'icon' => 'save-file',
+                'btn-style' => 'primary',
+                'classes' => 'export-link',
+            ]
+        )
+        ->addAction(
+            MyCustomListAction::class, 
+            my_custom_route',
+            [
+                'label' => 'Export as CSV',
+                'icon' => 'save-file',
+                'btn-style' => 'primary',
+                'classes' => 'export-link',
+                // Must return an array that will be passed to Twig path(). 
+                // Unknown parameters will be passed as query parameters.
+                'path_parameters' => function($entity) {
+                    return [
+                        'id' => $entity->getId(),
+                    ]
+                }
+            ]
+        )
     ;
 }
 ```
 
-### Shared options
+#### Action options:
 
 * *label*: Link label. Expects string. Required.
 * *icon*: Name of a bootstrap glyphicon.  Only the last part is needed. E.g.: use 'plus' to display 'glyphicon-plus'. See http://getbootstrap.com/components/#glyphicons.
 * *btn-style*: One of the available bootstrap btn style.  Only the last part is needed. E.g.: use 'primary' for 'btn-primary' style.  See http://getbootstrap.com/css/#buttons-options
 * *classes*: A string containing the classes of your choice that you want to add on the link.
+* *path_parameters* (EntityAction only): the path parameters used for the route. The Closure is passed the entity
 
-### List actions
+### Securing actions
 
-Those actions are displayed at the top of the list next to the regular "Create" button.
-
-There are currently two type of actions: ListAction and EntityAction
-
-#### DatagridListAction
-   
-A List action is shown on top of the datagrid. Next to the regular "Create" button.
-They will allow you to add custom commands from the list.  A typical use case is for an export link.
-   
-   
-```php
-->addAction(
-   DatagridListAction::class,
-   'csv_export',
-   [
-       'label' => 'Export as CSV',
-       'icon' => 'save-file',
-       'btn-style' => 'primary',
-       'classes' => 'export-link',
-   ]
-);
-```
-
-#### DatagridEntityAction
-
-A Entity action is shown for each item shown in the list.  It will be added next to the default "edit" and "delete" actions.
-They will be displayed in the order they are defined.
-They will not be visible if you disable the action column.  There is currently no way to define specific access checks for those actions, they will therefore always be displayed.
-
-
-```php
-->addAction(
-    DatagridEntityAction::class,
-    'route_name_that_needs_id',
-    [
-        'label' => 'Do something with the entity',
-        'icon' => 'save-file',
-        'btn-style' => 'primary',
-        'classes' => 'export-link',
-        // Must return an array that will be passed to Twig path(). 
-        // Unknown parameters will be passed as query parameters.
-        'path_parameters' => function($entity) {
-            return [
-                'id' => $entity->getId(),
-            ]
-        }
-    ]
-);
-```
+See [Security|./Security.md] for explanation about the Admin::hasAccess class

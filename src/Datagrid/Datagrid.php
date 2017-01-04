@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridEntityAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridListAction;
@@ -84,14 +85,23 @@ class Datagrid implements DatagridInterface
     private $factory;
 
     /**
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+     */
+    private $authorizationChecker;
+
+    /**
      * Datagrid constructor.
      * @param \Knp\Component\Pager\PaginatorInterface $paginator
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Symfony\Component\Form\FormFactory $factory
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationChecker $authorizationChecker
      */
-    public function __construct(PaginatorInterface $paginator, EntityManagerInterface $entityManager, FormFactory $factory)
+    public function __construct(PaginatorInterface $paginator, EntityManagerInterface $entityManager, FormFactory $factory, AuthorizationChecker $authorizationChecker)
     {
         $this->paginator = $paginator;
         $this->entityManager = $entityManager;
         $this->factory = $factory;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -183,9 +193,10 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @param string $name
-     * @param string $type A valid DatagridActionType implementation name
+     * @param string $type
+     * @param string $route A valid DatagridActionType implementation name
      * @param array $options List of options for the given DatagridActionType
+     * @return DatagridInterface
      */
     public function addAction($type, $route, $options = [])
     {
@@ -199,21 +210,28 @@ class Datagrid implements DatagridInterface
 
     /**
      * Return list of all fields configured for this datagrid
+     *
+     * @return array
      */
     public function getListActions()
     {
-        return array_filter($this->actions, function($action) {
-            return $action instanceof DatagridListAction;
+        $entityClass = $this->getAdmin()->getEntityClass();
+        $dummyObject = new $entityClass;
+        return array_filter($this->actions, function($action) use ($dummyObject) {
+            return $action instanceof DatagridListAction && $this->authorizationChecker->isGranted([get_class($action)], $dummyObject);
         });
     }
 
     /**
      * Return list of all fields configured for this datagrid
+     *
+     * @param $entity
+     * @return array
      */
-    public function getEntityActions()
+    public function getEntityActions($entity)
     {
-        return array_filter($this->actions, function($action) {
-            return $action instanceof DatagridEntityAction;
+        return array_filter($this->actions, function($action) use ($entity) {
+            return $action instanceof DatagridEntityAction && $this->authorizationChecker->isGranted([get_class($action)], $entity);
         });
     }
 
@@ -237,6 +255,7 @@ class Datagrid implements DatagridInterface
     /**
      * Bind the Request to the Datagrid
      *
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function bind(AdminInterface $admin, Request $request)
@@ -318,8 +337,9 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @param string $name
-     * @param mixed $default
+     * @param $name
+     * @param null $default
+     * @return mixed|null
      */
     public function getOption($name, $default = null)
     {
