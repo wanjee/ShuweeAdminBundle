@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
@@ -14,6 +15,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *
  * @ORM\Table(name="shuwee_users")
  * @ORM\Entity()
+ * @UniqueEntity(fields={"username"}, message="{{ value }} is already used.")
  */
 class User implements UserInterface, \Serializable, EquatableInterface
 {
@@ -45,6 +47,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @var string
      *
+     * Not mapped, used for password management in create/edit forms.
+     */
+    protected $plainPassword;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=128)
      */
     protected $password;
@@ -57,7 +66,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $salt;
 
     /**
-     *
+     * Constructor
      */
     public function __construct()
     {
@@ -106,6 +115,26 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

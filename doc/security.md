@@ -43,14 +43,48 @@ security:
 Configure the encoder as you prefer.  Define *ShuweeAdminBundle:User* as a provider, use that provider in your firewall.
 You can define other firewalls for i.e. frontend or a webservice if needed.
 
-## Create admin user
+## Administer administrators
+
+ShuweeAdminBundle comes with an abstract admin class you can extend.
+
+First create an Admin class, which extend the provided abstract class.
+
+``` php
+<?php
+namespace AppBundle\Admin;
+
+use Wanjee\Shuwee\AdminBundle\Admin\AbstractUserAdmin;
+
+/**
+* Class ShuweeUserAdmin
+*
+* @package AppBundle\Admin
+*/
+class ShuweeUserAdmin extends AbstractUserAdmin
+{
+ // Be lazy, let AbstractUserAdmin do all the job
+ // But feel free to overwrite whatever you need
+}
+```
+
+Then declare it as a service.
+
+``` php
+appbundle.shuwee_user_admin:
+    class: AppBundle\Admin\ShuweeUserAdmin
+    parent: shuwee_admin.user_admin_abstract
+    tags:
+      -  { name: shuwee.admin }
+```
+
+## Commands 
+### Create admin user 
 
 To generate a new user use the dedicated command
 
 ``` bash
 bin/console shuwee:admin:user:add username password --roles=ROLE_ADMIN
 ```
-
 
 A simple voter solution has been implemented.  It's far from perfect but usable for simple use cases.
 It has to be implemented per Admin (so per entity to edit).
