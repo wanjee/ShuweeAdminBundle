@@ -7,6 +7,13 @@ services:
         class: Wanjee\Shuwee\AdminBundle\Admin\Admin
         abstract: true
 
+    # UserAdmin
+    shuwee_admin.user_admin_abstract:
+        class: Wanjee\Shuwee\AdminBundle\Admin\AbstractUserAdmin
+        abstract: true
+        calls:
+          - [setEncoderFactory, ['@security.encoder_factory']]
+
     # Routing
     shuwee_admin.admin_routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
@@ -42,8 +49,8 @@ services:
 
     # Datagrid
     shuwee_admin.datagrid:
-            class: Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
-            arguments: ['@knp_paginator', '@doctrine.orm.default_entity_manager', '@form.factory']
+        class: Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid
+        arguments: ['@knp_paginator', '@doctrine.orm.default_entity_manager', '@form.factory']
 
     # Security
     shuwee_admin.security.user_manager:
