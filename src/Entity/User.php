@@ -45,6 +45,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @var string
      *
+     * Not mapped, used for password management in create/edit forms.
+     */
+    protected $plainPassword;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=128)
      */
     protected $password;
@@ -57,7 +64,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $salt;
 
     /**
-     *
+     * Constructor
      */
     public function __construct()
     {
@@ -106,6 +113,26 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
