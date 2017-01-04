@@ -40,7 +40,8 @@ class UserType extends AbstractType
                     'mapped' => true,
                     'attr' => [
                         'autocomplete' => 'off',
-                    ]
+                    ],
+                    'help' => 'Leave empty to keep previous password.'
                 ]
             )
             ->add(
