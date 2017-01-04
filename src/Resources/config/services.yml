@@ -14,6 +14,12 @@ services:
         calls:
           - [setEncoderFactory, ['@security.encoder_factory']]
 
+    shuwee_admin.form.user_admin:
+        class: Wanjee\Shuwee\AdminBundle\Form\UserType
+        arguments: ['@security.authorization_checker']
+        tags:
+            - { name: form.type, alias: user_admin }
+
     # Routing
     shuwee_admin.admin_routing_helper:
         class: Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
