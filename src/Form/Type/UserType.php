@@ -1,6 +1,6 @@
 <?php
 
-namespace Wanjee\Shuwee\AdminBundle\Form;
+namespace Wanjee\Shuwee\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

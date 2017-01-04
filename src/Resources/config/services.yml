@@ -15,7 +15,7 @@ services:
           - [setEncoderFactory, ['@security.encoder_factory']]
 
     shuwee_admin.form.user_admin:
-        class: Wanjee\Shuwee\AdminBundle\Form\UserType
+        class: Wanjee\Shuwee\AdminBundle\Form\Type\UserType
         arguments: ['@security.authorization_checker']
         tags:
             - { name: form.type, alias: user_admin }

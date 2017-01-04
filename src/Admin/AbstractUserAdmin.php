@@ -8,7 +8,7 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeCollection;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\Type\DatagridFieldTypeText;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type\DatagridFilterTypeText;
 use Wanjee\Shuwee\AdminBundle\Entity\User;
-use Wanjee\Shuwee\AdminBundle\Form\UserType;
+use Wanjee\Shuwee\AdminBundle\Form\Type\UserType;
 
 /**
  * Class AbstractUserAdmin
