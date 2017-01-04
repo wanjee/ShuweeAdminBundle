@@ -305,7 +305,8 @@ public function attachFilters(DatagridInterface $datagrid)
 {
     $datagrid
         ->addFilter('title', DatagridFilterTypeText::class, ['label' => 'Title',])
-        ->addFilter('status', DatagridFilterTypeChoice::class, ['label' => 'Published', 'choices' => ['Yes' => 1,'No' => 0,],]);
+        ->addFilter('status', DatagridFilterTypeChoice::class, ['label' => 'Published', 'choices' => ['Yes' => 1,'No' => 0,],])
+        ->addFilter('user', DatagridFilterTypeEntity::class, ['label' => 'User', 'class' => User::class, 'choice_label' => 'username', 'placeholder' => 'Choose a user',]) ;
 }
 ```
 
