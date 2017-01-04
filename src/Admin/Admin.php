@@ -6,6 +6,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -207,9 +208,12 @@ abstract class Admin implements AdminInterface
         return $default;
     }
 
-    public function setEntityManager(EntityManager $entityManager)
+    /**
+     * @param \Doctrine\Common\Persistence\ManagerRegistry $doctrine
+     */
+    public function setDoctrine(ManagerRegistry $doctrine)
     {
-        $this->entityManager = $entityManager;
+        $this->entityManager = $doctrine->getManager();
     }
 
     /**

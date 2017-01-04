@@ -2,7 +2,6 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
