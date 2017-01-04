@@ -64,6 +64,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridViewAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridCreateAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridUpdateAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridDeleteAction;
 
 /**
  * Class PostAdmin
@@ -79,7 +83,7 @@ class PostAdmin extends Admin
      * it returns user authorization
      *
      * @param UserInterface $user
-     * @param string $attribute
+     * @param string $action The FQN classname of the action being voted on.
      * @param mixed $object
      * @return integer either VoterInterface::ACCESS_GRANTED, VoterInterface::ACCESS_ABSTAIN, or VoterInterface::ACCESS_DENIED
      */
@@ -87,10 +91,10 @@ class PostAdmin extends Admin
     {
         $grants = array(
             ContentVoter::LIST_CONTENT => array('ROLE_ADMIN'),
-            ContentVoter::VIEW_CONTENT => array('ROLE_ADMIN'),
-            ContentVoter::CREATE_CONTENT => array('ROLE_SUPER_ADMIN'),
-            ContentVoter::UPDATE_CONTENT => array('ROLE_ADMIN'),
-            ContentVoter::DELETE_CONTENT => array(), // no can do.
+            DatagridViewAction::class => array('ROLE_ADMIN'),
+            DatagridCreateAction::class => array('ROLE_SUPER_ADMIN'),
+            DatagridUpdateAction::class => array('ROLE_ADMIN'),
+            DatagridDeleteAction::class => array(), // no can do.
         );
 
         // get required role
