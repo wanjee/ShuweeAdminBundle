@@ -56,17 +56,7 @@
                 <td class="actions">
                     <div class="btn-toolbar">
                         <div class="btn-group btn-group-xs">
-                            {% if admin_is_granted(datagrid.admin, 'VIEW', entity) and datagrid.admin.hasPreviewUrlCallback() %}
-                            <a class="btn btn-default" role="button" href="{{ datagrid.admin.getPreviewUrl(entity) }}"><i class="glyphicon glyphicon-eye-open"></i>  {{'crud.view' | trans({}, 'ShuweeAdminBundle') }}</a>
-                            {% endif %}
-                            {% if admin_is_granted(datagrid.admin, 'UPDATE', entity) %}
-                            <a class="btn btn-primary" role="button" href="{{ admin_get_path(datagrid.admin, 'update', {'id': entity.id}) }}"><i class="glyphicon glyphicon-edit"></i>  {{'crud.edit' | trans({}, 'ShuweeAdminBundle') }}</a>
-                            {% endif %}
-                            {% if admin_is_granted(datagrid.admin, 'DELETE', entity) %}
-                            <a class="btn btn-danger" role="button" href="{{ admin_get_path(datagrid.admin, 'delete', {'id': entity.id}) }}"><i class="glyphicon glyphicon-trash"></i> {{'crud.delete' | trans({}, 'ShuweeAdminBundle') }}</a>
-                            {% endif %}
-
-                            {%- for action in datagrid.entityActions -%}
+                            {%- for action in datagrid.entityActions(entity) -%}
                                 <a href="{{ path(action.route, action.routeParameters(entity)) }}" class="btn btn-sm btn-{{ action.getOption('btn-style') }} {{ action.getOption('classes') }}" type="button">
                                     {%- if action.getOption('icon') -%}
                                         <i class="glyphicon glyphicon-{{ action.getOption('icon') }}"></i>

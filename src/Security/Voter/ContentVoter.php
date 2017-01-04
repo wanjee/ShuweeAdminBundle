@@ -18,22 +18,6 @@ class ContentVoter implements VoterInterface
      * Crud list action
      */
     const LIST_CONTENT = 'LIST';
-    /**
-     * Crud view action
-     */
-    const VIEW_CONTENT = 'VIEW';
-    /**
-     * Crud create action
-     */
-    const CREATE_CONTENT = 'CREATE';
-    /**
-     * Crud update action
-     */
-    const UPDATE_CONTENT = 'UPDATE';
-    /**
-     * Crud delete action
-     */
-    const DELETE_CONTENT = 'DELETE';
 
     /**
      * @var \Wanjee\Shuwee\AdminBundle\Manager\AdminManager
@@ -54,16 +38,8 @@ class ContentVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return in_array(
-            $attribute,
-            [
-                self::LIST_CONTENT,
-                self::VIEW_CONTENT,
-                self::CREATE_CONTENT,
-                self::UPDATE_CONTENT,
-                self::DELETE_CONTENT,
-            ]
-        );
+        // check is delegated to Admin::hasAccess()
+        return true;
     }
 
     /**
@@ -103,8 +79,8 @@ class ContentVoter implements VoterInterface
      * This method must return one of the following constants:
      * ACCESS_GRANTED, ACCESS_DENIED, or ACCESS_ABSTAIN.
      *
-     * @param TokenInterface $token      A TokenInterface instance
-     * @param object $object     The object to secure
+     * @param TokenInterface $token A TokenInterface instance
+     * @param $entity The object to secure
      * @param array $attributes An array of attributes associated with the method being invoked
      *
      * @return integer either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
@@ -127,11 +103,6 @@ class ContentVoter implements VoterInterface
 
         // set the attribute to check against
         $attribute = reset($attributes);
-
-        // check if the given attribute is covered by this voter
-        if (!$this->supportsAttribute($attribute)) {
-            return VoterInterface::ACCESS_ABSTAIN;
-        }
 
         // get current logged in user
         $user = $token->getUser();

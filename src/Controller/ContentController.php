@@ -19,6 +19,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridCreateAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridDeleteAction;
+use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridUpdateAction;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
 /**
@@ -68,7 +71,7 @@ class ContentController extends Controller
         $entityClass = $admin->getEntityClass();
         $entity = new $entityClass();
 
-        $this->secure($admin, ContentVoter::CREATE_CONTENT, $entity);
+        $this->secure($admin, DatagridCreateAction::class, $entity);
 
         $form = $this->getCreateForm($admin, $entity);
 
@@ -116,7 +119,7 @@ class ContentController extends Controller
             throw $this->createNotFoundException('That resource cannot be found');
         }
 
-        $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
+        $this->secure($admin, DatagridUpdateAction::class, $entity);
 
         $form = $this->getUpdateForm($admin, $entity);
 
@@ -163,7 +166,7 @@ class ContentController extends Controller
             throw $this->createNotFoundException('That resource cannot be found');
         }
 
-        $this->secure($admin, ContentVoter::DELETE_CONTENT, $entity);
+        $this->secure($admin, DatagridDeleteAction::class, $entity);
 
         $form = $this->getDeleteForm($admin, $entity);
 
@@ -208,7 +211,7 @@ class ContentController extends Controller
             throw $this->createNotFoundException('The resource cannot be found');
         }
 
-        $this->secure($admin, ContentVoter::UPDATE_CONTENT, $entity);
+        $this->secure($admin, DatagridUpdateAction::class, $entity);
         $this->checkCsrf($request->attributes->get('token'));
 
         $field = $request->attributes->get('field');
@@ -332,8 +335,9 @@ class ContentController extends Controller
      *
      * @throws AccessDeniedException if user is not allowed
      *
-     * @param mixed $attributes
-     * @param mixed $object
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param $attributes
+     * @param null $object
      */
     private function secure(Admin $admin, $attributes, $object = null)
     {
