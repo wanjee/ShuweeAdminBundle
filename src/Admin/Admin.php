@@ -41,6 +41,11 @@ abstract class Admin implements AdminInterface
     protected $setup = false;
 
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * This function is used to boot up Admin implementation when first used.
      * We do not use __construct as we want the end user to be able to use it
      * without having to thing about calling parent constructor.
@@ -71,20 +76,20 @@ abstract class Admin implements AdminInterface
     /**
      * @inheritDoc
      */
-    final public function buildDatagrid(DatagridInterface $datagrid, EntityManager $em)
+    final public function buildDatagrid(DatagridInterface $datagrid)
     {
         $this->attachFields($datagrid);
-        $this->attachDefaultActions($datagrid, $em);
+        $this->attachDefaultActions($datagrid);
         $this->attachActions($datagrid);
         $this->attachFilters($datagrid);
     }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
-     * @param \Doctrine\ORM\EntityManager $em
      */
-    private function attachDefaultActions(DatagridInterface $datagrid, EntityManager $em)
+    private function attachDefaultActions(DatagridInterface $datagrid)
     {
+        $em = $this->entityManager;
         $datagrid
             ->addAction(
                 DatagridCreateAction::class,
@@ -200,6 +205,11 @@ abstract class Admin implements AdminInterface
         }
 
         return $default;
+    }
+
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 
     /**

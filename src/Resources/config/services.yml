@@ -5,6 +5,8 @@ services:
 
     shuwee_admin.admin_abstract:
         class: Wanjee\Shuwee\AdminBundle\Admin\Admin
+        calls:
+            - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
         abstract: true
 
     # Routing

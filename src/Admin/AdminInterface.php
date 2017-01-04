@@ -46,9 +46,8 @@ interface AdminInterface
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
-     * @param \Doctrine\ORM\EntityManager $em
      */
-    public function buildDatagrid(DatagridInterface $datagrid, EntityManager $em);
+    public function buildDatagrid(DatagridInterface $datagrid);
 
     /**
      * @return array Options
