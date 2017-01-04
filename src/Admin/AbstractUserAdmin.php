@@ -121,13 +121,6 @@ abstract class AbstractUserAdmin extends Admin
                 [
                     'label' => 'Username',
                 ]
-            )
-            ->addFilter(
-                'username',
-                DatagridFilterTypeText::class,
-                [
-                    'label' => 'Username',
-                ]
             );
     }
 
