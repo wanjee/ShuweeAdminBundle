@@ -102,7 +102,7 @@ abstract class Admin implements AdminInterface
                     'icon' => 'edit',
                     'path_parameters' => function ($entity) {
                         return [
-                            'id' => $entity->getId(),
+                            'id' => $entity,
                         ];
                     },
                 ]
@@ -116,7 +116,7 @@ abstract class Admin implements AdminInterface
                     'icon' => 'trash',
                     'path_parameters' => function ($entity) {
                         return [
-                            'id' => $entity->getId(),
+                            'id' => $entity,
                         ];
                     },
                 ]
