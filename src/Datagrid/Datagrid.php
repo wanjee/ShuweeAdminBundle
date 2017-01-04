@@ -273,7 +273,7 @@ class Datagrid implements DatagridInterface
         $this->request = $request;
 
         // attach our fields, filters and actions
-        $this->admin->buildDatagrid($this);
+        $this->admin->buildDatagrid($this, $this->entityManager);
 
         $this->applyFilters();
     }

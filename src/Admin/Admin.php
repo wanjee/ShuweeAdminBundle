@@ -6,12 +6,13 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridCreateAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridDeleteAction;
-use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridListAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridUpdateAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Datagrid;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
@@ -70,18 +71,19 @@ abstract class Admin implements AdminInterface
     /**
      * @inheritDoc
      */
-    final public function buildDatagrid(DatagridInterface $datagrid)
+    final public function buildDatagrid(DatagridInterface $datagrid, EntityManager $em)
     {
         $this->attachFields($datagrid);
-        $this->attachDefaultActions($datagrid);
+        $this->attachDefaultActions($datagrid, $em);
         $this->attachActions($datagrid);
         $this->attachFilters($datagrid);
     }
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     * @param \Doctrine\ORM\EntityManager $em
      */
-    private function attachDefaultActions(DatagridInterface $datagrid)
+    private function attachDefaultActions(DatagridInterface $datagrid, EntityManager $em)
     {
         $datagrid
             ->addAction(
@@ -100,9 +102,11 @@ abstract class Admin implements AdminInterface
                     'label' => 'Edit',
                     'btn-style' => 'primary',
                     'icon' => 'edit',
-                    'path_parameters' => function ($entity) {
+                    'path_parameters' => function ($entity) use ($em) {
+                        $meta = $em->getClassMetadata(get_class($entity));
+                        $accessor = PropertyAccess::createPropertyAccessor();
                         return [
-                            'id' => $entity,
+                            'id' => $accessor->getValue($entity, $meta->getSingleIdentifierFieldName())
                         ];
                     },
                 ]
@@ -114,9 +118,11 @@ abstract class Admin implements AdminInterface
                     'label' => 'Delete',
                     'btn-style' => 'danger',
                     'icon' => 'trash',
-                    'path_parameters' => function ($entity) {
+                    'path_parameters' => function ($entity) use ($em) {
+                        $meta = $em->getClassMetadata(get_class($entity));
+                        $accessor = PropertyAccess::createPropertyAccessor();
                         return [
-                            'id' => $entity,
+                            'id' => $accessor->getValue($entity, $meta->getSingleIdentifierFieldName())
                         ];
                     },
                 ]

@@ -2,6 +2,7 @@
 
 namespace Wanjee\Shuwee\AdminBundle\Admin;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
@@ -45,8 +46,9 @@ interface AdminInterface
 
     /**
      * @param \Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface $datagrid
+     * @param \Doctrine\ORM\EntityManager $em
      */
-    public function buildDatagrid(DatagridInterface $datagrid);
+    public function buildDatagrid(DatagridInterface $datagrid, EntityManager $em);
 
     /**
      * @return array Options
