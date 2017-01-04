@@ -65,6 +65,8 @@ class DatagridFieldTypeCollection extends DatagridFieldType
             }
 
             $string = implode(', ', $dataArray);
+        } else if (is_array($data)) {
+            $string = implode(', ', $data);
         } else {
             $string = 'Unsupported.';
         }
