@@ -39,7 +39,7 @@ Allows the action column to be hidden if you disable view, edit and delete permi
     
 ## Fields
 
-In your admin controller define the datagrid fields as follow:
+In your admin implementation define the datagrid fields as follow:
 
 ``` php
 /**
