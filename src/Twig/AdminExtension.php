@@ -5,7 +5,6 @@ namespace Wanjee\Shuwee\AdminBundle\Twig;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-use Wanjee\Shuwee\AdminBundle\Admin\Admin;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 use Wanjee\Shuwee\AdminBundle\Manager\AdminManager;
 use Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper;
@@ -19,7 +18,7 @@ class AdminExtension extends \Twig_Extension
     protected $adminManager;
 
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Routing\Helper\RoutingHelper
+     * @var \Wanjee\Shuwee\AdminBundle\Routing\Helper\AdminRoutingHelper
      */
     protected $routingHelper;
 

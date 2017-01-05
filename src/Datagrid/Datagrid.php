@@ -24,7 +24,7 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type\DatagridFilterTypeEntity;
 class Datagrid implements DatagridInterface
 {
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @var \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
      */
     private $admin;
 
@@ -118,7 +118,7 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Admin\Admin
+     * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
      */
     public function getAdmin()
     {

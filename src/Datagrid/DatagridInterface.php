@@ -18,7 +18,7 @@ interface DatagridInterface
     /**
      * Get implementation of Admin to use in this datagrid
      *
-     * @return \Wanjee\Shuwee\AdminBundle\Admin\Admin
+     * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
      */
     public function getAdmin();
 

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+use Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin ;
 use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
 
 /**
@@ -27,15 +27,14 @@ use Wanjee\Shuwee\AdminBundle\Security\Voter\ContentVoter;
  */
 class ContentController extends Controller
 {
-
     /**
      * List all entities of the type supported by given Admin
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request, Admin $admin)
+    public function indexAction(Request $request, AbstractAdmin $admin)
     {
         $this->secure($admin, ContentVoter::LIST_CONTENT);
 
@@ -57,10 +56,10 @@ class ContentController extends Controller
      * Create an entity of given type
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, Admin $admin)
+    public function createAction(Request $request, AbstractAdmin $admin)
     {
         $translator = $this->getTranslator();
 
@@ -102,10 +101,10 @@ class ContentController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function updateAction(Request $request, Admin $admin)
+    public function updateAction(Request $request, AbstractAdmin $admin)
     {
         $translator = $this->getTranslator();
 
@@ -149,10 +148,10 @@ class ContentController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Request $request, Admin $admin)
+    public function deleteAction(Request $request, AbstractAdmin $admin)
     {
         $translator = $this->getTranslator();
 
@@ -196,10 +195,10 @@ class ContentController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException if the resource cannot be loaded
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function toggleAction(Request $request, Admin $admin)
+    public function toggleAction(Request $request, AbstractAdmin $admin)
     {
         $id = $request->attributes->get('id');
         $entity = $this->getDoctrine()->getRepository($admin->getEntityClass())->find($id);
@@ -235,12 +234,12 @@ class ContentController extends Controller
     /**
      * Get form to create a new entity.
      *
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @param $entity
      *
      * @return \Symfony\Component\Form\Form
      */
-    private function getCreateForm(Admin $admin, $entity)
+    private function getCreateForm(AbstractAdmin $admin, $entity)
     {
         $translator = $this->getTranslator();
 
@@ -269,12 +268,12 @@ class ContentController extends Controller
     /**
      * Get form to update an existing entity.
      *
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @param $entity
      *
      * @return \Symfony\Component\Form\Form
      */
-    private function getUpdateForm(Admin $admin, $entity)
+    private function getUpdateForm(AbstractAdmin $admin, $entity)
     {
         $translator = $this->getTranslator();
 
@@ -304,12 +303,12 @@ class ContentController extends Controller
     /**
      * Get form to update an existing entity.
      *
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @param $entity
      *
      * @return \Symfony\Component\Form\Form
      */
-    private function getDeleteForm(Admin $admin, $entity)
+    private function getDeleteForm(AbstractAdmin $admin, $entity)
     {
         $translator = $this->getTranslator();
 
@@ -335,7 +334,7 @@ class ContentController extends Controller
      * @param mixed $attributes
      * @param mixed $object
      */
-    private function secure(Admin $admin, $attributes, $object = null)
+    private function secure(AbstractAdmin $admin, $attributes, $object = null)
     {
         if (!is_array($attributes)) {
             $attributes = [$attributes];

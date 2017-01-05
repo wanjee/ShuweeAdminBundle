@@ -15,7 +15,7 @@ use Wanjee\Shuwee\AdminBundle\Form\Type\UserType;
  *
  * @package AppBundle\Admin
  */
-abstract class AbstractUserAdmin extends Admin
+abstract class AbstractUserAdmin extends AbstractAdmin
 {
     /**
      * @var EncoderFactoryInterface
