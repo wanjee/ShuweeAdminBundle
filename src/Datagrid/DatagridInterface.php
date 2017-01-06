@@ -5,7 +5,6 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin;
-use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 
 interface DatagridInterface
 {
