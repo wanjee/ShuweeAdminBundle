@@ -4,6 +4,7 @@ namespace Wanjee\Shuwee\AdminBundle\Datagrid;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin;
 use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
 
 interface DatagridInterface
@@ -18,7 +19,7 @@ interface DatagridInterface
     /**
      * Get implementation of Admin to use in this datagrid
      *
-     * @return \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface
+     * @return \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin
      */
     public function getAdmin();
 
@@ -67,8 +68,8 @@ interface DatagridInterface
     /**
      * Bind the Request to the Datagrid
      *
-     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function bind(AdminInterface $admin, Request $request);
+    public function bind(AbstractAdmin $admin, Request $request);
 }
