@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Wanjee\Shuwee\AdminBundle\Admin\AdminInterface;
+use Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridEntityAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Action\DatagridListAction;
 use Wanjee\Shuwee\AdminBundle\Datagrid\Field\DatagridField;
@@ -24,7 +24,7 @@ use Wanjee\Shuwee\AdminBundle\Datagrid\Filter\Type\DatagridFilterTypeEntity;
 class Datagrid implements DatagridInterface
 {
     /**
-     * @var \Wanjee\Shuwee\AdminBundle\Admin\Admin $admin
+     * @var \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin $admin
      */
     private $admin;
 
@@ -118,7 +118,7 @@ class Datagrid implements DatagridInterface
     }
 
     /**
-     * @return \Wanjee\Shuwee\AdminBundle\Admin\Admin
+     * @return \Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin
      */
     public function getAdmin()
     {
@@ -239,7 +239,7 @@ class Datagrid implements DatagridInterface
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function bind(AdminInterface $admin, Request $request)
+    public function bind(AbstractAdmin $admin, Request $request)
     {
         if ($this->request) {
             throw new \RuntimeException('A datagrid can only be bound once to a request');

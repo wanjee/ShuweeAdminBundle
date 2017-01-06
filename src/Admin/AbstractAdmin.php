@@ -1,20 +1,17 @@
 <?php
 
-/**
- *
- */
-
 namespace Wanjee\Shuwee\AdminBundle\Admin;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 /**
- * Class Admin
+ * Class AbstractAdmin
  * @package Wanjee\Shuwee\AdminBundle\Admin
  */
-abstract class Admin implements AdminInterface
+abstract class AbstractAdmin implements AdminInterface
 {
     /**
      * List of global options

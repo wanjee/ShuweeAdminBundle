@@ -22,7 +22,7 @@ See [Form type extensions](./form_type_extensions.md)
 <?php
 namespace AppBundle\Admin;
 
-use Wanjee\Shuwee\AdminBundle\Admin\Admin;
+use Wanjee\Shuwee\AdminBundle\Admin\AbstractAdmin;
 use Wanjee\Shuwee\AdminBundle\Datagrid\DatagridInterface;
 
 use AppBundle\Form\PostType;
@@ -32,7 +32,7 @@ use AppBundle\Entity\Post;
  * Class PostAdmin
  * @package AppBundle\Admin
  */
-class PostAdmin extends Admin
+class PostAdmin extends AbstractAdmin
 {
     /**
      * @return string
@@ -240,8 +240,8 @@ Every AdminClass has an alias that is used in the url and in route names. By def
 E.g. `AppBundle\Admin\PostAdmin` will have an alias set to `post`.
 
 To overwrite the default implement the `getAlias` method in your admin class:
-``` php
 
+``` php
 /**
  * @return string
  */
