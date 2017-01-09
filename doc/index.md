@@ -80,5 +80,6 @@ shuwee_admin:
 3. [Menu](./menu.md)
 4. [Forms](./forms.md)
 5. [Security](./security.md)
+5. [L10N](./l10n.md)
 
 

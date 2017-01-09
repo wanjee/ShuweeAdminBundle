@@ -79,18 +79,18 @@ Implement getOptions() method to configure some behaviors of your Admin implemen
 Complete example: 
 ```php
 /**
- * @return array Options
- */
-public function getOptions() {
-    return array(
-        'label' => '{0} Posts|{1} Post|]1,Inf] Posts',
-        'description' => 'A blog post is a journal entry.',
-        'menu_section' => 'Content',
-        'preview_url_callback' => function($entity) {
-            return $entity->getId();
-        }
-    );
-}
+  * @return array Options
+  */
+ public function getOptions() {
+     return array(
+         'label' => '{0} Posts|{1} Post|]1,Inf] Posts',
+         'description' => 'A blog post is a journal entry.',
+         'menu_section' => 'Content',
+         'preview_url_callback' => function($entity) {
+             return $entity->getId();
+         }
+     );
+ }
 ``` 
 
 #### label
