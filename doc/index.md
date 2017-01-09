@@ -79,7 +79,6 @@ shuwee_admin:
 2. [Datagrid](./datagrid.md)
 3. [Menu](./menu.md)
 4. [Forms](./forms.md)
-5. [Form type extensions](./form_type_extensions.md)
-6. [Security](./security.md)
+5. [Security](./security.md)
 
 
