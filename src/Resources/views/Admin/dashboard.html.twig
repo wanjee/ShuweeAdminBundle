@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="panel-body">
                                     {%- if admin.getOption('description') is not empty -%}
-                                        <p class="text-muted">{{ admin.getOption('description') }}</p>
+                                        <p class="text-muted">{{ admin_get_description(admin) }}</p>
                                     {%- endif -%}
                                     {% if admin_is_granted(admin, 'LIST') %}
                                         <a href="{{ admin_get_path(admin, 'index') }}" class="btn btn-sm btn-default"

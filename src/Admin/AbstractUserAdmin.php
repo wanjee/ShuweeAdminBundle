@@ -54,9 +54,9 @@ abstract class AbstractUserAdmin extends AbstractAdmin
      */
     public function getOptions() {
         return [
-            'label' => '{0} Admin users|{1} Admin user|]1,Inf] Admin user',
-            'description' => 'User that will manage content',
-            'menu_section' => 'People',
+            'label' => 'user.admin.label',
+            'description' => 'user.admin.description',
+            'menu_section' => 'menu.people.section.label',
         ];
     }
 

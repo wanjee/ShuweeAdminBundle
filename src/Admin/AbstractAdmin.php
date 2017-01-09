@@ -107,7 +107,7 @@ abstract class AbstractAdmin implements AdminInterface
                     'label' => ucfirst($this->getAlias()),
                     'description' => null,
                     'preview_url_callback' => null,
-                    'menu_section' => 'content',
+                    'menu_section' => 'menu.default.section.label',
                 ]
             )
             ->setAllowedTypes('label', ['string'])

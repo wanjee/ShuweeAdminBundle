@@ -59,6 +59,7 @@ class AdminExtension extends \Twig_Extension
     {
         return [
           new \Twig_SimpleFunction('admin_get_label', [$this, 'getAdminLabel']),
+          new \Twig_SimpleFunction('admin_get_description', [$this, 'getAdminDescription']),
           new \Twig_SimpleFunction('admin_get_path', [$this, 'getAdminPath']),
           new \Twig_SimpleFunction('admin_is_granted', [$this, 'isGranted']),
         ];
@@ -100,6 +101,16 @@ class AdminExtension extends \Twig_Extension
         $count = $plural ? 100 : 1;
 
         return $this->translator->transChoice($admin->getOption('label'), $count, [], 'ShuweeAdminBundle');
+    }
+
+    /**
+     * @param \Wanjee\Shuwee\AdminBundle\Admin\AdminInterface $admin
+     * @param bool $plural
+     * @return string
+     */
+    public function getAdminDescription(AdminInterface $admin)
+    {
+        return $this->translator->trans($admin->getOption('description'), [], 'ShuweeAdminBundle');
     }
 
     /**
