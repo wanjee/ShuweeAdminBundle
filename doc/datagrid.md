@@ -363,6 +363,12 @@ Allows you to filter the list on a entity relation.
         'class' => User::class,
         'choice_label' => 'username',
         'placeholder' => 'Choose a user',
+        'query_builder' => function (EntityRepository $er) {
+            return $er->createQueryBuilder('u')
+                ->addOrderBy('u.name', 'ASC')
+                ->addOrderBy('u.version', 'ASC');
+        },
+        'group_by' => 'name',
     ]
 ) 
 ``` 
@@ -372,6 +378,10 @@ Allows you to filter the list on a entity relation.
 * *class*: List of options to display.  Expects string. *Required*. See http://symfony.com/doc/current/reference/forms/types/entity.html#class
 * *choice_label*: Displayed property in the list. See http://symfony.com/doc/current/reference/forms/types/entity.html#choice-label 
 * *placeholder*: This option determines whether or not a special "empty" option will appear at the top of a select widget. Expects string. Defaults to 'All' Shuwee does not allow disabling placeholder. http://symfony.com/doc/current/reference/forms/types/entity.html#placeholder
+* *query_builder*: Allows you to create a custom query for your choices. https://symfony.com/doc/current/reference/forms/types/entity.html#query-builder
+* *group_by*: You can group the option elements of a select into optgroup by passing a multi-dimensional array to choices. https://symfony.com/doc/current/reference/forms/types/entity.html#group-by
+* *em*: If specified, this entity manager will be used to load the choices instead of the default entity manager. https://symfony.com/doc/current/reference/forms/types/entity.html#em
+
 
 ### Known limitations
 
